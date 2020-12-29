@@ -10,7 +10,7 @@ namespace Fakebook.Profile.Domain
     {
 
         public string Email { get; set; }
-        public string ProfilePictureUrl { get; set; }
+        public Uri ProfilePictureUrl { get; set; }
 
         public string Name
         {
