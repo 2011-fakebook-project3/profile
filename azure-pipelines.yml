@@ -34,7 +34,7 @@ stages:
         organization: '2011-fakebook-project3'
         scannerMode: 'MSBuild'
         projectKey: '2011-fakebook-project3'
-        projectName: 'profile'
+        projectName: '2011-fakebook-project3_profile'
         extraProperties: |
           sonar.exclusions=**/lib/**
           sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
