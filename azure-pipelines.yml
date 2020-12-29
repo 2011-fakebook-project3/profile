@@ -50,3 +50,24 @@ stages:
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: dotnet build
       workingDirectory: 'Fakebook.Profile/Fakebook.Profile.RestApi'
+      
+    - task: DotNetCoreCLI@2
+      displayName: dotnet test
+      inputs:
+        command: 'test'
+        arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+        publishTestResults: true
+        workingDirectory: 'Fakebook.Profile'
+
+    - script: dotnet publish --configuration $(buildConfiguration) --output publish
+      displayName: dotnet publish
+      workingDirectory: 'Fakebook.Profile/Fakebook.Profile.RestApi'
+
+    - task: SonarCloudAnalyze@1
+      displayName: sonar run analysis
+
+    - task: SonarCloudPublish@1
+      displayName: sonar analysis publish
+      inputs:
+        pollingTimeoutSec: '300'
+      
