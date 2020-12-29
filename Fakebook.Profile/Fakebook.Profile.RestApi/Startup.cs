@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace Fakebook.ProfileRestApi
+namespace Fakebook.Profile.RestApi
 {
     public class Startup
     {
