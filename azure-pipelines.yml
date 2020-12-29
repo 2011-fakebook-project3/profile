@@ -7,6 +7,9 @@ trigger:
     - azure-pipelines.yml
     - 'Fakebook.Profile'
 
+pr:
+- 'main'
+
 pool:
   vmImage: 'ubuntu-latest'
 
