@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakebook.ProfileRestApi", "Fakebook.ProfileRestApi\Fakebook.ProfileRestApi.csproj", "{7DFCA236-3356-4913-B661-100CFF8DFF76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DFCA236-3356-4913-B661-100CFF8DFF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFCA236-3356-4913-B661-100CFF8DFF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFCA236-3356-4913-B661-100CFF8DFF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFCA236-3356-4913-B661-100CFF8DFF76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {348AE9AB-1243-453F-A7B1-50C4CE991A30}
+	EndGlobalSection
+EndGlobal
