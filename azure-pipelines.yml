@@ -33,7 +33,7 @@ stages:
         SonarCloud: 'SonarCloud'
         organization: '2011-nov02-net'
         scannerMode: 'MSBuild'
-        projectKey: '2011-fakebook-project3_profile'
+        projectKey: '2011-fakebook-project3'
         projectName: 'profile'
         extraProperties: |
           sonar.exclusions=**/lib/**
