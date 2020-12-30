@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.7.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.12.0-beta1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.12.0-beta1" />
   </ItemGroup>
 
 </Project>
