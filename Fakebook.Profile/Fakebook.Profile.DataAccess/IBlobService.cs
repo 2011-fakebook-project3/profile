@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fakebook.Profile.DataAccess
 {
-    class DbService : IDbService
+    /// <summary>
+    /// Interface for interacting with azure.
+    /// </summary>
+    public interface IBlobService
     {
     }
 }
