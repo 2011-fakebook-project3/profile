@@ -24,4 +24,4 @@ namespace Fakebook.Profile.DataAccess.Services
         public Task<ICollection<BlobProfile>> GetProfiles();
     }
 }
-}
+

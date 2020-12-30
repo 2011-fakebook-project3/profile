@@ -11,7 +11,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Fakebook.Profile.DataAccess.BlobModel
 
 {
-    class BlobProfile
+    public class BlobProfile
     {
         [BsonId]
         public string Email { get; set; }
