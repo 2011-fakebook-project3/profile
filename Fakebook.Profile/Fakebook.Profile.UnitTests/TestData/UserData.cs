@@ -62,7 +62,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),                            
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
@@ -76,7 +76,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null,
@@ -117,7 +117,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),     
                             FirstName = null,
                             LastName = null,
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
@@ -131,7 +131,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
@@ -145,7 +145,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.String(), // .Email()
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(), 
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
@@ -454,7 +454,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -465,7 +465,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl =new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -480,7 +480,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -513,7 +513,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -523,7 +523,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {
                             FirstName =  null,
                             LastName =  null,
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -537,7 +537,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {                        
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -547,7 +547,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {                            
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.String(),
                             PhoneNumber = GenerateRandom.String(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -696,4 +696,3 @@ namespace Fakebook.Profile.UnitTests.TestData
             }
         }
     }
-}
