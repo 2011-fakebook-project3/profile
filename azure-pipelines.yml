@@ -69,7 +69,7 @@ stages:
     - task: SonarCloudAnalyze@1
       displayName: sonar run analysis
 
-  - job: publish sonar cloud results
+  - job: publish_sonarcloud_results
     steps:
     - task: SonarCloudPublish@1
       displayName: sonar analysis publish
