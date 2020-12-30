@@ -19,7 +19,7 @@ RUN dotnet restore
 COPY . ./
 
 # publish to parent folder
-RUN dotnet publish -c Release -o ../publish
+RUN dotnet publish -s Fakebook.Profile.RestApi/ -c Release -o ../publish
 
 # ------------------------------------------------------------------------- #
 # -----------------------<[ Runtime Docker Script ]>----------------------- #
