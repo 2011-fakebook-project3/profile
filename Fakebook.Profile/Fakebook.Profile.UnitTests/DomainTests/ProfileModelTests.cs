@@ -13,6 +13,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
     public class ProfileModelTests
     {
         #region EmailTests
+        /// <summary>
+        /// Check that emails can't be null.
+        /// </summary>
         [Fact]
         public void EmailCantBeNull()
         {
@@ -23,11 +26,15 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Throws<ArgumentNullException>(() => new DomainProfile(email));
         }
 
-
+        /// <summary>
+        /// Check that invalid emails throw an exception.
+        /// </summary>
+        /// <param name="email">The email to test. Should be invalid.</param>
         [Theory]
         [InlineData("test1@test")]
         [InlineData("test2.test2")]
         [InlineData("test3.test3@test3")]
+        [InlineData("test4")]
         public void InvalidEmailThrowsException(string email)
         {
             //arrange
@@ -37,6 +44,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
 
+        /// <summary>
+        /// Test that valid emails work.
+        /// </summary>
+        /// <param name="email">The email to test.</param>
         [Theory]
         [InlineData("Simple@email.com")]
         [InlineData("Other@email.test")]
@@ -56,6 +67,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
 
         #region PfPTests
+        /// <summary>
+        /// Insure Uri's can be null.
+        /// </summary>
         [Fact]
         public void UrlCanBeNull()
         {
@@ -70,9 +84,18 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Null(profile.ProfilePictureUrl);
         }
 
+        /// <summary>
+        /// Check that a valid url is accepted.
+        /// </summary>
+        /// <param name="host">The host of the uri to test. Should be a domain</param>
+        /// <param name="path">The path to the resource in the url</param>
         [Theory]
         //https://imgur.com/t/photography/nOfAU66
-        [InlineData("imgur.com","t/photography/nOfAU66")]
+        [InlineData("i.imgur.com", "BCeyxdR.jpg")]
+        //https://i.imgur.com/Lf5S5Sa.jpg
+        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
+        //https://i.imgur.com/DX5KAnQ.jpg
+        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
         public void ValidUrlWorks(string host, string path)
         {
             //arrange
@@ -87,11 +110,15 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             //assert
             Assert.NotNull(profile.ProfilePictureUrl);
         }
-
         #endregion
 
 
         #region NameTests
+        /// <summary>
+        /// Check that the name property can format names correctly
+        /// </summary>
+        /// <param name="first">The first name</param>
+        /// <param name="last">The last name</param>
         [Theory]
         [InlineData("first", "last")]
         [InlineData("Something", "Name")]
@@ -112,7 +139,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
 
-        //name test - only valid characters
+
+        /// <summary>
+        /// Insure Valid characters are accepted
+        /// </summary>
+        /// <param name="name"> The name to test.</param>
         [Theory]
         [InlineData("Name")]
         [InlineData("name")]
@@ -133,6 +164,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Equal(name, profile.LastName);
         }
 
+
+        /// <summary>
+        /// Test that invalid names are rejected.
+        /// </summary>
+        /// <param name="name">The name to test</param>
         [Theory]
         [InlineData("X Æ A-12")]
         [InlineData("1234567")]
@@ -151,7 +187,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         #endregion
 
         #region PhoneNumberTests
-
+        /// <summary>
+        /// Insure valid phone number inputs work.
+        /// </summary>
+        /// <param name="phoneNumber">Phone number string</param>
         [Theory]
         [InlineData("1234567899")]
         [InlineData("570-386-1123")]
@@ -170,6 +209,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.True(profile.PhoneNumber.Length <= 14 || profile.PhoneNumber.Length >= 10);
         }
 
+        /// <summary>
+        /// Invalid phone numbers don't work.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number to test.</param>
         [Theory]
         [InlineData("345")]
         [InlineData("77777777777777777777")]
@@ -183,43 +226,77 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // assert
             Assert.Throws<ArgumentException>(() => profile.PhoneNumber =  phoneNumber);
         }
-
-
         #endregion
 
+
         #region BirthdayTests
+        /// <summary>
+        /// Valid birthdate should be in the past
+        /// </summary>
+        /// <param name="birthDate"> a birthdate string</param>
         [Theory]
-        [InlineData("1888-08-08")]
-        [InlineData("1999-09-09")]
-        [InlineData("2020-12-29")]
-        public void ValidBirthDataShouldBeInThePast(DateTime BirthDate)
+        [InlineData("8/18/1880")]
+        [InlineData("9/19/1999")]
+        [InlineData("12/29/2020")]
+        public void ValidBirthDataShouldBeInThePast(string birthDate)
         {
             // arrange
             DomainProfile profile = new DomainProfile("testemail@email.com");
-
+            DateTime bDate = DateTime.Parse(birthDate);
+            
             // act
-            profile.BirthDate = BirthDate;
+            profile.BirthDate = bDate;
 
             // assert
             Assert.True(profile.BirthDate < DateTime.Now);
-
         }
 
         [Theory]
-        [InlineData("2021-05-11")]
-        [InlineData("2022-02-28")]
-        [InlineData("2023-12-31")]
-        public void InvalidBirthdateShouldThrowAnException(DateTime BirthDate)
+        [InlineData("5/11/2021")]
+        [InlineData("2/28/2022")]
+        [InlineData("12/31/2023")]
+        public void InvalidBirthdateShouldThrowAnException(string birthDate)
         {
             // arrange 
             DomainProfile profile = new DomainProfile("testemail@email.com");
+            DateTime bDate = DateTime.Parse(birthDate);
+
+            // act + assert        
+            Assert.Throws<ArgumentException>(() => profile.BirthDate = bDate);
+        }
+
+        // corner cases 
+        [Theory]
+        [InlineData("2/30/2020")]
+        [InlineData("2/29/2019")]
+        [InlineData("12/32/2019")]
+        public void InValidDateCornerCasesShouldThrowAnException(string birthDate)
+        {
+            // arrange
+            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DateTime bDate = DateTime.Parse(birthDate);
+
+            // act + assert
+            Assert.Throws<ArgumentException>(() => profile.BirthDate = bDate);
+        }
+
+
+
+        /// <summary>
+        /// Check that one milisecond ago is valid because it's in the past.
+        /// </summary>
+        [Fact]
+        public void EarlyerTodayIsValid()
+        {
+            // arrange 
+            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DateTime earlyerToday = DateTime.Now;
+            earlyerToday = earlyerToday.AddMilliseconds( -1);
 
             // act
-            profile.BirthDate = BirthDate;
-
+            profile.BirthDate = earlyerToday;
             // assert
-            Assert.Throws<ArgumentException>(() => profile.BirthDate = BirthDate);
-
+            Assert.Equal(earlyerToday, profile.BirthDate);
         }
         #endregion
 
