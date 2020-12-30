@@ -20,6 +20,8 @@ stages:
     variables:
       sdkVersion: '5.x'
       buildConfiguration: 'Release'
+      targetProject: 'Fakebook.Profile/Fakebook.Profile.RestApi'
+      targetSolution: 'Fakebook.Profile'
   
     steps:
     - task: UseDotNet@2
@@ -37,19 +39,18 @@ stages:
         projectName: 'profile'
         extraProperties: |
           sonar.exclusions=**/lib/**
-          sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
+          sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml
 
     - task: UseDotNet@2
       displayName: 'Use .NET 5 SDK'
       inputs:
         packageType: 'sdk'
-        version: '5.x'
+        version: $(sdkVersion)
         installationPath: $(Agent.ToolsDirectory)/dotnet
-        workingDirectory: 'Fakebook.Profile/Fakebook.Profile.RestApi'
 
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: dotnet build
-      workingDirectory: 'Fakebook.Profile/Fakebook.Profile.RestApi'
+      workingDirectory: $(targetSolution)
       
     - task: DotNetCoreCLI@2
       displayName: dotnet test
