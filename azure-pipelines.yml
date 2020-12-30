@@ -59,9 +59,9 @@ stages:
       displayName: sonar run analysis
       
     - task: SonarCloudPublish@1
-    displayName: sonar analysis publish
-    inputs:
-      pollingTimeoutSec: '300'
+      displayName: sonar analysis publish
+      inputs:
+        pollingTimeoutSec: '300'
 
 - stage: docker
   jobs: 
