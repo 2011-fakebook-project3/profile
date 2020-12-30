@@ -21,7 +21,7 @@ variables:
   targetSolution: 'Fakebook.Profile'
 
 stages:
-- stage: build
+- stage: setup
   jobs:
   - job: sonar_cloud_setup
     steps:
@@ -40,6 +40,8 @@ stages:
         projectName: 'profile'
         extraProperties: 'sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml'
         
+- stage: build
+  jobs:
   - job: build
     steps:
     - task: UseDotNet@2
@@ -55,7 +57,9 @@ stages:
         repository: 'profile'
         command: 'build'
         Dockerfile: '**/Dockerfile'
-      
+
+- stage: test
+  jobs:      
   - job: test_and_analyze
     steps:
     - task: DotNetCoreCLI@2
@@ -69,12 +73,12 @@ stages:
     - task: SonarCloudAnalyze@1
       displayName: sonar run analysis
 
+        
+- stage: publish_results
+  jobs:
   - job: publish_sonarcloud_results
     steps:
     - task: SonarCloudPublish@1
       displayName: sonar analysis publish
       inputs:
         pollingTimeoutSec: '300'
-
-  - job: docker
-    # docker build here
