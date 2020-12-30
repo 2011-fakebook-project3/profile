@@ -21,9 +21,9 @@ variables:
   targetSolution: 'Fakebook.Profile'
 
 stages:
-- stage: setup
+- stage: analyze
   jobs:
-  - job: sonar_cloud_setup
+  - job: build
     steps:
     - task: UseDotNet@2
       displayName: dotnet sdk 2.x
@@ -40,28 +40,13 @@ stages:
         projectName: 'profile'
         extraProperties: 'sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml'
         
-- stage: build
-  jobs:
-  - job: build
-    steps:
     - task: UseDotNet@2
       displayName: 'Use .NET 5 SDK'
       inputs:
         packageType: 'sdk'
         version: $(sdkVersion)
         installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - task: Docker@2
-      displayName: docker build image
-      inputs:
-        repository: 'profile'
-        command: 'build'
-        Dockerfile: '**/Dockerfile'
-
-- stage: test
-  jobs:      
-  - job: test_and_analyze
-    steps:
+        
     - task: DotNetCoreCLI@2
       displayName: dotnet test
       inputs:
@@ -72,13 +57,19 @@ stages:
 
     - task: SonarCloudAnalyze@1
       displayName: sonar run analysis
-
-        
-- stage: publish_results
-  jobs:
-  - job: publish_sonarcloud_results
-    steps:
+      
     - task: SonarCloudPublish@1
-      displayName: sonar analysis publish
+    displayName: sonar analysis publish
+    inputs:
+      pollingTimeoutSec: '300'
+
+- stage: docker
+  jobs: 
+  - job: docker
+    steps:
+    - task: Docker@2
+      displayName: docker build image
       inputs:
-        pollingTimeoutSec: '300'
+        repository: 'profile'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
