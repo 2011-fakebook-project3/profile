@@ -305,7 +305,5 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Equal(earlyerToday, profile.BirthDate);
         }
         #endregion
-
-
     }
 }

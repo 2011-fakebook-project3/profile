@@ -15,6 +15,10 @@ namespace Fakebook.Profile.UnitTests.TestData
             return s_random.Next(max + 1 - min) + min;
         }
 
+        /// <summary>
+        /// return a randomized phone number in the correct format
+        /// </summary>
+        /// <returns></returns>
         public static string PhoneNumber()
         {
             int[] ints = new int[10];
@@ -28,15 +32,23 @@ namespace Fakebook.Profile.UnitTests.TestData
             return $"({ints[c++]}{ints[c++]}{ints[c++]}) {ints[c++]}{ints[c++]}{ints[c++]}-{ints[c++]}{ints[c++]}{ints[c++]}{ints[c++]}";
         }
 
+        /// <summary>
+        /// return a randomized date in the correct format
+        /// </summary>
+        /// <returns></returns>
         public static DateTime DateTime()
         {
             int month = GenerateInRange(1, 12);
             int day = GenerateInRange(1, 28);
-            int year = GenerateInRange(1980, 2010);
+            int year = GenerateInRange(1880, 2020);
 
             return new DateTime(year, month, day);
         }
 
+        /// <summary>
+        /// return a randomized string for first name and last name in the correct format
+        /// </summary>
+        /// <returns></returns>
         public static string String()
         {
             int length = GenerateInRange(8, 16);
@@ -62,6 +74,10 @@ namespace Fakebook.Profile.UnitTests.TestData
             return new string(chars);
         }
 
+        /// <summary>
+        /// return a randomized user email in the correct format
+        /// </summary>
+        /// <returns></returns>
         public static string Email()
         {
             string user = String();
@@ -70,11 +86,19 @@ namespace Fakebook.Profile.UnitTests.TestData
             return $"{user}@{domain}.{end}";
         }
 
+        /// <summary>
+        /// helper method to generate a number between 0-100
+        /// </summary>
+        /// <returns></returns>
         public static int Int(int min = 0, int max = 100)
         {
             return s_random.Next(min, max + 1);
         }
 
+        /// <summary>
+        /// helper method to generate a double between 0-100
+        /// </summary>
+        /// <returns></returns>
         public static double Double(double min = 0.0, double max = 100.0)
         {
             double temp = (s_random.NextDouble() * max) - min;
