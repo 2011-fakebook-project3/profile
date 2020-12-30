@@ -27,7 +27,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         */
 
         [Theory]
-        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Valid)]
+        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Valid))]
         public void ValidUserInfoShouldReturnWithNoErrors(DomainProfile MockedProfile)
         {
             // arrange
@@ -53,7 +53,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         [Theory]
-        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Invalid)]
+        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Invalid))]
         public void InvalidUserReturnsErrors(DomainProfile MockedProfile)
         {
             // arrange
@@ -70,9 +70,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             profile.Status = MockedProfile.Status;
 
             // assert
-            Assert.N
+            //Assert.N;
 
 
         }
     }
 }
+
