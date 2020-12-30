@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Fakebook.Profile.Domain;
+using Fakebook.Profile.UnitTests.TestData;
 using Moq;
 
 using Xunit;
