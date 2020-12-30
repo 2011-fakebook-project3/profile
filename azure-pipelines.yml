@@ -75,7 +75,7 @@ stages:
         pollingTimeoutSec: '300'
 
 - stage: docker
-  dependsOn: [ 'analyze' ]
+  dependsOn: []
   jobs: 
   - job: docker
     steps:
