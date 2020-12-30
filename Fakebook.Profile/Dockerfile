@@ -12,6 +12,7 @@ WORKDIR /app
 COPY Fakebook.Profile.Domain/*.csproj Fakebook.Profile.Domain/
 COPY Fakebook.Profile.DataAccess/*.csproj Fakebook.Profile.DataAccess/
 COPY Fakebook.Profile.RestApi/*.csproj Fakebook.Profile.RestApi/
+COPY Fakebook.Profile.UnitTests/*.csproj Fakebook.Profile.UnitTests/
 COPY *.sln ./
 RUN dotnet restore
 
