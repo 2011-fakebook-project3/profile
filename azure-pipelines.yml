@@ -13,6 +13,11 @@ pr:
     include:
     - '*'
 
+  paths:
+    include:
+    - azure-pipelines.yml
+    - 'Fakebook.Profile'
+
 pool:
   vmImage: 'ubuntu-latest'
 
