@@ -186,6 +186,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
         #endregion
 
+
         #region PhoneNumberTests
         /// <summary>
         /// Insure valid phone number inputs work.
@@ -231,7 +232,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
         #region BirthdayTests
         /// <summary>
-        /// Valid birthdate should be in the past
+        /// Check if a valid birthdate is in the past
         /// </summary>
         /// <param name="birthDate"> a birthdate string</param>
         [Theory]
@@ -251,6 +252,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.True(profile.BirthDate < DateTime.Now);
         }
 
+        /// <summary>
+        /// Check if an invalid birthdate throws an argument exception
+        /// </summary>
+        /// <param name="birthDate"> a birthdate string</param>
         [Theory]
         [InlineData("5/11/2021")]
         [InlineData("2/28/2022")]
@@ -265,7 +270,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Throws<ArgumentException>(() => profile.BirthDate = bDate);
         }
 
-        // corner cases 
+        /// <summary>
+        /// Check if an invalid date throws an exception
+        /// </summary>
+        /// <param name="birthDate"> a birthdate string</param>
         [Theory]
         [InlineData("2/30/2020")]
         [InlineData("2/29/2019")]
@@ -279,8 +287,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // act + assert
             Assert.Throws<ArgumentException>(() => profile.BirthDate = bDate);
         }
-
-
 
         /// <summary>
         /// Check that one milisecond ago is valid because it's in the past.
