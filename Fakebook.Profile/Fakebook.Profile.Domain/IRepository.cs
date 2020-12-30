@@ -11,5 +11,7 @@ namespace Fakebook.Profile.Domain
     /// </summary>
     public interface IRepository
     {
+
+        public Task<DomainProfile> GetProfileAsync(string email);
     }
 }

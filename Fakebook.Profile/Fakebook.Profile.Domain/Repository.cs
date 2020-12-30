@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Fakebook.Profile.Domain
 {
-    class Repository :IRepository
+    class Repository : IRepository
     {
+        public async Task<DomainProfile> GetProfileAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

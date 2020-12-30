@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fakebook.Profile.Domain
 {
-    class DomainProfile
+    public class DomainProfile
     {
 
         public string Email { get; set; }
