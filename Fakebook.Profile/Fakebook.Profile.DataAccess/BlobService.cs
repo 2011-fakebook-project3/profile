@@ -22,7 +22,7 @@ namespace Fakebook.Profile.DataAccess
         }
 
         //test
-        public async Task<Uri> UploadToBlob(Stream content, string contentType, string fileName, string blobContainerName=null)
+        public async Task<Uri> UploadToBlobAsync(Stream content, string contentType, string fileName, string blobContainerName=null)
         {
             if(blobContainerName is not null)
             {
