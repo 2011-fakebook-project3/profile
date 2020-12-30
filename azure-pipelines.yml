@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - main
+    - '*'
 
   paths:
     include:
@@ -9,7 +9,9 @@ trigger:
     - 'Fakebook.Profile'
 
 pr:
-- '*'
+  branches:
+    include:
+    - '*'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -46,6 +48,10 @@ stages:
         packageType: 'sdk'
         version: $(sdkVersion)
         installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: dotnet build
+      workingDirectory: $(targetSolution)
         
     - task: DotNetCoreCLI@2
       displayName: dotnet test
@@ -64,6 +70,7 @@ stages:
         pollingTimeoutSec: '300'
 
 - stage: docker
+  dependsOn: [ 'analyze' ]
   jobs: 
   - job: docker
     steps:
