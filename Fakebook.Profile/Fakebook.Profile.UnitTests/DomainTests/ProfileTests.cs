@@ -13,31 +13,66 @@ namespace Fakebook.Profile.UnitTests.DomainTests
     // unit testing domain profile model
     public class ProfileTests
     {
+
+        /*
+        * User:
+        * - Email: string
+        * - ProfilePictureUrl: string 
+        * - Name : string
+        * - FirstName: string
+        * - Lastname: string              
+        * - PhoneNumber: string
+        * - BirthDate: DateTime
+        * - Status: string
+        */
+
         [Theory]
-        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserTestData.Create.Valid)]
-        public void ValidUserInformationShouldReturnNoErrors(DomainProfile profile)
+        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Valid)]
+        public void ValidUserInfoShouldReturnWithNoErrors(DomainProfile MockedProfile)
         {
             // arrange
+            DomainProfile profile = new DomainProfile(); 
+
             // act
+            profile.Email = MockedProfile.Email;
+            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
+            profile.Name = MockedProfile.Name;
+            profile.FirstName = MockedProfile.FirstName;
+            profile.LastName = MockedProfile.LastName;
+            profile.PhoneNumber = MockedProfile.PhoneNumber;
+            profile.BirthDate = MockedProfile.BirthDate;
+            Profile.Status = MockedProfile.Status;
+
             // assert
-            Assert.True
-
-
-
-            
+            Assert.NotNull(profile.Name);
+            Assert.NotNull(profile.FirstName);
+            Assert.NotNull(profile.LastName);
+            Assert.Matches(RegularExpressions.EmailCharacters,profile.Email);
+            Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
+   
         }
 
         [Theory]
-        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserTestData.Create.Invalid)]
-        public void CreateUser_Invalid(DomainProfile user)
+        [ClassData(typeof(Fakebook.Profile.UnitTests.TestData.UserData.Create.Invalid)]
+        public void InvalidUserReturnsErrors(DomainProfile MockedProfile)
         {
-            // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
+            // arrange
+            DomainProfile profile = new DomainProfile();
 
-            var options = new 
+            // act
+            profile.Email = MockedProfile.Email;
+            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
+            profile.Name =  MockedProfile.Name;
+            profile.FirstName =  MockedProfile.FirstName;
+            profile.LastName = MockedProfile.LastName;
+            profile.PhoneNumber = MockedProfile.PhoneNumber;
+            profile.BirthDate =  MockedProfile.BirthDate;
+            profile.Status = MockedProfile.Status;
 
-            
+            // assert
+            Assert.N
+
+
         }
     }
 }

@@ -4,11 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Fakebook.Profile.DataAccess.BlobModel
+
 namespace Fakebook.Profile.DataAccess.Services
 {
-    public class ProfileService
+    /// <summary>
+    /// This class is to 
+    /// </summary>
+    public class ProfileService : IProfileService
     {
+        /// <summary>
+        /// Get a Specirfic Profile
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task<BlobProfile> GetProfileAsync(string email)
+        {
+            //get bson from blob service
 
+            //load the bson document.
+            BsonDocument bson = new BsonDocument();
 
+            //????? treat the bson document as a mongodb?
+
+            //extract data into collection of blobProfiles
+
+            throw new NotImplementedException();
+
+            //return the blob profiles
+        }
+
+        /// <summary>
+        /// Get all the profiles.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ICollection<BlobProfile>> GetProfiles()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

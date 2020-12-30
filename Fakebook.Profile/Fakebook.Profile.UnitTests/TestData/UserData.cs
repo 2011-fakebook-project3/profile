@@ -10,7 +10,7 @@ namespace Fakebook.Profile.UnitTests.TestData
     /// return randomized user profiles in the correct format
     /// </summary>
     /// <returns></returns>
-        public static class UserTestData
+        public static class UserData
         {
             public static class Create
             {

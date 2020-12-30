@@ -36,6 +36,8 @@ namespace Fakebook.Profile.Domain
         public string Status { get; set; }
 
 
+        public DomainProfile() { }
+
         public DomainProfile(string email)
         {
             this.Email = email;
