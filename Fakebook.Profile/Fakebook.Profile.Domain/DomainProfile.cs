@@ -13,6 +13,7 @@ namespace Fakebook.Profile.Domain
         //should be a url
         //defualts to a default image.
         public Uri ProfilePictureUrl { get; set; }
+        
 
         public string Name
         {

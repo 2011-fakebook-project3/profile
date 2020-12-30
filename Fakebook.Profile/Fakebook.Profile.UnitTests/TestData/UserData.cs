@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Fakebook.Profile.Domain;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Fakebook.Profile.UnitTests.TestData
 {
@@ -40,10 +43,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Email = GenerateRandom.Email(),
-                            Name = FirstName+' '+LastName,
+                            Email = GenerateRandom.Email(),                          
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,                       
@@ -55,10 +57,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Email = GenerateRandom.Email(),
-                            Name = FirstName+' '+LastName,
+                            Email = GenerateRandom.Email(),                            
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -70,10 +71,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
                             Email = GenerateRandom.Email(),
-                            Name = FirstName+' '+LastName,
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -85,10 +85,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
                             Email = GenerateRandom.Email(),
-                            Name = FirstName+' '+LastName,
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -103,7 +102,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                 /// <summary>
                 /// generates 3 variants of invalid user profiles:
-                /// invalid first name, last name, name
+                /// invalid first name, last name
                 /// invalid email format
                 /// invlaid phone number format 
                 /// </summary>
@@ -113,10 +112,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Email = GenerateRandom.Email(),
-                            Name = null,
+                            Email = GenerateRandom.Email(),     
                             FirstName = null,
                             LastName = null,
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -128,10 +126,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
                             Email = GenerateRandom.Email(),
-                            Name = FirstName+' '+LastName,
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -143,10 +140,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
                             Email = GenerateRandom.String(), // .Email()
-                            Name = FirstName+' '+LastName,
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -156,7 +152,6 @@ namespace Fakebook.Profile.UnitTests.TestData
                         }
                         };
                     }
-
                     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
                 }
             }
@@ -174,9 +169,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -193,9 +188,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                         target = GenerateRandom.Email();
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -205,7 +200,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -215,7 +210,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -239,9 +234,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -257,9 +252,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -275,9 +270,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -304,9 +299,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -322,9 +317,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -334,7 +329,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -344,7 +339,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -372,9 +367,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -402,9 +397,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Id = 1,
+ 
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -413,9 +408,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new User
+                        new DomainProfile
                         {
-                            Id = 1,
+
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -428,9 +423,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Id = 2,
+
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -439,9 +434,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String()
                         },
-                        new User
+                        new DomainProfile
                         {
-                            Id = 2,
+
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -454,9 +449,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Id = 3,
+
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -465,9 +460,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new User
+                        new DomainProfile
                         {
-                            Id = 3,
+
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -480,9 +475,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Id = 4,
+
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -491,9 +486,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String()
                         },
-                        new User
+                        new DomainProfile
                         {
-                            Id = 4,
+
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
@@ -514,9 +509,8 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new User
+                        new DomainProfile
                         {
-                            Id = 1,
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -525,9 +519,8 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String()
                         },
-                        new User
+                        new DomainProfile
                         {
-                            Id = 1,
                             FirstName =  null,
                             LastName =  null,
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -540,9 +533,8 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new User
-                        {
-                            Id = 2,
+                        new DomainProfile
+                        {                        
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -551,9 +543,8 @@ namespace Fakebook.Profile.UnitTests.TestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String()
                         },
-                        new User
-                        {
-                            Id = 2,
+                        new DomainProfile
+                        {                            
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
                             ProfilePictureUrl = GenerateRandom.String(),
@@ -577,9 +568,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -596,9 +587,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -608,7 +599,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -618,7 +609,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -643,9 +634,9 @@ namespace Fakebook.Profile.UnitTests.TestData
                     {
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -662,9 +653,9 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                         yield return new object[]
                         {
-                        new List<User>
+                        new List<DomainProfile>
                         {
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -674,7 +665,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
@@ -684,7 +675,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                                 BirthDate = GenerateRandom.DateTime(),
                                 Status = null
                             },
-                            new User
+                            new DomainProfile
                             {
                                 FirstName = GenerateRandom.String(),
                                 LastName = GenerateRandom.String(),
