@@ -29,6 +29,7 @@ namespace Fakebook.Profile.DataAccess.Services
             BsonDocument bson = new BsonDocument();
 
             //????? treat the bson document as a mongodb?
+            //https://docs.mongodb.com/manual/core/inmemory/
 
             //extract data into collection of blobProfiles
 
