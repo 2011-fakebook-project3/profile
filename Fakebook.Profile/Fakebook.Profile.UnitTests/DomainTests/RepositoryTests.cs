@@ -8,9 +8,9 @@ using Moq;
 
 using Xunit;
 
-namespace Fakebook.Profile.UnitTests
+namespace Fakebook.Profile.UnitTests.DomainTests
 {
-    class ProfileModelTests
+    class RepositoryTests
     {
     }
 }
