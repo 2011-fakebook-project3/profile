@@ -25,5 +25,11 @@ namespace Fakebook.Profile.Domain
         public string PhoneNumber { get; set; }
         public DateTime BirthDate { get; set; }
         public string Status { get; set; }
+
+
+        public DomainProfile(string email)
+        {
+            this.Email = email;
+        }
     }
 }

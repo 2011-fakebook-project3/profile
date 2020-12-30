@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Fakebook.Profile.UnitTests.DomainTests
 {
-    class RepositoryTests
+    public class RepositoryTests
     {
     }
 }
