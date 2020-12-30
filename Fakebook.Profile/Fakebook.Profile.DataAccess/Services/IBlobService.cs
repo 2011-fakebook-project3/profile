@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fakebook.Profile.DataAccess
+namespace Fakebook.Profile.DataAccess.Services
 {
     /// <summary>
     /// Interface for interacting with azure.

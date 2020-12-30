@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
-namespace Fakebook.Profile.DataAccess
+namespace Fakebook.Profile.DataAccess.Services
 {
     /// <summary>
     /// Gets data from/to azure.
@@ -19,6 +19,7 @@ namespace Fakebook.Profile.DataAccess
 
         public BlobService(BlobServiceClient client, string containerName){
             _Client = client;
+            _ContainerName = containerName;
         }
 
         //test
