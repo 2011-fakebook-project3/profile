@@ -37,12 +37,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // act
             profile.Email = MockedProfile.Email;
             profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.Name = MockedProfile.Name;
             profile.FirstName = MockedProfile.FirstName;
             profile.LastName = MockedProfile.LastName;
             profile.PhoneNumber = MockedProfile.PhoneNumber;
             profile.BirthDate = MockedProfile.BirthDate;
-            Profile.Status = MockedProfile.Status;
+            profile.Status = MockedProfile.Status;
 
             // assert
             Assert.NotNull(profile.Name);
@@ -63,7 +62,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // act
             profile.Email = MockedProfile.Email;
             profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.Name =  MockedProfile.Name;
             profile.FirstName =  MockedProfile.FirstName;
             profile.LastName = MockedProfile.LastName;
             profile.PhoneNumber = MockedProfile.PhoneNumber;
