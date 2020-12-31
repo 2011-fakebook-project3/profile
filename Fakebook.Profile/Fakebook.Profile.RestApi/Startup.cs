@@ -75,6 +75,10 @@ namespace Fakebook.Profile.RestApi
 
             app.UseRouting();
 
+            app.UseCors();
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {
