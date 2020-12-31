@@ -8,7 +8,7 @@ namespace Fakebook.Profile.DataAccess.Services
     public interface IProfileService
     {
         /// <summary>
-        /// Get a Specirfic Profile
+        /// Get a Specific Profile
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
