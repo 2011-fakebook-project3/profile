@@ -12,7 +12,11 @@ namespace Fakebook.Profile.DataAccess.StorageModel
 {
     public class StorageModelProfileTests
     {
-
+        //Email Tests
+        /// <summary>
+        /// Check that setting an email works at all.
+        /// </summary>
+        /// <param name="email">The email to set the profile's email to.</param>
         [Theory]
         [InlineData("test@email.com")]
         [InlineData("random@email.com")]
@@ -34,8 +38,14 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         }
 
 
-        //note: maybe this shouldn't work, but
-        // it's the model's responsibility for validation 
+        /// <summary>
+        /// Test that changing the email from an initial value works.
+        /// </summary>
+        /// <remarks>
+        /// Maybe this shouldn't be allowed, but for now
+        /// it's the model's responsibility for validation 
+        /// </remarks>
+        /// <param name="email"></param>
         [Theory]
         [InlineData("test@email.com")]
         [InlineData("random@email.com")]
@@ -56,6 +66,68 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             Assert.NotNull(bf.Email);
             Assert.Equal(email, bf.Email);
         }
+
+
+        //URI Tests
+        /// <summary>
+        /// Check that you can set a valid uri.
+        /// </summary>
+        /// <param name="host">The domain for th uri to test</param>
+        /// <param name="path">The path to the resource in the domain.</param>
+        [Theory]
+        [InlineData("test.com", "test")]
+        [InlineData("i.imgur.com", "BCeyxdR.jpg")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
+        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
+        public void SetValidUriShouldWork(string host, string path)
+        {
+            //arrange
+            StorageProfile pf = new StorageProfile();
+            var builder = new UriBuilder();
+
+            //act
+            builder.Host = host;
+            builder.Path = path;
+            pf.ProfilePictureUrl = builder.Uri;
+
+            //assert
+            Assert.NotNull(pf.ProfilePictureUrl);
+            Assert.Equal(host, pf.ProfilePictureUrl.Host);
+            Assert.EndsWith(path, pf.ProfilePictureUrl.AbsolutePath);
+        }
+
+
+        /// <summary>
+        /// Test that a uri can be changed from it's initial value.
+        /// </summary>
+        /// <param name="host">The host domain.</param>
+        /// <param name="path">The path relative to the host.</param>
+        [Theory]
+        [InlineData("test.com", "test")]
+        [InlineData("i.imgur.com", "BCeyxdR.jpg")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
+        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
+        public void ChangeValidUriShouldWork(string host, string path)
+        {
+            //arrange
+            StorageProfile pf = new StorageProfile();
+            //set to an inital uri, since this is testing that it can change when not null.
+            pf.ProfilePictureUrl = new UriBuilder().Uri;
+            var builder = new UriBuilder();
+
+            //act
+            builder.Host = host;
+            builder.Path = path;
+            pf.ProfilePictureUrl = builder.Uri;
+
+            //assert
+            Assert.NotNull(pf.ProfilePictureUrl);
+            Assert.Equal(host, pf.ProfilePictureUrl.Host);
+            Assert.EndsWith(path, pf.ProfilePictureUrl.AbsolutePath);
+        }
+
+
+
 
     }
 }
