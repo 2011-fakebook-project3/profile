@@ -10,7 +10,7 @@ namespace Fakebook.Profile.RestApi.Controllers
 {
     //TODO: uncomment when okta is set up 
     [Authorize]
-    [Route("/api/Profile")]
+    [Route("api/Profile")]
     public class ProfileController : Controller
     {
 
@@ -26,7 +26,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         }
 
         // GET: Profile/Create
-        [HttpGet]   
+        [HttpPost]
         public ActionResult Create() {
             var email = User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
 
@@ -34,13 +34,6 @@ namespace Fakebook.Profile.RestApi.Controllers
             return Ok();
         }
 
-        // POST: Profile/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection) {
-            // return default ok for now
-            return Ok();
-        }
 
         // POST: Profile/Edit/5
         [HttpPost]
