@@ -61,7 +61,7 @@ namespace Fakebook.Profile.RestApi
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://OUR_OKTA.okta.com/oauth2/default";
+                    options.Authority = "https://dev-7862904.okta.com/oauth2/default";
                     options.Audience = "api://default";
                     //Won't send details outside of dev env
                     if (_env.IsDevelopment())
@@ -71,7 +71,7 @@ namespace Fakebook.Profile.RestApi
                     options.RequireHttpsMetadata = false;
                 }).AddOktaMvc(new OktaMvcOptions
                     {
-                        OktaDomain = "https://OUR_OKTA.okta.com/oauth2/default",
+                        OktaDomain = "https://dev-7862904okta.com/oauth2/default",
                         ClientId = "CLIENT_ID_HERE",
                         ClientSecret = "CLIENT_SECRET_HERE",
                     }
@@ -91,7 +91,6 @@ namespace Fakebook.Profile.RestApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
-                
             }
 
             app.UseHttpsRedirection();
