@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Options;
 
 namespace Fakebook.Profile.RestApi
 {
