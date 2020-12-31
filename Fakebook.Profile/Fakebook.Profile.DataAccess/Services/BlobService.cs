@@ -21,25 +21,14 @@ namespace Fakebook.Profile.DataAccess.Services
             _ContainerName = containerName;
         }
 
-        //test
         public async Task<Uri> UploadToBlobAsync(Stream content, string contentType, string fileName, string blobContainerName=null)
         {
-            if(blobContainerName is not null)
-            {
-                blobContainerName = this._ContainerName;
-            }
-
-            BlobContainerClient blobclient = GetClient(blobContainerName);
-
-            await blobclient.GetBlobClient(fileName).UploadAsync(content, new BlobHttpHeaders { ContentType = contentType});
-
-            return blobclient.Uri;
+            throw new NotImplementedException();
         }
 
         private BlobContainerClient GetClient(string containerName)
         {
-            BlobContainerClient containerClient = _Client.GetBlobContainerClient(containerName);
-            return containerClient;
+            throw new NotImplementedException();
         }
     }
 }
