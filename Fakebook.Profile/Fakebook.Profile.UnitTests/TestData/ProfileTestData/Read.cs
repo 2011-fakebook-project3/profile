@@ -1,7 +1,7 @@
-﻿using Fakebook.Profile.Domain;
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+
+using Fakebook.Profile.Domain;
 
 namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
 {
