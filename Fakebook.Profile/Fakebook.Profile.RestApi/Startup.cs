@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
-using Fakebook.Profile.DataAccess.Services;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -21,14 +20,6 @@ namespace Fakebook.Profile.RestApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-
-            // https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-5.0&tabs=visual-studio#add-a-configuration-model
-            services.Configure<ProfileDbSettings>(
-                Configuration.GetSection(nameof(ProfileDbSettings)));
-
-            services.AddSingleton<IProfileDbSettings>(sp =>
-                sp.GetRequiredService<IOptions<ProfileDbSettings>>().Value);
-
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
