@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-using Fakebook.Profile.DataAccess.BlobModel;
-
-namespace Fakebook.Profile.UnitTests.APITests.BlobModelTests
+namespace Fakebook.Profile.DataAccess.StorageModel
 {
-    public class BlobProfileModelTests
+    public class StorageModelProfileTests
     {
 
         [Theory]
