@@ -71,7 +71,7 @@ namespace Fakebook.Profile.RestApi
                     options.RequireHttpsMetadata = false;
                 }).AddOktaMvc(new OktaMvcOptions
                     {
-                        OktaDomain = "https://dev-7862904.okta.com/oauth2/default",
+                        OktaDomain = "https://OUR_OKTA.okta.com/oauth2/default",
                         ClientId = "CLIENT_ID_HERE",
                         ClientSecret = "CLIENT_SECRET_HERE",
                     }
