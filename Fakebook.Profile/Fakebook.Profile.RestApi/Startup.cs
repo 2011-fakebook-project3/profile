@@ -21,11 +21,14 @@ namespace Fakebook.Profile.RestApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment _env;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
@@ -54,12 +57,17 @@ namespace Fakebook.Profile.RestApi
                     });
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(                
+                JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://OUR_OKTA.okta.com/oauth2/default";
                     options.Audience = "api://default";
-                    options.IncludeErrorDetails = true;
+                    //NOTE: should be false in production probably   
+                    if (_env.IsDevelopment())
+                    {
+                        options.IncludeErrorDetails = true;
+                    }                   
                     options.RequireHttpsMetadata = false;
                 }).AddOktaMvc(new OktaMvcOptions
                     {
@@ -79,10 +87,11 @@ namespace Fakebook.Profile.RestApi
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment()) {
+            if (_env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
+                
             }
 
             app.UseHttpsRedirection();
