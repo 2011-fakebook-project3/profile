@@ -18,8 +18,7 @@ namespace Fakebook.Profile.RestApi.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     //TODO: uncomment when okta is set up 
-    [Authorize]
-    [Route("/api/Profile")]
+    //[Authorize]
     public class ProfileController : Controller
     {
         private IProfileRepository _repository;
