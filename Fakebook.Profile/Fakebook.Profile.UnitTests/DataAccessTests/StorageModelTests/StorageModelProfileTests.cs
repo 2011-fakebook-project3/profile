@@ -127,7 +127,41 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         }
 
 
+        //names
+        [Theory]
+        [InlineData("Name")]
+        public void SettingFirstNameShouldWork(string name)
+        {
+            //arrange
+            StorageProfile pf = new StorageProfile();
 
+            //act
+            pf.FirstName = name;
+
+            //assert
+            Assert.NotNull(pf.FirstName);
+            Assert.Equal(name, pf.FirstName);
+        }
+
+
+        [Theory]
+        [InlineData("Name")]
+        [InlineData("name")]
+        [InlineData("hypen-name")]
+        [InlineData("Na,me")]
+        [InlineData("Mr.Name")]
+        public void SettingLastNameShouldWork(string name)
+        {
+            //arrange
+            StorageProfile pf = new StorageProfile();
+
+            //act
+            pf.LastName = name;
+
+            //assert
+            Assert.NotNull(pf.LastName);
+            Assert.Equal(name, pf.LastName);
+        }
 
     }
 }
