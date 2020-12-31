@@ -35,6 +35,20 @@ namespace Fakebook.Profile.RestApi
             services.AddSingleton<IProfileDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<ProfileDbSettings>>().Value);
 
+
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://frontend.site", "http://other.services", "okta.site")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
