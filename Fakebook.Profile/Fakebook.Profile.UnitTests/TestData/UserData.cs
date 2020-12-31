@@ -62,7 +62,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),                            
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
@@ -76,7 +76,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null,
@@ -106,7 +106,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                 /// invalid email format
                 /// invlaid phone number format 
                 /// </summary>
-                public class Invalid : IEnumerable<object[]>
+                public class InvalidName : IEnumerable<object[]>
                 {
                     public IEnumerator<object[]> GetEnumerator()
                     {
@@ -117,49 +117,63 @@ namespace Fakebook.Profile.UnitTests.TestData
                             Email = GenerateRandom.Email(),     
                             FirstName = null,
                             LastName = null,
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = GenerateRandom.String(),
                         }
-                        };
-
-                        yield return new object[]
-                        {
-                        new DomainProfile
-                        {
-                            Email = GenerateRandom.Email(),
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
-                            PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
-                            BirthDate = GenerateRandom.DateTime(),
-                            Status = GenerateRandom.String(),
-                        }
-                        };
-
-                        yield return new object[]
-                        {
-                        new DomainProfile
-                        {
-                            Email = GenerateRandom.String(), // .Email()
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
-                            PhoneNumber = GenerateRandom.PhoneNumber(), 
-                            BirthDate = GenerateRandom.DateTime(),
-                            Status = GenerateRandom.String(),
-                        }
-                        };
+                        };                       
                     }
                     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
                 }
-            }
 
-            /// <summary>
-            /// placeholder
-            /// </summary>          
-            public static class ReadByEmail
+                public class InvalidPhoneNumber : IEnumerable<object[]>
+                {
+                    public IEnumerator<object[]> GetEnumerator()
+                    {
+                        yield return new object[]
+                        {
+                            new DomainProfile
+                            {
+                                Email = GenerateRandom.Email(),
+                                FirstName = GenerateRandom.String(),
+                                LastName = GenerateRandom.String(),
+                                ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                                PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
+                                BirthDate = GenerateRandom.DateTime(),
+                                Status = GenerateRandom.String(),
+                            }
+                    };
+                    }
+                    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+                }
+
+
+                public class InvalidEmail : IEnumerable<object[]>
+                {
+                    public IEnumerator<object[]> GetEnumerator()
+                    {
+                        yield return new object[]
+                        {
+                            new DomainProfile
+                            {
+                                Email = GenerateRandom.String(), // .Email()
+                                FirstName = GenerateRandom.String(),
+                                LastName = GenerateRandom.String(),
+                                ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                                PhoneNumber = GenerateRandom.PhoneNumber(),
+                                BirthDate = GenerateRandom.DateTime(),
+                                Status = GenerateRandom.String(),
+                            }
+                        };
+                    }
+                    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+                }          
+
+        /// <summary>
+        /// placeholder
+        /// </summary>          
+        public static class ReadByEmail
             {
                 public class Valid : IEnumerable<object[]>
                 {
@@ -454,7 +468,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName = GenerateRandom.String(),
                             LastName = GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -465,7 +479,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -480,7 +494,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -513,7 +527,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -523,7 +537,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {
                             FirstName =  null,
                             LastName =  null,
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -537,7 +551,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {                        
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -547,7 +561,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                         {                            
                             FirstName =  GenerateRandom.String(),
                             LastName =  GenerateRandom.String(),
-                            ProfilePictureUrl = GenerateRandom.String(),
+                            ProfilePictureUrl = new Uri(GenerateRandom.String()),
                             Email = GenerateRandom.String(),
                             PhoneNumber = GenerateRandom.String(),
                             BirthDate = GenerateRandom.DateTime(),
@@ -695,5 +709,4 @@ namespace Fakebook.Profile.UnitTests.TestData
                 }
             }
         }
-    }
 }
