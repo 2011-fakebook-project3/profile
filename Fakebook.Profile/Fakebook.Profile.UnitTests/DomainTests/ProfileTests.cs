@@ -1,4 +1,5 @@
-﻿using Fakebook.Profile.Domain;
+﻿using System;
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
 
@@ -115,6 +116,30 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.NotNull(profile.LastName);
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
             Assert.DoesNotMatch(RegularExpressions.EmailCharacters, profile.Email);
+        }
+
+
+
+        [Theory]
+        [InlineData("test.com", "test")]
+        [InlineData("i.imgur.com", "BCeyxdR.jpg")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
+        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
+        public void SetUri(string domain, string path)
+        {
+            // arrange
+            DomainProfile profile = new DomainProfile();
+
+            //act
+            var builder = new UriBuilder();
+            builder.Host = domain;
+            builder.Path = path;
+            profile.ProfilePictureUrl = builder.Uri;
+
+            //assert
+            Assert.NotNull(profile.ProfilePictureUrl);
+            Assert.Equal(domain, profile.ProfilePictureUrl.Host);
+            Assert.EndsWith(path, profile.ProfilePictureUrl.AbsoluteUri);
         }
     }
 }
