@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fakebook.Profile.Domain;
+﻿using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
-using Moq;
-
+using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
 
 using Xunit;
 
@@ -28,7 +22,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         */
 
         [Theory]
-        [ClassData(typeof(UserData.Create.Valid))]
+        [ClassData(typeof(Create.Valid))]
         public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile MockedProfile)
         {
             // arrange
@@ -52,7 +46,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         [Theory]
-        [ClassData(typeof(UserData.Create.InvalidName))]
+        [ClassData(typeof(Create.InvalidName))]
         public void InvalidUserNameReturnsErrors(DomainProfile MockedProfile)
         {
             // arrange
@@ -76,7 +70,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         [Theory]
-        [ClassData(typeof(UserData.Create.InvalidPhoneNumber))]
+        [ClassData(typeof(Create.InvalidPhoneNumber))]
         public void InvalidUserPhoneNumberReturnsErrors(DomainProfile MockedProfile)
         {
             // arrange
@@ -100,7 +94,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         [Theory]
-        [ClassData(typeof(UserData.Create.InvalidPhoneNumber))]
+        [ClassData(typeof(Create.InvalidPhoneNumber))]
         public void InvalidUserEmailReturnsErrors(DomainProfile MockedProfile)
         {
             // arrange

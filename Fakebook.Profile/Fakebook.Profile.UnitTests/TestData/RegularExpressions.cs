@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fakebook.Profile.UnitTests.TestData
+﻿namespace Fakebook.Profile.UnitTests.TestData
 {
     public static class RegularExpressions
     {
