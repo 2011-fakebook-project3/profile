@@ -9,11 +9,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace Fakebook.Profile.RestApi.Controllers
 {
     //TODO: uncomment when okta is set up 
-    //[Authorize]
+    [Authorize]
+    [Route("/api/Profile")]
     public class ProfileController : Controller
     {
+
         // GET: Profile/Create
+        [HttpGet]
+        [Route("/Details/{email}")]
+        public ActionResult Details([FromRoute] string email)
+        {
+            var userEmail = User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
+
+            // return default ok for now
+            return Ok();
+        }
+
+        // GET: Profile/Create
+        [HttpGet]   
         public ActionResult Create() {
+            var email = User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
+
             // return default ok for now
             return Ok();
         }
