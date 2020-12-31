@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Fakebook.Profile.DataAccess.BlobModel;
+using Fakebook.Profile.DataAccess.StorageModel;
 using MongoDB.Bson;
 
 namespace Fakebook.Profile.DataAccess.Services
@@ -18,7 +18,7 @@ namespace Fakebook.Profile.DataAccess.Services
         /// <param name="email"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<BlobProfile> GetProfileAsync(string email)
+        public async Task<StorageProfile> GetProfileAsync(string email)
 
         {
             //get bson from blob service
@@ -40,7 +40,7 @@ namespace Fakebook.Profile.DataAccess.Services
         /// Get all the profiles.
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<BlobProfile>> GetProfiles()
+        public async Task<ICollection<StorageProfile>> GetProfiles()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();

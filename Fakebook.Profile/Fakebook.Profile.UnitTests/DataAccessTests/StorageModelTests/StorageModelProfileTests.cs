@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Fakebook.Profile.DataAccess.BlobModel;
+using Fakebook.Profile.DataAccess.StorageModel;
 
 using Xunit;
 
@@ -23,7 +23,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetEmailShouldWork(string email)
         {
             //arrange
-            BlobProfile bf = new BlobProfile();
+            StorageProfile bf = new StorageProfile();
 
             //act
             bf.Email = email;
@@ -46,7 +46,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangingEmailShouldWork(string email)
         {
             //arrange
-            BlobProfile bf = new BlobProfile();
+            StorageProfile bf = new StorageProfile();
             bf.Email = "someOtherEmail@email.com";
 
             //act

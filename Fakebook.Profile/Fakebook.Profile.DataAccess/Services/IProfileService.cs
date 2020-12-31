@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Fakebook.Profile.DataAccess.BlobModel;
+using Fakebook.Profile.DataAccess.StorageModel;
 
 namespace Fakebook.Profile.DataAccess.Services
 {
@@ -12,13 +12,13 @@ namespace Fakebook.Profile.DataAccess.Services
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public Task<BlobProfile> GetProfileAsync(string email);
+        public Task<StorageProfile> GetProfileAsync(string email);
 
         /// <summary>
         /// Get all the profiles.
         /// </summary>
         /// <returns></returns>
-        public Task<ICollection<BlobProfile>> GetProfiles();
+        public Task<ICollection<StorageProfile>> GetProfiles();
     }
 }
 
