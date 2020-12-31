@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Fakebook.Profile.DataAccess.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Okta.AspNetCore;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -43,7 +44,10 @@ namespace Fakebook.Profile.RestApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", "https://frontend.site", "http://other.services", "okta.site")
+                        builder.WithOrigins("http://localhost:4200", 
+                                "https://frontend.site", 
+                                "http://other.services", 
+                                "okta.site")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
@@ -55,7 +59,17 @@ namespace Fakebook.Profile.RestApi
                 {
                     options.Authority = "https://OUR_OKTA.okta.com/oauth2/default";
                     options.Audience = "api://default";
-                });
+                    options.IncludeErrorDetails = true;
+                    options.RequireHttpsMetadata = false;
+                }).AddOktaMvc(new OktaMvcOptions
+                    {
+                        OktaDomain = "https://dev-7862904.okta.com/oauth2/default",
+                        ClientId = "CLIENT_ID_HERE",
+                        ClientSecret = "CLIENT_SECRET_HERE",
+                    }
+                );
+
+            
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
