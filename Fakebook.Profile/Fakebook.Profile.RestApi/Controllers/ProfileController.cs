@@ -18,7 +18,8 @@ namespace Fakebook.Profile.RestApi.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     //TODO: uncomment when okta is set up 
-    //[Authorize]
+    [Authorize]
+    [Route("/api/Profile")]
     public class ProfileController : Controller
     {
         private IProfileRepository _repository;
@@ -41,6 +42,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpGet("selection/{emails}")]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesAsync([FromBody] IEnumerable<string> emails)
         {
+            //var userEmail = User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
             throw new NotImplementedException();
         }
 
@@ -53,6 +55,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpGet("{profileEmail}")]
         public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
         {
+            // var email = User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
             throw new NotImplementedException();
         }
 
