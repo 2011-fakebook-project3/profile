@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Fakebook.Profile.DataAccess.BlobModel;
+
 using Xunit;
 
 namespace Fakebook.Profile.DataAccess.StorageModel

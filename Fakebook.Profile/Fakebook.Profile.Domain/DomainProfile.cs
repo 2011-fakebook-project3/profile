@@ -35,6 +35,8 @@ namespace Fakebook.Profile.Domain
         //can be null, or reasonable text (sanitized so they don't get funky)
         public string Status { get; set; }
 
+        public DomainProfile() {
+        }
 
         public DomainProfile(string email)
         {

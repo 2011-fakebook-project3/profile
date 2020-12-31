@@ -1,4 +1,6 @@
-﻿namespace Fakebook.Profile.DataAccess.StorageModel
+﻿using System;
+
+namespace Fakebook.Profile.DataAccess.StorageModel
 {
     public class StorageProfile
     {
