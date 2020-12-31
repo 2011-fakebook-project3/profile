@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Fakebook.Profile.DataAccess.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -48,6 +49,13 @@ namespace Fakebook.Profile.RestApi
                             .AllowCredentials();
                     });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://OUR_OKTA.okta.com/oauth2/default";
+                    options.Audience = "api://default";
+                });
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
