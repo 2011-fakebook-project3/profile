@@ -19,6 +19,7 @@ namespace Fakebook.Profile.DataAccess.Services
         public BlobService(BlobServiceClient client, string containerName){
             _Client = client;
             _ContainerName = containerName;
+            throw new NotImplementedException();
         }
 
         public async Task<Uri> UploadToBlobAsync(Stream content, string contentType, string fileName, string blobContainerName=null)
