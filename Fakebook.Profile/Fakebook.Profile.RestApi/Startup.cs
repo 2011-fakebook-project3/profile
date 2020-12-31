@@ -47,7 +47,8 @@ namespace Fakebook.Profile.RestApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", 
+                        builder.WithOrigins("http://localhost:4200",
+                                "http://localhost:44362", 
                                 "https://frontend.site", 
                                 "http://other.services", 
                                 "okta.site")
