@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using Fakebook.Profile.DataAccess.StorageModel;
+using Fakebook.Profile.DataAccess.EntityModel;
 
 using Xunit;
 
@@ -27,7 +26,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetEmailShouldWork(string email)
         {
             //arrange
-            StorageProfile bf = new StorageProfile();
+            EntityProfile bf = new EntityProfile();
 
             //act
             bf.Email = email;
@@ -56,7 +55,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangingEmailShouldWork(string email)
         {
             //arrange
-            StorageProfile bf = new StorageProfile();
+            EntityProfile bf = new EntityProfile();
             bf.Email = "someOtherEmail@email.com";
 
             //act
@@ -82,7 +81,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetValidUriShouldWork(string host, string path)
         {
             //arrange
-            StorageProfile pf = new StorageProfile();
+            EntityProfile pf = new EntityProfile();
             var builder = new UriBuilder();
 
             //act
@@ -110,7 +109,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangeValidUriShouldWork(string host, string path)
         {
             //arrange
-            StorageProfile pf = new StorageProfile();
+            EntityProfile pf = new EntityProfile();
             //set to an inital uri, since this is testing that it can change when not null.
             pf.ProfilePictureUrl = new UriBuilder().Uri;
             var builder = new UriBuilder();
@@ -133,7 +132,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SettingFirstNameShouldWork(string name)
         {
             //arrange
-            StorageProfile pf = new StorageProfile();
+            EntityProfile pf = new EntityProfile();
 
             //act
             pf.FirstName = name;
@@ -153,7 +152,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SettingLastNameShouldWork(string name)
         {
             //arrange
-            StorageProfile pf = new StorageProfile();
+            EntityProfile pf = new EntityProfile();
 
             //act
             pf.LastName = name;

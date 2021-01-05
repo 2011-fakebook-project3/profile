@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Fakebook.Profile.DataAccess.StorageModel
+namespace Fakebook.Profile.DataAccess.EntityModel
 {
-    public class StorageProfile
+    public class EntityProfile
     {
+
+        public EntityProfile()
+        {
+            throw new NotImplementedException();
+        }
+
         public string Email
         {
             get
@@ -80,6 +87,28 @@ namespace Fakebook.Profile.DataAccess.StorageModel
 
         public string Status
         {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public virtual ICollection<EntityFollow> Followees {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public virtual ICollection<EntityFollow> Followers {
             get
             {
                 throw new NotImplementedException();
