@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Fakebook.Profile.Domain;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fakebook.Profile.Domain
 {
@@ -7,8 +9,10 @@ namespace Fakebook.Profile.Domain
     /// </summary>
     public interface IRepository
     {
-        public Task CreateProfileAsync(DomainProfile profileData);
-        public Task<DomainProfile> GetProfileAsync(string email);
-        public Task UpdateProfileAsync(string email, DomainProfile domainProfileData);
+        Task CreateProfileAsync(DomainProfile profileData);
+        Task<DomainProfile> GetProfileAsync(string email);
+        Task<IEnumerable<DomainProfile>> GetAllProfilesAsync();
+        Task UpdateProfileAsync(string email, DomainProfile domainProfileData);
     }
 }
+
