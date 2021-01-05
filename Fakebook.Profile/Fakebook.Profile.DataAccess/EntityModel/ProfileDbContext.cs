@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
-    class ProfileDbContext : DbContext
+    public class ProfileDbContext : DbContext
     {
 
         public ProfileDbContext([NotNull] DbContextOptions options) :

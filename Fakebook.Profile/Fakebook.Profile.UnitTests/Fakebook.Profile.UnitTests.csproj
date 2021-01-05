@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fakebook.Profile.DataAccess\Fakebook.Profile.DataAccess.csproj" />
     <ProjectReference Include="..\Fakebook.Profile.Domain\Fakebook.Profile.Domain.csproj" />
     <ProjectReference Include="..\Fakebook.Profile.RestApi\Fakebook.Profile.RestApi.csproj" />
   </ItemGroup>

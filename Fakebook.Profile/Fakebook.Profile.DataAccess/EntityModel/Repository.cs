@@ -9,6 +9,15 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 {
     public class Repository
     {
+        private ProfileDbContext _context;
+
+        public Repository(ProfileDbContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         public Task CreateProfileAsync(DomainProfile profileData)
         {
             throw new NotImplementedException();
