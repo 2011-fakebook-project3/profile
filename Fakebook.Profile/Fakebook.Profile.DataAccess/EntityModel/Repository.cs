@@ -18,7 +18,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
 
 
-        public Task CreateProfileAsync(DomainProfile profileData)
+        public async Task CreateProfileAsync(DomainProfile profileData)
         {
             throw new NotImplementedException();
 
@@ -29,7 +29,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
             throw new NotImplementedException();
         }
 
-        public Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
+        public async Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
         {
             throw new NotImplementedException();
         }
