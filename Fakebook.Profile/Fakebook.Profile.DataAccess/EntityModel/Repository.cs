@@ -7,7 +7,7 @@ using Fakebook.Profile.Domain;
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
-    public class Repository
+    public class Repository : IRepository
     {
         private ProfileDbContext _context;
 
