@@ -34,7 +34,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 var repo = new Repository(actingContext);
 
                 // Create the user data
-                Task result = repo.UpdateProfileAsync(email: orig.Email, updated);
+                await repo.UpdateProfileAsync(email: orig.Email, updated);
             }
 
             // Assert
