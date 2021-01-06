@@ -1,43 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
+    /// <summary>
+    /// Controller that handles routes/actions relating to profiles
+    /// </summary>
     [Route("api/profiles")]
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        // PUT: /api/profile/selection/{emails}
+        private IRepository _repository;
+
+        /// <summary>
+        /// Contructor method for creating a Profile Controller
+        /// </summary>
+        /// <param name="repository">Instance of an IRepository interface that allows for the class to store through different mediums</param>
+        public ProfileController(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        /// <summary>
+        /// Action method that handles getting multiple profiles via their emails;
+        /// PUT: /api/profiles/selection/{emails}
+        /// </summary>
+        /// <param name="emails">A collection of emails as strings to get the profiles</param>
+        /// <returns>A collection of profiles converted to API Models</returns>
         [HttpGet("selection/{emails}")]
         public ActionResult<IEnumerable<ProfileApiModel>> SelectProfiles([FromBody] IEnumerable<string> emails)
         {
             throw new NotImplementedException();
         }
 
-        // GET: /api/profile/{userEmail}
-        [HttpGet("{userEmail}")]
-        public ActionResult<ProfileApiModel> Get(string userEmail = null)
+        /// <summary>
+        /// Action method that handles getting a single user by their email;
+        /// GET: /api/profiles/{profileEmail}
+        /// </summary>
+        /// <param name="profileEmail">The email of the user being retrieved</param>
+        /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
+        [HttpGet("{profileEmail}")]
+        public ActionResult<ProfileApiModel> Get(string profileEmail = null)
         {
             throw new NotImplementedException();
         }
 
-        // POST: /api/profile/
+        /// <summary>
+        /// Action method that is used for creating a new profile;
+        /// POST: /api/profiles/
+        /// </summary>
+        /// <param name="apiModel">The data of the profile to be created</param>
+        /// <returns>Created if the model was created successfully, otherwise a 400-based status code</returns>
         [HttpPost]
         public ActionResult Create([FromBody] ProfileApiModel apiModel)
         {
             throw new NotImplementedException();
         }
 
-        // PUT: /api/profile/
+        /// <summary>
+        /// Updates a user profile with a given email;
+        /// PUT: /api/profiles/{profileEmail}
+        /// </summary>
+        /// <param name="apiModel">The data to update the currect user with, if it exists</param>
+        /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
-        public ActionResult Update([FromBody] ProfileApiModel apiModel)
+        public ActionResult Update(string profileEmail, [FromBody] ProfileApiModel apiModel)
         {
             throw new NotImplementedException();
         }
