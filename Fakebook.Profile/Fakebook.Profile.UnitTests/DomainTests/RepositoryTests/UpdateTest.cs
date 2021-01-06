@@ -13,7 +13,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
 {
     public class UpdateTest
     {
-
         #region stuff
         [Theory]
         [ClassData(typeof(TestData.ProfileTestData.Update.Valid))]
@@ -27,7 +26,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 .UseSqlite(connection)
                 .Options;
 
-
             // Act
             using (var actingContext = new ProfileDbContext(options))
             {
@@ -38,7 +36,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 // Create the user data
                 Task result = repo.UpdateProfileAsync(email: orig.Email, updated);
             }
-
 
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
