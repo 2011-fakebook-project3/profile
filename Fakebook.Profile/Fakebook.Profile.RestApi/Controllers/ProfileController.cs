@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
-    [Route("api/profile")]
+    [Route("api/profiles")]
     [ApiController]
     public class ProfileController : ControllerBase
     {
