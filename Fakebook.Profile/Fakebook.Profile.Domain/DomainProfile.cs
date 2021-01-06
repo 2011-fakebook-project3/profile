@@ -11,7 +11,6 @@ namespace Fakebook.Profile.Domain
         //[anything]@[anything].[anything]
         public string Email { get; set; }
 
-
         //should be a url
         //defaults to a default image.
         public Uri ProfilePictureUrl { get; set; }
