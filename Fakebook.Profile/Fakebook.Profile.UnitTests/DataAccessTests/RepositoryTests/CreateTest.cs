@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Fakebook.Profile.DataAccess.EntityModel;
+using Fakebook.Profile.Domain;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
 {
-    class CreateTest
+    public class CreateTest
     {
 
         //create tests
