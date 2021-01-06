@@ -22,7 +22,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         //todo: probably change over to using our test data
         //todo: moq a profile repository for when the implementations need one.
         [InlineData("test@test.com")]
-        public void GetSpecificProfileWorks(string email)
+        public void GetSpecificProfileWorks(string email) 
         {
             // ... ummmmmmm something
             //arrange
@@ -36,6 +36,23 @@ namespace Fakebook.Profile.UnitTests.APITests
             Assert.NotNull(result);
             var viewResult = Assert.IsType<ViewResult>(result);
             //var model = Assert.IsAssignableFrom<IEnumerable<ViewModel>>(viewResult.ViewData.Model);
+        }
+
+        //same as above, but ensure you get a 404 from non-existant user
+
+
+        [Theory]
+        [InlineData()]
+        public void GetSetofProfilesWorks()
+        {
+            //arrange
+            var controller = new ProfileController(/* moq repo */);
+
+            //act
+            var result = controller.SelectProfiles(null); //list of emails
+
+            //assert
+            Assert.NotNull(result);
         }
     }
 }
