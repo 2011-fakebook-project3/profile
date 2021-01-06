@@ -9,119 +9,40 @@ namespace Fakebook.Profile.Domain
     public class DomainProfile
     {
         //[anything]@[anything].[anything]
-        public string Email
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Email { get; set; }
 
 
         //should be a url
-        //defualts to a default image.
-        public Uri ProfilePictureUrl
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //defaults to a default image.
+        public Uri ProfilePictureUrl { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Name { get => $"{FirstName} {LastName}"; }
 
         //A-Z, ', ., - only... probs
-        public string FirstName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string FirstName { get; set; }
 
-
-        public string LastName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string LastName { get; set; }
 
         //any 10 digits, can have - or () spaces optional, or null
-        public string PhoneNumber
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string PhoneNumber { get; set; }
 
         //not future
-        public DateTime BirthDate
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public DateTime BirthDate { get; set; }
 
         //can be null, or reasonable text (sanitized so they don't get funky)
-        public string Status
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Status { get; set; }
 
-
-        public DomainProfile() {
-        }
+        public DomainProfile() {}
 
         public DomainProfile(string email)
         {
-            this.Email = email;
+            Email = email;
         }
 
         public DomainProfile(string email, string phoneNumber)
         {
-            this.Email = email;
-            this.PhoneNumber = phoneNumber;
+            Email = email;
+            PhoneNumber = phoneNumber;
         }
     }
 }
