@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
+
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+
 using Xunit;
 
 namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
@@ -23,8 +26,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 .UseSqlite(connection)
                 .Options;
 
-            Task task;
-
             //TODO: either make this an arg, and theory function, or fill in data
             DomainProfile newProfile = new DomainProfile();
 
@@ -36,9 +37,8 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 var repo = new Repository(testContext);
 
                 // Create the user data
-                task = repo.CreateProfileAsync(newProfile);
+                await repo.CreateProfileAsync(newProfile);
             }
-
 
             //assert
             using (var assertcontext = new ProfileDbContext(options))
@@ -59,8 +59,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             }
 
         }
-
-
 
         [Fact]
         public void CreateInvalidUserFails()
