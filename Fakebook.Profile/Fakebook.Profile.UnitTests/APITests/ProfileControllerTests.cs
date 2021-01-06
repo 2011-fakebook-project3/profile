@@ -100,10 +100,10 @@ namespace Fakebook.Profile.UnitTests.APITests
                     );
             }
 
-            // Set it up to mimic the profile being found
+            // Set it up to mimic the profile found
             mockedProfileRepository
                 .Setup(mpr => mpr.GetProfilesByEmailAsync(It.IsAny<IEnumerable<string>>()))
-                .ReturnsAsync(expectedResults);          
+                .ReturnsAsync(expectedResults);
 
             //act
             var result = await controller.SelectProfilesAsync(emails); //list of emails
@@ -117,7 +117,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var value = result.Value.ToList();
 
             //assert data matches what it should
-            foreach(DomainProfile profile in expectedResults)
+            foreach (DomainProfile profile in expectedResults)
             {
                 //get the matching profile
                 var resultprofile = result.Value.FirstOrDefault(entry => entry.Email == profile.Email);
@@ -131,7 +131,6 @@ namespace Fakebook.Profile.UnitTests.APITests
         }
         #endregion
 
-
         #region CreateProfile
         //CreateAsync
         /// <summary>
@@ -144,23 +143,21 @@ namespace Fakebook.Profile.UnitTests.APITests
             DomainProfile profile = new DomainProfile(GenerateRandom.Email());
 
             var mockedProfileRepository = new Mock<IRepository>();
-            mockedProfileRepository.Setup(repo => repo.CreateProfileAsync(profile))
-                .Returns(Task.CompletedTask)
+            mockedProfileRepository
+                .Setup(repo => repo.CreateProfileAsync(It.IsAny<DomainProfile>()))
                 .Verifiable();
 
             var controller = new ProfileController(mockedProfileRepository.Object);
-
+            
             //act
-            var result = controller.CreateAsync(null); //list of emails
+            var result = await controller.CreateAsync(null); // a profile API model
 
             //assert
             Assert.NotNull(result);
             Assert.IsType<OkResult>(result);
-            mockedProfileRepository.Verify();
-
+            //mockedProfileRepository.Verify();
+            mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Once);
         }
-
-
 
         /// <summary>
         /// Creating an invalid profile fails because of the data not meeting constraints.
@@ -170,20 +167,24 @@ namespace Fakebook.Profile.UnitTests.APITests
         {
             //arrange
             var mockedProfileRepository = new Mock<IRepository>();
+
+            mockedProfileRepository.Setup(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()))
+                .Throws(new ArgumentException());
+
             var controller = new ProfileController(mockedProfileRepository.Object);
 
+            ProfileApiModel badProfile = new ProfileApiModel();
+
             //act
-            var result = controller.SelectProfilesAsync(null); //list of emails
+            var result = controller.CreateAsync(badProfile); 
 
             //assert
             Assert.NotNull(result);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.IsType<SerializableError>(badRequestResult.Value);
-            //assert response code is error or something.
         }
         #endregion
-
 
         //UpdateAsync
         #region Update
@@ -218,8 +219,6 @@ namespace Fakebook.Profile.UnitTests.APITests
             //200 ok + obj in body matches
         }
 
-
-
         /// <summary>
         /// trying to update a profile not in the repository won't work. 404 not found error.
         /// </summary>
@@ -231,16 +230,13 @@ namespace Fakebook.Profile.UnitTests.APITests
             var controller = new ProfileController(mockedProfileRepository.Object);
 
             //act
-            var result = controller.SelectProfilesAsync(null); //list of emails
+            var result = controller.SelectProfilesAsync(null); 
 
             //assert
             Assert.NotNull(result);
             var notFoundRequestResult = Assert.IsType<NotFoundObjectResult>(result);
             Assert.IsType<SerializableError>(notFoundRequestResult.Value);
-            //assert response code is error or something.
         }
-
-
 
         /// <summary>
         /// Calling update with invalid information will fail, and return an error code.
@@ -250,16 +246,23 @@ namespace Fakebook.Profile.UnitTests.APITests
         {
             //arrange
             var mockedProfileRepository = new Mock<IRepository>();
+            mockedProfileRepository.Setup(obj => obj.GetProfileAsync(It.IsAny<string>()))
+                .Throws(new ArgumentException("Invalid argument (from moq)"));
+
             var controller = new ProfileController(mockedProfileRepository.Object);
 
+            string email = GenerateRandom.Email();
+
+            ProfileApiModel badmodel = new ProfileApiModel();
+            badmodel.Email = email;
+
             //act
-            var result = controller.SelectProfilesAsync(null); //list of emails
+            var result = controller.UpdateAsync(email, badmodel);
 
             //assert
             Assert.NotNull(result);
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.IsType<SerializableError>(badRequestResult.Value);
-            //assert response code is error or something.
         }
         #endregion
     }
