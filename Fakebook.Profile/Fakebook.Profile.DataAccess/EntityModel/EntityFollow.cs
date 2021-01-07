@@ -8,14 +8,14 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 {
     public class EntityFollow
     {
-       /*
-        public EntityFollow() { }
-        public EntityFollow(int id, int userId)
-        {
-            FolloweeId = id;
-            FollowerId = userId;
-        }
-        */
+        
+         public EntityFollow() { }
+         public EntityFollow(string followeeEmail, string followerEmail)
+         {
+            FolloweeEmail = followeeEmail;
+            FollowerEmail = followerEmail;
+         }
+         
 
         public string FolloweeEmail { get; set; }
         public string FollowerEmail { get; set; }

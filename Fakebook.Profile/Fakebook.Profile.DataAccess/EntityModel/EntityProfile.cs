@@ -1,124 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
     public class EntityProfile
     {
-
         public EntityProfile()
         {
-            throw new NotImplementedException();
+            Followees = new HashSet<EntityFollow>();
+            Followers = new HashSet<EntityFollow>();
         }
 
-        public string Email
+        public EntityProfile ShallowCopy()
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            return (EntityProfile)this.MemberwiseClone();
         }
 
-        public Uri ProfilePictureUrl
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        [Key]
+        [Column(name: nameof(Email))]
+        public string Email { get; set; }
 
-        public string FirstName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Uri ProfilePictureUrl { get; set;}
 
+        public string FirstName { get; set; }
 
-        public string LastName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string LastName { get; set; }
 
-        public string PhoneNumber
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        [MaxLength(15)]
+        public string PhoneNumber { get; set; }
 
-        public DateTime BirthDate
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public DateTime BirthDate { get; set; }
 
+        public string Status { get; set; }
 
-        public string Status
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        public virtual ICollection<EntityFollow> Followees {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public virtual ICollection<EntityFollow> Followers {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
+        // bridge table
+        public virtual ICollection<EntityFollow> Followees { get; set; }
+        public virtual ICollection<EntityFollow> Followers { get; set; }
     }
 }
