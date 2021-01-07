@@ -35,6 +35,10 @@ namespace Fakebook.Profile.RestApi.ApiModel
         //can be null, or reasonable text (sanitized so they don't get funky)
         public string Status { get; set; }
 
+        public ProfileApiModel()
+        {
+        }
+
         public ProfileApiModel(DomainProfile p)
         {
             Email = p.Email;

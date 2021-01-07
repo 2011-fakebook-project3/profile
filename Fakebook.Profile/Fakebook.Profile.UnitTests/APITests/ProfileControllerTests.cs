@@ -249,7 +249,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             badmodel.Email = email;
 
             //act
-            var result = controller.UpdateAsync(email, badmodel);
+            var result = controller.UpdateAsync(badmodel);
 
             //assert
             Assert.NotNull(result);
