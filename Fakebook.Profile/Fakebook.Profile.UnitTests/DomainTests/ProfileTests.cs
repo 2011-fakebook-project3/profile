@@ -1,5 +1,6 @@
 ﻿using System;
 using Fakebook.Profile.Domain;
+using Fakebook.Profile.Domain.Utility;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
 
