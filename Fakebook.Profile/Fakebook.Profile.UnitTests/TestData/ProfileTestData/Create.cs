@@ -19,6 +19,16 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
          * - Status: string
          */
 
+        // randomly generate URI throws an exception
+        private static string fakeURI1 = "https://i.imgur.com/FAKE1.jpg";
+        private static string fakeURI2 = "https://i.imgur.com/FAKE2.jpg";
+        private static string fakeURI3 = "https://i.imgur.com/FAKE3.jpg";
+        private static string fakeURI4 = "https://i.imgur.com/FAKE4.jpg";
+        private static string fakeURI5 = "https://i.imgur.com/FAKE5.jpg";
+
+
+
+
         public class Valid : IEnumerable<object[]>
         {
             /// <summary>
@@ -52,7 +62,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         Email = GenerateRandom.Email(),
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),
-                        ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                        ProfilePictureUrl = new Uri(fakeURI1),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
@@ -66,7 +76,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         Email = GenerateRandom.Email(),
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),
-                        ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                        ProfilePictureUrl = new Uri(fakeURI2),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = null,
@@ -106,9 +116,10 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                     new DomainProfile
                     {
                         Email = GenerateRandom.Email(),
-                        FirstName = null,
-                        LastName = null,
-                        ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                        // cannot set to null, will get exception
+                        // FirstName = null,
+                        // LastName = null,
+                        ProfilePictureUrl = new Uri(fakeURI3),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
@@ -129,8 +140,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         Email = GenerateRandom.Email(),
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),
-                        ProfilePictureUrl = new Uri(GenerateRandom.String()),
-                        PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
+                        ProfilePictureUrl = new Uri(fakeURI4),
+                        // cannot set to a random string, will get exception
+                        // PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
                     }
@@ -147,10 +159,11 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile
                     {
-                        Email = GenerateRandom.String(), // .Email()
+                        // cannot set to a random string, will get exception
+                        // Email = GenerateRandom.String(), // .Email()
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),
-                        ProfilePictureUrl = new Uri(GenerateRandom.String()),
+                        ProfilePictureUrl = new Uri(fakeURI5),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),

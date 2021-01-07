@@ -85,7 +85,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// <param name="host">The host of the uri to test. Should be a domain</param>
         /// <param name="path">The path to the resource in the url</param>
         [Theory]
-        //https://imgur.com/t/photography/nOfAU66
+        //https://i.imgur.com/BCeyxdR.jpg
         [InlineData("i.imgur.com", "BCeyxdR.jpg")]
         //https://i.imgur.com/Lf5S5Sa.jpg
         [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
@@ -101,6 +101,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
             //act
             Uri uri = uriBuilder.Uri;
+            profile.ProfilePictureUrl = uri;
 
             //assert
             Assert.NotNull(profile.ProfilePictureUrl);
