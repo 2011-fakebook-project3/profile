@@ -73,6 +73,9 @@ namespace Fakebook.Profile.RestApi.Controllers
         [Authorize]
         [HttpGet("")]
         [HttpGet("{profileEmail}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
         {
             string email = profileEmail is not null ? profileEmail : GetUserEmail();
