@@ -21,7 +21,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task Profile_Read_Valid(List<DomainProfile> profiles, string userEmail)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using var connection = new SqliteConnection("Data Source=:Memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
@@ -58,7 +58,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task Profile_Read_Invalid(List<DomainProfile> profiles, string userEmail)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using var connection = new SqliteConnection("Data Source=:Memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
