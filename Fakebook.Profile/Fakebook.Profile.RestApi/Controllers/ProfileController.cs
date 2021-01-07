@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fakebook.Profile.RestApi.Controllers
@@ -15,7 +18,7 @@ namespace Fakebook.Profile.RestApi.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private IProfileRepository _repository;
+        private readonly IProfileRepository _repository;
 
         /// <summary>
         /// Contructor method for creating a Profile Controller
@@ -27,6 +30,22 @@ namespace Fakebook.Profile.RestApi.Controllers
         }
 
         /// <summary>
+        /// Helper method for getting the password of a currently authenticated user
+        /// </summary>
+        /// <returns>The email of the user, if they are logged in</returns>
+        private string GetUserEmail()
+        {
+            try
+            {
+                return User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Action method that handles getting multiple profiles via their emails;
         /// PUT: /api/profiles/selection/{emails}
         /// </summary>
@@ -35,7 +54,12 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpGet("selection/{emails}")]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesAsync([FromBody] IEnumerable<string> emails)
         {
-            throw new NotImplementedException();
+            var results = await _repository.GetProfilesByEmailAsync(emails);
+            // convert them to the ApiModel
+
+            return results
+                .Select(p => new ProfileApiModel(p))
+                .ToList();
         }
 
         /// <summary>
@@ -47,7 +71,9 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpGet("{profileEmail}")]
         public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
         {
-            throw new NotImplementedException();
+            string email = profileEmail is not null ? profileEmail : ;
+            var result = await _repository.GetProfileAsync(profileEmail);
+            return Ok(new ProfileApiModel(result));
         }
 
         /// <summary>
@@ -59,19 +85,38 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAsync([FromBody] ProfileApiModel apiModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var domainProfile = apiModel.ToDomainProfile();
+                await _repository.CreateProfileAsync(domainProfile);
+                return Ok();
+            }
+            catch
+            {
+                // return this because the profile could not be created.
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Updates a user profile with a given email;
-        /// PUT: /api/profiles/{profileEmail}
+        /// PUT: /api/profiles/
         /// </summary>
         /// <param name="apiModel">The data to update the currect user with, if it exists</param>
         /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync(string profileEmail, [FromBody] ProfileApiModel apiModel)
+        public async Task<ActionResult> UpdateAsync([FromBody] ProfileApiModel apiModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string userEmail = GetUserEmail();
+                await _repository.UpdateProfileAsync(userEmail, apiModel.ToDomainProfile());
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
