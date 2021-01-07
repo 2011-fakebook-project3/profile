@@ -106,7 +106,7 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .ReturnsAsync(expectedResults);
 
             //act
-            var result = await controller.SelectProfilesAsync(emails); //list of emails
+            var result = await controller.SelectProfilesAsync(emails);
 
             //assert
             Assert.NotNull(result);
@@ -137,7 +137,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         /// Tests that you can create a profile with valid data.
         /// </summary>
         [Fact]
-        public void CreateProfileWorksForValidData()
+        public async void CreateProfileWorksForValidData()
         {
             //arrange
             DomainProfile profile = new DomainProfile(GenerateRandom.Email());
