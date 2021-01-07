@@ -108,12 +108,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
             profile.FirstName = MockedProfile.FirstName;
             profile.LastName = MockedProfile.LastName;
-            
+            profile.PhoneNumber = MockedProfile.PhoneNumber;
             profile.BirthDate = MockedProfile.BirthDate;
             profile.Status = MockedProfile.Status;
 
             // assert
-            Assert.ThrowsAny<ArgumentException>( () => profile.PhoneNumber = MockedProfile.PhoneNumber);
             Assert.NotNull(profile.Name);
             Assert.NotNull(profile.FirstName);
             Assert.NotNull(profile.LastName);
