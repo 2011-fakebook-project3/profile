@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
 
 namespace Fakebook.Profile.RestApi.ApiModel
@@ -33,5 +34,34 @@ namespace Fakebook.Profile.RestApi.ApiModel
 
         //can be null, or reasonable text (sanitized so they don't get funky)
         public string Status { get; set; }
+
+        public ProfileApiModel()
+        {
+        }
+
+        public ProfileApiModel(DomainProfile p)
+        {
+            Email = p.Email;
+            ProfilePictureUrl = p.ProfilePictureUrl;
+            FirstName = p.FirstName;
+            LastName = p.LastName;
+            PhoneNumber = p.PhoneNumber;
+            BirthDate = p.BirthDate;
+            Status = p.Status;
+        }
+
+        public DomainProfile ToDomainProfile()
+        {
+            return new DomainProfile
+            {
+                Email = Email,
+                FirstName = FirstName,
+                LastName = LastName,
+                PhoneNumber = PhoneNumber,
+                BirthDate = BirthDate,
+                ProfilePictureUrl = ProfilePictureUrl,
+                Status = Status
+            };
+        }
     }
 }
