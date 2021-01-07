@@ -54,6 +54,9 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <returns>A collection of profiles converted to API Models</returns>
         [Authorize]
         [HttpGet("selection/{emails}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesAsync([FromBody] IEnumerable<string> emails)
         {
             var results = await _repository.GetProfilesByEmailAsync(emails);
