@@ -197,13 +197,6 @@ namespace Fakebook.Profile.UnitTests.APITests
             origProfile.FirstName = "bob";
             origProfile.LastName = "lastname";
 
-            /*
-             * neccissary???
-            DomainProfile changedProfile = new DomainProfile(email);
-            changedProfile.FirstName = "Bob";
-            changedProfile.LastName = "Person";
-            */
-
             var mockedProfileRepository = new Mock<IRepository>();
             mockedProfileRepository.Setup(repo => repo.UpdateProfileAsync(email, origProfile))
                 .Returns(Task.CompletedTask)
