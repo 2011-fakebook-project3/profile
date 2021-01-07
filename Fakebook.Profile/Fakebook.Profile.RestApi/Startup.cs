@@ -1,7 +1,10 @@
 using System;
+
+using Fakebook.Profile.DataAccess.EntityModel;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +30,9 @@ namespace Fakebook.Profile.RestApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
             */
+
+            services.AddDbContext<ProfileDbContext>(options
+                => options.UseNpgsql(Configuration["Fakebook:ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
