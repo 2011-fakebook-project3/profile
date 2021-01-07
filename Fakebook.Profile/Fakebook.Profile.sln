@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakebook.Profile.RestApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakebook.Profile.Domain", "Fakebook.Profile.Domain\Fakebook.Profile.Domain.csproj", "{E49B48BF-EC31-432C-923F-BA8338EEBD1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakebook.Profile.DataAccess", "Fakebook.Profile.DataAccess\Fakebook.Profile.DataAccess.csproj", "{F83A82B3-426F-4059-A53D-4B015D85B270}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakebook.Profile.DataAccess", "Fakebook.Profile.DataAccess\Fakebook.Profile.DataAccess.csproj", "{F83A82B3-426F-4059-A53D-4B015D85B270}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fakebook.Profile.UnitTests", "Fakebook.Profile.UnitTests\Fakebook.Profile.UnitTests.csproj", "{35186703-5D5B-4E4E-BED6-8295A9C0178A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fakebook.Profile.UnitTests", "Fakebook.Profile.UnitTests\Fakebook.Profile.UnitTests.csproj", "{35186703-5D5B-4E4E-BED6-8295A9C0178A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB71D544-4ACF-43BD-98F4-CE63660F359B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
