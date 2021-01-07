@@ -30,7 +30,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             {
                 actingContext.Database.EnsureCreated();
 
-                var repo = new Repository(actingContext);
+                var repo = new ProfileRepository(actingContext);
 
                 // Create the user data
                 await repo.UpdateProfileAsync(email: orig.Email, updated);
@@ -39,7 +39,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
             {
-                var repo = new Repository(assertionContext);
+                var repo = new ProfileRepository(assertionContext);
 
                 await repo.UpdateProfileAsync(orig.Email, updated);
 
@@ -69,7 +69,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             {
                 actingContext.Database.EnsureCreated();
 
-                var repo = new Repository(actingContext);
+                var repo = new ProfileRepository(actingContext);
 
                 // Create the user data
                 await repo.UpdateProfileAsync(email: original.Email, update);
@@ -78,7 +78,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
             {
-                var repo = new Repository(assertionContext);
+                var repo = new ProfileRepository(assertionContext);
 
                 await Assert.ThrowsAsync<ArgumentException>(() => repo.UpdateProfileAsync(original.Email, update));
 

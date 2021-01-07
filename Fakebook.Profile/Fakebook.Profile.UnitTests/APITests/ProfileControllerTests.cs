@@ -38,7 +38,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             };
 
             //arrange
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             var controller = new ProfileController(mockedProfileRepository.Object);
             mockedProfileRepository
                 .Setup(mpr => mpr.GetProfileAsync(It.IsAny<string>()))
@@ -71,7 +71,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         public async void GetSetofProfilesWorks()
         {
             //arrange
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             var controller = new ProfileController(mockedProfileRepository.Object);
             var expectedResults = new List<DomainProfile>();
 
@@ -142,7 +142,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             //arrange
             DomainProfile profile = new DomainProfile(GenerateRandom.Email());
 
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             mockedProfileRepository
                 .Setup(repo => repo.CreateProfileAsync(It.IsAny<DomainProfile>()))
                 .Verifiable();
@@ -165,7 +165,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         public void CreateProfileReturnsErrorForInvalidData()
         {
             //arrange
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
 
             mockedProfileRepository.Setup(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()))
                 .Throws(new ArgumentException());
@@ -196,7 +196,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             origProfile.FirstName = "bob";
             origProfile.LastName = "lastname";
 
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             mockedProfileRepository.Setup(repo => repo.UpdateProfileAsync(email, origProfile))
                 .Returns(Task.CompletedTask)
                 .Verifiable();
@@ -218,7 +218,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         public void UpdatingNonexistProfileFails()
         {
             //arrange
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             var controller = new ProfileController(mockedProfileRepository.Object);
 
             //act
@@ -237,7 +237,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         public void UpdatingWithInvalidInformationFails()
         {
             //arrange
-            var mockedProfileRepository = new Mock<IRepository>();
+            var mockedProfileRepository = new Mock<IProfileRepository>();
             mockedProfileRepository.Setup(obj => obj.GetProfileAsync(It.IsAny<string>()))
                 .Throws(new ArgumentException("Invalid argument (from moq)"));
 

@@ -15,13 +15,13 @@ namespace Fakebook.Profile.RestApi.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private IRepository _repository;
+        private IProfileRepository _repository;
 
         /// <summary>
         /// Contructor method for creating a Profile Controller
         /// </summary>
         /// <param name="repository">Instance of an IRepository interface that allows for the class to store through different mediums</param>
-        public ProfileController(IRepository repository)
+        public ProfileController(IProfileRepository repository)
         {
             _repository = repository;
         }

@@ -7,11 +7,11 @@ using Fakebook.Profile.DataAccess.EntityModel;
 
 namespace Fakebook.Profile.Domain
 {
-    public class Repository : IRepository
+    public class ProfileRepository : IProfileRepository
     {
         private readonly ProfileDbContext _context;
 
-        public Repository(ProfileDbContext context)
+        public ProfileRepository(ProfileDbContext context)
         {
             _context = context;
             throw new NotImplementedException();
