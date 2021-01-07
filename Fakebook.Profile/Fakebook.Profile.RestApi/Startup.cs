@@ -92,7 +92,6 @@ namespace Fakebook.Profile.RestApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
-                
             }
 
             app.UseHttpsRedirection();
