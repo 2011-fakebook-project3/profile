@@ -15,7 +15,7 @@ namespace Fakebook.Profile.Domain
         private string _email;
         public string Email
         {
-            get { return _email; }
+            get => _email;
             set
             {
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
@@ -29,19 +29,13 @@ namespace Fakebook.Profile.Domain
         //should be a url, defualts to an image.
         public Uri ProfilePictureUrl { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return FirstName + ' ' + LastName;
-            }
-        }
+        public string Name => $"{FirstName} {LastName}";       
 
         //A-Z, ', ., - only... probs
         private string _firstName;
-        public string FirstName 
+        public string FirstName
         {
-            get { return _firstName; }
+            get => _firstName;
             set
             {
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
@@ -53,9 +47,9 @@ namespace Fakebook.Profile.Domain
         }
 
         private string _lastName;
-        public string LastName 
+        public string LastName
         {
-            get { return _lastName; }
+            get => _lastName;
             set
             {
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
@@ -68,9 +62,9 @@ namespace Fakebook.Profile.Domain
 
         private string _phoneNumber;
         //any 10 digits, can have - or () spaces optional, or null
-        public string PhoneNumber 
+        public string PhoneNumber
         {
-            get { return _phoneNumber; }
+            get => _phoneNumber;
             set
             {
                 Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
@@ -82,9 +76,9 @@ namespace Fakebook.Profile.Domain
         }
 
         private DateTime _birthDate;
-        public DateTime BirthDate 
+        public DateTime BirthDate
         {
-            get { return _birthDate; }
+            get => _birthDate;
             set
             {
                 if (value > DateTime.Now)
