@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Fakebook.Profile.DataAccess.StorageModel
 {
-    public class StorageModelProfileTests
+    public class EntityProfileTests
     {
         //Email Tests
         /// <summary>
