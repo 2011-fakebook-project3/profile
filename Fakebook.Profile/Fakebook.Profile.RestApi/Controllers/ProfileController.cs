@@ -51,6 +51,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="emails">A collection of emails as strings to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
+        [Authorize]
         [HttpGet("selection/{emails}")]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesAsync([FromBody] IEnumerable<string> emails)
         {
@@ -68,11 +69,19 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="profileEmail">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
+        [Authorize]
+        [HttpGet("")]
         [HttpGet("{profileEmail}")]
         public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
         {
-            string email = profileEmail is not null ? profileEmail : ;
-            var result = await _repository.GetProfileAsync(profileEmail);
+            string email = profileEmail is not null ? profileEmail : GetUserEmail();
+
+            if (email is null)
+            {
+                throw new ArgumentException("Could not find current user's email");
+            }
+
+            var result = await _repository.GetProfileAsync(email);
             return Ok(new ProfileApiModel(result));
         }
 
@@ -105,11 +114,17 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <param name="apiModel">The data to update the currect user with, if it exists</param>
         /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> UpdateAsync([FromBody] ProfileApiModel apiModel)
         {
             try
             {
                 string userEmail = GetUserEmail();
+                if(userEmail is null)
+                {
+                    throw new ArgumentException("Could not find current user's email");
+                }
+
                 await _repository.UpdateProfileAsync(userEmail, apiModel.ToDomainProfile());
                 return Ok();
             }
