@@ -7,6 +7,7 @@ using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fakebook.Profile.RestApi.Controllers
@@ -92,13 +93,16 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <param name="apiModel">The data of the profile to be created</param>
         /// <returns>Created if the model was created successfully, otherwise a 400-based status code</returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult> CreateAsync([FromBody] ProfileApiModel apiModel)
         {
             try
             {
                 var domainProfile = apiModel.ToDomainProfile();
                 await _repository.CreateProfileAsync(domainProfile);
-                return Ok();
+                return this.CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
             }
             catch
             {
@@ -115,13 +119,16 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UpdateAsync([FromBody] ProfileApiModel apiModel)
         {
             try
             {
                 string userEmail = GetUserEmail();
                 if(userEmail is null)
-                {
+                {           
                     throw new ArgumentException("Could not find current user's email");
                 }
 
@@ -130,6 +137,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             }
             catch
             {
+                //should be 404?
                 return BadRequest();
             }
         }
