@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
 
 namespace Fakebook.Profile.RestApi.ApiModel
@@ -10,6 +11,17 @@ namespace Fakebook.Profile.RestApi.ApiModel
     /// </summary>
     public class ProfileApiModel
     {
+        public ProfileApiModel(DomainProfile p)
+        {
+            Email = p.Email;
+            ProfilePictureUrl = p.ProfilePictureUrl;
+            FirstName = p.FirstName;
+            LastName = p.LastName;
+            PhoneNumber = p.PhoneNumber;
+            BirthDate = p.BirthDate;
+            Status = p.Status;
+        }
+
         //[anything]@[anything].[anything]
         [Required, RegularExpression(RegularExpressions.EmailCharacters)]
         public string Email { get; set; }
