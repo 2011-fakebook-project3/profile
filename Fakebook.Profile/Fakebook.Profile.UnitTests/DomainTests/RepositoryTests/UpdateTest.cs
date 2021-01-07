@@ -13,7 +13,6 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
 {
     public class UpdateTest
     {
-        #region stuff
         [Theory]
         [ClassData(typeof(TestData.ProfileTestData.Update.Valid))]
         public async void UpdatingRealProfileWorks(DomainProfile orig, DomainProfile updated)
@@ -42,7 +41,7 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
             {
                 var repo = new Repository(assertionContext);
 
-                var updateResult = repo.UpdateProfileAsync(orig.Email, updated);
+                await repo.UpdateProfileAsync(orig.Email, updated);
 
                 //Assert.True(updateResult, "Unable to update the user.");
                 var alteredUser = await repo.GetProfileAsync(orig.Email);
@@ -52,6 +51,42 @@ namespace Fakebook.Profile.UnitTests.DataAccessTests.RepositoryTests
                 Assert.NotEqual(orig.Status, alteredUser.Status);
             }
         }
-        #endregion
+
+        [Theory]
+        [ClassData(typeof(TestData.ProfileTestData.Update.Invalid))]
+        public async void Profile_Update_Invalid(DomainProfile original, DomainProfile update)
+        {
+            // Arrange
+            using var connection = new SqliteConnection("Data Source=:memory:");
+            connection.Open();
+
+            var options = new DbContextOptionsBuilder<ProfileDbContext>()
+                .UseSqlite(connection)
+                .Options;
+
+            // Act
+            using (var actingContext = new ProfileDbContext(options))
+            {
+                actingContext.Database.EnsureCreated();
+
+                var repo = new Repository(actingContext);
+
+                // Create the user data
+                await repo.UpdateProfileAsync(email: original.Email, update);
+            }
+
+            // Assert
+            using (var assertionContext = new ProfileDbContext(options))
+            {
+                var repo = new Repository(assertionContext);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => repo.UpdateProfileAsync(original.Email, update));
+
+                //Assert.True(updateResult, "Unable to update the user.");
+                var profileActual = await repo.GetProfileAsync(original.Email);
+
+                Assert.Equal(original, profileActual);
+            }
+        }
     }
 }
