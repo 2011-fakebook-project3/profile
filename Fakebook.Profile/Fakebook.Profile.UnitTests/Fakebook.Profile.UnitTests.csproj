@@ -28,9 +28,4 @@
     <ProjectReference Include="..\Fakebook.Profile.RestApi\Fakebook.Profile.RestApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controller\" />
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>
