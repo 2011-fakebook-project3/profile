@@ -154,8 +154,7 @@ namespace Fakebook.Profile.UnitTests.APITests
 
             //assert
             Assert.NotNull(result);
-            Assert.IsType<OkResult>(result);
-            //mockedProfileRepository.Verify();
+            Assert.IsType<OkResult>(result);  
             mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Once);
         }
 
