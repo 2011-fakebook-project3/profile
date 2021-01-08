@@ -148,7 +148,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-        public class InvalidName : IEnumerable<object[]>
+        public class Invalid : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
