@@ -1,8 +1,6 @@
-﻿using Fakebook.Profile.DataAccess.Services.Interfaces;
-
-namespace Fakebook.Profile.DataAccess.Services
+﻿namespace Fakebook.Profile.DataAccess.Services.Interfaces
 {
-    public class ProfileDbSettings : IProfileDbSettings
+    public interface IProfileDbSettings
     {
         public string ProfilesCollectionName { get; set; }
         public string ConnectionString { get; set; }
