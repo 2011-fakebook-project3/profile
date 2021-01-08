@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
-
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
@@ -23,7 +17,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EntityProfile>(entity =>
@@ -51,27 +44,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
                 entity.Property(e => e.Status)
                     .IsRequired(false);
-            });
-
-            // 
-            modelBuilder.Entity<EntityFollow>(entity =>
-            {
-                entity.ToTable("Follow", "Fakebook");
-
-                entity.HasKey(e => new { e.FollowerEmail, e.FolloweeEmail })
-                      .HasName("Pk_FollowEntity");
-
-                entity.HasOne(e => e.Followee)
-                    .WithMany(f => f.Followers)
-                    .HasForeignKey(f => f.FolloweeEmail)
-                    .HasConstraintName("Fk_Follow_Followee")
-                    .OnDelete(DeleteBehavior.NoAction);
-
-                entity.HasOne(e => e.Follower)
-                    .WithMany(f => f.Followees)
-                    .HasForeignKey(f => f.FollowerEmail)
-                    .HasConstraintName("Fk_Follow_Follower")
-                    .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }
