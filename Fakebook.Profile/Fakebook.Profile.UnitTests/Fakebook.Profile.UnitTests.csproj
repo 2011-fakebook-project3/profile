@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.7.0" />
+    <None Remove="DataAccessTests\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0-beta.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.1" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
@@ -28,6 +33,10 @@
     <ProjectReference Include="..\Fakebook.Profile.DataAccess\Fakebook.Profile.DataAccess.csproj" />
     <ProjectReference Include="..\Fakebook.Profile.Domain\Fakebook.Profile.Domain.csproj" />
     <ProjectReference Include="..\Fakebook.Profile.RestApi\Fakebook.Profile.RestApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataAccessTests\" />
   </ItemGroup>
 
 </Project>
