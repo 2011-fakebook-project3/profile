@@ -1,6 +1,6 @@
 ﻿using Fakebook.Profile.DataAccess.EntityModel;
 using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -217,3 +217,4 @@ namespace Fakebook.Profile.Domain
     }
 
 }
+

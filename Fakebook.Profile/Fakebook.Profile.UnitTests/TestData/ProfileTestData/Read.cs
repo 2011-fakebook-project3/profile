@@ -11,6 +11,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         {
             public IEnumerator<object[]> GetEnumerator()
             {
+
                 string target = GenerateRandom.Email();
 
                 yield return new object[]
@@ -204,3 +205,4 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         }
     }
 }
+

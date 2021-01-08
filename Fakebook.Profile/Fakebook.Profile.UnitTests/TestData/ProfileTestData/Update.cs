@@ -34,7 +34,6 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-
                 // email will be used to update the profile
                 string targetEmail1 = GenerateRandom.Email();
 
@@ -154,6 +153,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             public IEnumerator<object[]> GetEnumerator()
             {
 
+
                 // email will be used to update the profile
                 string targetEmail1 = GenerateRandom.Email();
 
@@ -190,7 +190,6 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-
                 // email will be used to update the profile
                 string targetEmail2 = GenerateRandom.Email();
 
@@ -206,6 +205,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String()
                      },
+
                     new DomainProfile
                     {
                         FirstName =  GenerateRandom.String(),
@@ -223,3 +223,4 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         }
     }
 }
+

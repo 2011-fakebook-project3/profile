@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
-
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
@@ -17,8 +16,9 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public ProfileDbContext([NotNull] DbContextOptions options) :
             base(options)
         { }
-
+        
         public DbSet<EntityProfile> EntityProfiles { get; set; }
+        public DbSet<EntityFollow> Follows { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,37 +51,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
                 entity.Property(e => e.Status)
                     .IsRequired(false);
-
-                /*
-                entity.Property(e => e.FollowerEmails)
-                    .IsRequired(false);
-
-                entity.Property(e => e.FolloweeEmails)
-
-                    .IsRequired(false);
                
-                entity.HasMany<EntityProfile>(s => s.Followers)
-                    .WithMany(c => c.Followers)
-                    .HasForeignKey(f => f.FolloweeId)      
-                .Map(cs =>
-                {
-                    // uhh...
-                    cs.MapLeftKey("Email");
-                    cs.MapRightKey("Folower");
-                    cs.ToTable("Followee");
-                });
-                
-                entity.HasMany<EntityProfile>(s => s.Followees)
-                    .WithMany(c => c.Followees)               
-                .Map(cs =>
-                {
-                    // uhh...
-                    cs.MapLeftKey("Email");
-                    cs.MapRightKey("followee");
-                    cs.ToTable("Followee");
-                });
-                */
-
             });
 
             // 
@@ -104,6 +74,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                     .HasConstraintName("Fk_Follow_Follower")
                     .OnDelete(DeleteBehavior.NoAction);
             });
+
         }
     }
 }

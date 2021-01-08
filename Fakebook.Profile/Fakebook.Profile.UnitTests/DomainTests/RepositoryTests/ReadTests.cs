@@ -27,6 +27,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             // Arrange
             using var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
+
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
                 .Options;
@@ -39,6 +40,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
                 // Create the user data
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
+
             }
 
             // Assert
@@ -67,7 +69,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         /// <returns></returns>
         [Theory]
         [ClassData(typeof(Read.Invalid))]
-        public async Task GetOneProfile_InvalidData(List<DomainProfile> users, string userEmail)
+        public async Task GetOneProfile_InvalidData(List<DomainProfile> users, string userEmail)      
         {
             // Arrange
             using var connection = new SqliteConnection("Data Source=:memory:");
@@ -118,16 +120,14 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 .UseSqlite(connection)
                 .Options;
              
-
             // Act
             using (var actingContext = new ProfileDbContext(options))
             {
                 actingContext.Database.EnsureCreated();
                 var repo = new ProfileRepository(actingContext);
-
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
             }
-            
+ 
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
             {

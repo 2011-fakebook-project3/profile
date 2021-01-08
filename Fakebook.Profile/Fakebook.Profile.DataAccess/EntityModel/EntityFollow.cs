@@ -10,6 +10,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     public class EntityFollow
     {
         /*
+
         public EntityFollow() { }
         public EntityFollow(int id, int userId)
         {
@@ -27,3 +28,4 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
     }
 }
+

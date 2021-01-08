@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
 using Microsoft.OpenApi.Models;
 
 namespace Fakebook.Profile.RestApi
@@ -37,7 +38,7 @@ namespace Fakebook.Profile.RestApi
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IProfileRepository, ProfileRepository>();
-
+          
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });

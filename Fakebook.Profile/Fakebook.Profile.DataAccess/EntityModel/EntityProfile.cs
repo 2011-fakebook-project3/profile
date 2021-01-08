@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
     public class EntityProfile
     {
+
         public EntityProfile()
         {
             Followees = new HashSet<EntityFollow>();
@@ -39,5 +41,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         // bridge table
         public virtual ICollection<EntityFollow> Followees { get; set; }
         public virtual ICollection<EntityFollow> Followers { get; set; }
+
     }
 }
