@@ -1,4 +1,5 @@
 ﻿using Fakebook.Profile.DataAccess.Services.Interfaces;
+
 namespace Fakebook.Profile.DataAccess.Services
 {
     public class ProfileDbSettings : IProfileDbSettings
