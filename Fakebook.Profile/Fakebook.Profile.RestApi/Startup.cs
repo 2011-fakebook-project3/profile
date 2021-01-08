@@ -4,7 +4,6 @@ using Fakebook.Profile.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +13,7 @@ using Fakebook.Profile.DataAccess.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Okta.AspNetCore;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Microsoft.OpenApi.Models;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -64,11 +64,11 @@ namespace Fakebook.Profile.RestApi
 
             services.AddControllers();
 
-            /*
+            
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
-            */
+            
 
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
@@ -78,8 +78,8 @@ namespace Fakebook.Profile.RestApi
         public void Configure(IApplicationBuilder app) {
             if (_env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
             }
 
             app.UseHttpsRedirection();
