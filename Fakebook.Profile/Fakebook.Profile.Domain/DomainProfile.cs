@@ -38,6 +38,11 @@ namespace Fakebook.Profile.Domain
             get => _firstName;
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid first name, {value}");
+                }
+
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
                 Match m = nameRegex.Match(value);
                 if (!m.Success)
@@ -52,6 +57,11 @@ namespace Fakebook.Profile.Domain
             get => _lastName;
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid first name, {value}");
+                }
+
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
                 Match m = nameRegex.Match(value);
                 if (!m.Success)
@@ -66,11 +76,15 @@ namespace Fakebook.Profile.Domain
         {
             get => _phoneNumber;
             set
-            {
-                Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
-                Match m = phoneRegex.Match(value);
-                if (!m.Success)
-                    throw new ArgumentException();
+            {  
+                if(value is not null)
+                {
+                    Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
+                    Match m = phoneRegex.Match(value);
+                    if (!m.Success)
+                        throw new ArgumentException();
+                }
+                
                 _phoneNumber = value;
             }
         }
