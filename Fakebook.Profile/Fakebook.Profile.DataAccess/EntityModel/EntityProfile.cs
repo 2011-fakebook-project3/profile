@@ -7,12 +7,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 {
     public class EntityProfile
     {
-        public EntityProfile()
-        {
-            Followees = new HashSet<EntityFollow>();
-            Followers = new HashSet<EntityFollow>();
-        }
-
         public EntityProfile ShallowCopy()
         {
             return (EntityProfile)this.MemberwiseClone();
@@ -34,9 +28,5 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public DateTime BirthDate { get; set; }
 
         public string Status { get; set; }
-
-        // bridge table
-        public virtual ICollection<EntityFollow> Followees { get; set; }
-        public virtual ICollection<EntityFollow> Followers { get; set; }
     }
 }
