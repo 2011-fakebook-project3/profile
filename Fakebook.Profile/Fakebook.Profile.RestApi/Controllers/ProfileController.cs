@@ -16,8 +16,7 @@ namespace Fakebook.Profile.RestApi.Controllers
     /// Controller that handles routes/actions relating to profiles
     /// </summary>
     [Route("api/profiles")]
-    //TODO: uncomment when okta is set up 
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
@@ -56,7 +55,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="emails">A collection of emails as strings to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
-        [Authorize]
         [HttpGet("selection/{emails}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -77,7 +75,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="profileEmail">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
-        [Authorize]
         [HttpGet("")]
         [HttpGet("{profileEmail}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -128,7 +125,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <param name="apiModel">The data to update the currect user with, if it exists</param>
         /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
