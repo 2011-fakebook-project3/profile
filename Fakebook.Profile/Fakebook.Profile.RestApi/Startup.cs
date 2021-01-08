@@ -34,16 +34,14 @@ namespace Fakebook.Profile.RestApi
             services.AddSingleton<IProfileDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<ProfileDbSettings>>().Value);
 
+            // TODO: Add in the user secret for the links to the other files
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200",
-                                "http://localhost:44362", 
-                                "https://frontend.site", 
-                                "http://other.services", 
-                                "okta.site")
+                        builder.WithOrigins()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
