@@ -1,4 +1,0 @@
-﻿[*.cs]
-
-# IDE0001: Simplify Names
-dotnet_diagnostic.IDE0001.severity = silent
