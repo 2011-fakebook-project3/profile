@@ -77,10 +77,6 @@ namespace Fakebook.Profile.Domain
         public async Task<IEnumerable<DomainProfile>> GetAllProfilesAsync()
         {          
             var entity = await _context.EntityProfiles
-                .Include(u => u.Followees)
-                     .ThenInclude(u => u.Followee)
-                .Include(u => u.Followers)
-                      .ThenInclude(u => u.Follower)         
                 .ToListAsync();
 
             // model mapping
@@ -109,10 +105,6 @@ namespace Fakebook.Profile.Domain
             }
 
             var entity = await entities                
-                .Include(u => u.Followees)
-                     .ThenInclude(u => u.Followee)
-                .Include(u => u.Followers)
-                      .ThenInclude(u => u.Follower)
                 .FirstOrDefaultAsync(e => e.Email == email);
 
             // model mapping
@@ -137,11 +129,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentException("Not all emails requested are present.");
             }
 
-            var users = await userEntities
-                .Include(u => u.Followees)
-                     .ThenInclude(u => u.Followee)
-                .Include(u => u.Followers)
-                      .ThenInclude(u => u.Follower)                
+            var users = await userEntities            
                 .ToListAsync();
 
             if (!emails.Any() || !users.Any())

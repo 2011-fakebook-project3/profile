@@ -13,9 +13,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         { }
         
         public DbSet<EntityProfile> EntityProfiles { get; set; }
-        public DbSet<EntityFollow> Follows { get; set; }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
