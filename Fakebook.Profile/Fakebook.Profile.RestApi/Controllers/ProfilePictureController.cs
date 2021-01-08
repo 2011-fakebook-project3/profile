@@ -28,7 +28,7 @@ namespace Fakebook.Profile.RestApi.Controllers
 
         // POST api/<ProfilePictureController>
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<ActionResult> Post([FromBody] string value)
+        public async Task<ActionResult> Post()
         {
             IFormFile file = Request.Form.Files[0];
             if (file == null)
