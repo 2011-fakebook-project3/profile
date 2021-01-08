@@ -90,7 +90,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         }
 
         [Theory]
-        [ClassData(typeof(Update.Invalid))]
+        [ClassData(typeof(Update.InvalidName))]
         public async Task UpdateProfile_InvalidName(DomainProfile user, DomainProfile userUpdate)
         {
             // Arrange
