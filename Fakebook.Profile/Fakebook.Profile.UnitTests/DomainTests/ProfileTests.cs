@@ -83,7 +83,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
             profile.FirstName = MockedProfile.FirstName;
             profile.LastName = MockedProfile.LastName;
-            profile.PhoneNumber = MockedProfile.PhoneNumber;
+            if(MockedProfile.PhoneNumber is not null)
+                profile.PhoneNumber = MockedProfile.PhoneNumber;
             profile.BirthDate = MockedProfile.BirthDate;
             profile.Status = MockedProfile.Status;
 
@@ -115,7 +116,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.NotNull(profile.Name);
             Assert.NotNull(profile.FirstName);
             Assert.NotNull(profile.LastName);
-            Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
+            Assert.DoesNotMatch(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
             Assert.DoesNotMatch(RegularExpressions.EmailCharacters, profile.Email);
         }
 
