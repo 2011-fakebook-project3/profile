@@ -14,6 +14,9 @@ using Fakebook.Profile.DataAccess.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Okta.AspNetCore;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using System.IO;
+using Serilog.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -75,12 +78,15 @@ namespace Fakebook.Profile.RestApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app) {
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory) {
             if (_env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 //app.UseSwagger();
                 //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
             }
+
+            var path = Directory.GetCurrentDirectory();
+            loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
             app.UseHttpsRedirection();
 

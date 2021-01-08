@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
+using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
@@ -22,13 +23,17 @@ namespace Fakebook.Profile.RestApi.Controllers
     {
         private readonly IProfileRepository _repository;
 
+
+        private readonly ILogger<ProfileController> _logger;
+
         /// <summary>
         /// Contructor method for creating a Profile Controller
         /// </summary>
         /// <param name="repository">Instance of an IRepository interface that allows for the class to store through different mediums</param>
-        public ProfileController(IProfileRepository repository)
+        public ProfileController(IProfileRepository repository, ILogger<ProfileController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -86,6 +91,7 @@ namespace Fakebook.Profile.RestApi.Controllers
 
             if (email is null)
             {
+                _logger.LogError($"Could not find current user's email. {profileEmail}");
                 throw new ArgumentException("Could not find current user's email");
             }
 
@@ -111,9 +117,11 @@ namespace Fakebook.Profile.RestApi.Controllers
                 await _repository.CreateProfileAsync(domainProfile);
                 return this.CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
             }
-            catch
+            catch(Exception e)
             {
                 // return this because the profile could not be created.
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
                 return BadRequest();
             }
         }
@@ -141,9 +149,16 @@ namespace Fakebook.Profile.RestApi.Controllers
 
                 await _repository.UpdateProfileAsync(userEmail, apiModel.ToDomainProfile());
                 return Ok();
-            }
-            catch
+            }catch(ArgumentException e)
             {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                return NotFound(GetUserEmail());
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
                 //should be 404?
                 return BadRequest();
             }
