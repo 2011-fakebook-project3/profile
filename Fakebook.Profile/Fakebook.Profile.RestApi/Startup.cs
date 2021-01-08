@@ -1,18 +1,16 @@
 using Fakebook.Profile.DataAccess.EntityModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Fakebook.Profile.DataAccess.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Okta.AspNetCore;
+using Fakebook.Profile.DataAccess.Services.Interfaces;
+
 namespace Fakebook.Profile.RestApi
 {
     public class Startup
@@ -35,8 +33,6 @@ namespace Fakebook.Profile.RestApi
 
             services.AddSingleton<IProfileDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<ProfileDbSettings>>().Value);
-
-
 
             services.AddCors(options =>
             {
