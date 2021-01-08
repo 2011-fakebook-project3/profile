@@ -1,6 +1,10 @@
+using System;
 using Fakebook.Profile.DataAccess.EntityModel;
+using Fakebook.Profile.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,16 +30,6 @@ namespace Fakebook.Profile.RestApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-
-            // https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-5.0&tabs=visual-studio#add-a-configuration-model
-            services.Configure<ProfileDbSettings>(
-                Configuration.GetSection(nameof(ProfileDbSettings)));
-
-            services.AddSingleton<IProfileDbSettings>(sp =>
-                sp.GetRequiredService<IOptions<ProfileDbSettings>>().Value);
-
-            // TODO: Add in the user secret for the links to the other files
-
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -67,8 +61,6 @@ namespace Fakebook.Profile.RestApi
                         ClientSecret = "CLIENT_SECRET_HERE",
                     }
                 );
-
-            
 
             services.AddControllers();
 
