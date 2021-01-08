@@ -40,7 +40,7 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException($"Invalid first name, {value}");
+                    throw new ArgumentNullException($"Invalid first name, {value}");
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
@@ -60,7 +60,7 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException($"Invalid first name, {value}");
+                    throw new ArgumentNullException($"Invalid first name, {value}");
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
