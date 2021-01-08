@@ -11,9 +11,8 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public ProfileDbContext([NotNull] DbContextOptions options) :
             base(options)
         { }
-
-        public DbSet<EntityProfile> StorageProfiles { get; set; }
-
+        
+        public DbSet<EntityProfile> EntityProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
