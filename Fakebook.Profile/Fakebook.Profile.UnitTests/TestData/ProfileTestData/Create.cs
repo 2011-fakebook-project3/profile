@@ -26,9 +26,6 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         private static string fakeURI4 = "https://i.imgur.com/FAKE4.jpg";
         private static string fakeURI5 = "https://i.imgur.com/FAKE5.jpg";
 
-
-
-
         public class Valid : IEnumerable<object[]>
         {
             /// <summary>
@@ -116,7 +113,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                     new DomainProfile
                     {
                         Email = GenerateRandom.Email(),
-                        // cannot set to null, will get exception
+                        // cannot set to null here, will get exception
                         // FirstName = null,
                         // LastName = null,
                         ProfilePictureUrl = new Uri(fakeURI3),
@@ -141,7 +138,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),
                         ProfilePictureUrl = new Uri(fakeURI4),
-                        // cannot set to a random string, will get exception
+                        // cannot set to a random string here, will get exception
                         // PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
@@ -159,7 +156,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile
                     {
-                        // cannot set to a random string, will get exception
+                        // cannot set to a random string here, will get exception
                         // Email = GenerateRandom.String(), // .Email()
                         FirstName = GenerateRandom.String(),
                         LastName = GenerateRandom.String(),

@@ -12,10 +12,10 @@ namespace Fakebook.Profile.Domain
     public class DomainProfile
     {
         //[anything]@[anything].[anything]
-        private string _email;
+        private string _email; 
         public string Email
         {
-            get => _email;
+            get => _email; 
             set
             {
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
@@ -27,11 +27,11 @@ namespace Fakebook.Profile.Domain
         }
 
         //should be a url, defualts to an image.
-        public Uri ProfilePictureUrl { get; set; }
+        public Uri ProfilePictureUrl { get; set; } = new Uri("https://publicdomainvectors.org/photos/defaultprofile.png");
 
-        public string Name => $"{FirstName} {LastName}";       
+        public string Name => $"{FirstName} {LastName}";
 
-        //A-Z, ', ., - only... probs
+        //A-Z, ', ., - only
         private string _firstName;
         public string FirstName
         {
@@ -39,6 +39,7 @@ namespace Fakebook.Profile.Domain
             set
             {
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
+                // throw null exception if value is null
                 Match m = nameRegex.Match(value);
                 if (!m.Success)
                     throw new ArgumentException();
@@ -61,17 +62,21 @@ namespace Fakebook.Profile.Domain
         }
 
         private string _phoneNumber;
-        //any 10 digits, can have - or () spaces optional, or null
+        //any up to 15 digits, can have - or () spaces optional, or null
         public string PhoneNumber
         {
             get => _phoneNumber;
             set
             {
                 Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
-                Match m = phoneRegex.Match(value);
-                if (!m.Success)
-                    throw new ArgumentException();
+                if (value != null)
+                {
+                    Match m = phoneRegex.Match(value);
+                    if (!m.Success)
+                        throw new ArgumentException();
+                }
                 _phoneNumber = value;
+
             }
         }
 
@@ -81,14 +86,29 @@ namespace Fakebook.Profile.Domain
             get => _birthDate;
             set
             {
-                if (value > DateTime.Now)
+                if (value.Date > DateTime.Now.Date) 
                     throw new ArgumentException();
                 _birthDate = value;
             }
         }
 
         //can be null, or reasonable text (sanitized so they don't get funky)
-        public string Status { get; set; }
+        string _status;
+        public string Status { 
+            get => _status;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _status = null;
+                }
+                else
+                {
+                    //todo: check for funk, like js, html, and sql injection. Packages can help
+                    _status = value;
+                }
+            }
+        }
 
         public DomainProfile() { }
 
