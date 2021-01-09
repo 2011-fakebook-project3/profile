@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using Fakebook.Profile.Domain;
-using Fakebook.Profile.RestApi.ApiModel;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+using Fakebook.Profile.Domain;
+using Fakebook.Profile.RestApi.ApiModel;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
@@ -16,6 +15,8 @@ namespace Fakebook.Profile.RestApi.Controllers
     /// Controller that handles routes/actions relating to profiles
     /// </summary>
     [Route("api/profiles")]
+    //TODO: uncomment when okta is set up 
+    //[Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
