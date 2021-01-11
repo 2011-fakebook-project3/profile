@@ -9,10 +9,19 @@ using System.Threading.Tasks;
 
 namespace Fakebook.Profile.Domain
 {
+    /// <summary>
+    /// A profile for the domain logic and Api to use.
+    /// </summary>
     public class DomainProfile
     {
         //[anything]@[anything].[anything]
         private string _email; 
+        /// <summary>
+        /// The user's email.
+        /// </summary>
+        /// <remarks>
+        /// Cannot be null, and must match the Regex for email characters.
+        /// </remarks>
         public string Email
         {
             get => _email; 
@@ -27,12 +36,23 @@ namespace Fakebook.Profile.Domain
         }
 
         //should be a url, defualts to an image.
+        /// <summary>
+        /// A url that is expected to be an image. Technically though, no checks are done to enforce that.
+        /// </summary>
         public Uri ProfilePictureUrl { get; set; } = new Uri("https://publicdomainvectors.org/photos/defaultprofile.png");
 
+        /// <summary>
+        /// Shortcut to get a user's full name. 
+        /// </summary>
         public string Name => $"{FirstName} {LastName}";
 
-        //A-Z, ', ., - only
         private string _firstName;
+        /// <summary>
+        /// The user's first name.
+        /// </summary>
+        /// <remarks>
+        /// A-Z, ', ., - are the only valid characters for first and last name.
+        /// </remarks>
         public string FirstName
         {
             get => _firstName;
@@ -53,6 +73,12 @@ namespace Fakebook.Profile.Domain
         }
 
         private string _lastName;
+        /// <summary>
+        /// The user's last name.
+        /// </summary>
+        /// <remarks>
+        /// A-Z, ', ., - are the only valid characters for first and last name.
+        /// </remarks>
         public string LastName
         {
             get => _lastName;
@@ -72,7 +98,12 @@ namespace Fakebook.Profile.Domain
         }
 
         private string _phoneNumber;
-        //any up to 15 digits, can have - or () spaces optional, or null
+        /// <summary>
+        /// The user's phone number.
+        /// </summary>
+        /// <remarks>
+        /// any up to 15 digits, can have - or () spaces optional, or be null
+        /// </remarks>
         public string PhoneNumber
         {
             get => _phoneNumber;
@@ -92,6 +123,12 @@ namespace Fakebook.Profile.Domain
         }
 
         private DateTime _birthDate;
+        /// <summary>
+        /// The user's birthdate. 
+        /// </summary>
+        /// <remarks>
+        /// Can't be null, but will default to all zeros.
+        /// </remarks>
         public DateTime BirthDate
         {
             get => _birthDate;
@@ -103,8 +140,13 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        //can be null, or reasonable text (sanitized so they don't get funky)
         string _status;
+        /// <summary>
+        /// The user's current status message.
+        /// </summary>
+        /// <remarks>
+        /// can be null, or reasonable text (sanitized so they don't get funky)
+        /// </remarks>
         public string Status { 
             get => _status;
             set
