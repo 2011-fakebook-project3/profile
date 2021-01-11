@@ -18,9 +18,13 @@ namespace Fakebook.Profile.Domain
             get => _email; 
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if(value is null)
                 {
-                    throw new ArgumentException("Invalid Email");
+                    throw new ArgumentNullException("Email cannot be null.");
+                }
+                else if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid Email, {value}");
                 }
 
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
@@ -43,7 +47,11 @@ namespace Fakebook.Profile.Domain
             get => _firstName;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if(value is null)
+                {
+                    throw new ArgumentNullException("First name cannot be null.");
+                }
+                 else if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException($"Invalid first name, {value}");
                 }
@@ -63,9 +71,13 @@ namespace Fakebook.Profile.Domain
             get => _lastName;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (value is null)
                 {
-                    throw new ArgumentException($"Invalid first name, {value}");
+                    throw new ArgumentNullException("Last name cannot be null.");
+                }
+                else if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid last name, {value}");
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);

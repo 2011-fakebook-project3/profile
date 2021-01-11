@@ -52,42 +52,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         }
 
         // Invalid split into 3 parts
-        // only test null values, not test names that don't fit regex
-        [Theory]
-        [ClassData(typeof(Create.InvalidName))]
-        public async Task CreateUser_InvalidName(DomainProfile user)
-        {
-            // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
-
-            var options = new DbContextOptionsBuilder<ProfileDbContext>()
-                .UseSqlite(connection)
-                .Options;
-
-            // Act
-            using (var actingContext = new ProfileDbContext(options))
-            {
-                actingContext.Database.EnsureCreated();
-
-                var repo = new ProfileRepository(actingContext);
-
-                // Create the entity profile with an incomplete user profile
-                // first name and last name are not set -> invalid (from ProfileRepository CreateProfileAsync)
-                await Assert.ThrowsAsync<ArgumentException>(async () => await repo.CreateProfileAsync(user));
-            }
-
-            // Assert
-            using (var assertionContext = new ProfileDbContext(options))
-            {
-                var repo = new ProfileRepository(assertionContext);
-
-                var users = await repo.GetAllProfilesAsync();
-
-                Assert.False(users.Any());
-            }
-        }
-
         [Theory]
         [ClassData(typeof(Create.InvalidPhoneNumber))]
         public async Task CreateUser_InvalidPhone(DomainProfile user)
@@ -128,41 +92,5 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 Assert.Equal(userInDB.Status, user.Status);
             }
         }
-
-        [Theory]
-        [ClassData(typeof(Create.InvalidEmail))]
-        public async Task CreateUser_InvalidEmail(DomainProfile user)
-        {
-            // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
-
-            var options = new DbContextOptionsBuilder<ProfileDbContext>()
-                .UseSqlite(connection)
-                .Options;
-
-            // Act
-            using (var actingContext = new ProfileDbContext(options))
-            {
-                actingContext.Database.EnsureCreated();
-
-                var repo = new ProfileRepository(actingContext);
-
-                // Create the entity profile with an incomplete user profile
-                // email is not set -> invalid (from ProfileRepository CreateProfileAsync)
-                await Assert.ThrowsAsync<ArgumentException>(async () => await repo.CreateProfileAsync(user));
-            }
-
-            // Assert
-            using (var assertionContext = new ProfileDbContext(options))
-            {
-                var repo = new ProfileRepository(assertionContext);
-
-                var users = await repo.GetAllProfilesAsync();
-
-                Assert.False(users.Any());
-            }
-        }
     }
-
 }

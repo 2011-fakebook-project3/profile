@@ -19,7 +19,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             string email = null;
             //act
             //assert
-            Assert.ThrowsAny<ArgumentNullException>(() => new DomainProfile(email, "first", "last"));
+            Assert.ThrowsAny<ArgumentNullException>(() => new DomainProfile(null, "first", "last"));
         }
 
         /// <summary>

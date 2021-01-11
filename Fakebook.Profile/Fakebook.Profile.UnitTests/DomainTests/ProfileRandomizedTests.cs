@@ -62,8 +62,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
             Assert.ThrowsAny<ArgumentNullException>(() => profile.FirstName = null);
             Assert.ThrowsAny<ArgumentNullException>(() => profile.LastName = null);
-            Assert.ThrowsAny<ArgumentException>(() => profile.FirstName = MockedProfile.FirstName);
-            Assert.ThrowsAny<ArgumentException>(() => profile.LastName = MockedProfile.LastName);
         }
 
         [Theory]
@@ -83,7 +81,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.NotNull(profile.FirstName);
             Assert.NotNull(profile.LastName);
             Assert.Matches(RegularExpressions.EmailCharacters, profile.Email);
-            Assert.ThrowsAny<ArgumentException>(() => profile.PhoneNumber = MockedProfile.PhoneNumber);
             Assert.ThrowsAny<ArgumentException>(() => profile.PhoneNumber = GenerateRandom.String());
         }
 
@@ -117,7 +114,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             // act
             // assert
-            Assert.ThrowsAny<ArgumentException>(() => new DomainProfile(MockedProfile.Email, MockedProfile.FirstName, MockedProfile.LastName));
+            Assert.ThrowsAny<ArgumentException>(() => new DomainProfile(GenerateRandom.String(), MockedProfile.FirstName, MockedProfile.LastName));
         }
 
 
