@@ -18,7 +18,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
+                        new DomainProfile(target, GenerateRandom.String(), GenerateRandom.String())
                         {
                             ProfilePictureUrl = null,
                             PhoneNumber = GenerateRandom.PhoneNumber(),
