@@ -13,7 +13,7 @@ namespace Fakebook.Profile.DataAccess.Services
     /// <summary>
     /// Gets data from/to a NoSQL database.
     /// </summary>
-    public class StorageService : IStorageService
+    public class AzureBlobStorageService : IStorageService
     {
         private readonly BlobServiceClient _client;
         private string _containerName;
@@ -24,7 +24,7 @@ namespace Fakebook.Profile.DataAccess.Services
         /// <param name="client"> an instance of BlobClient</param>
         /// <param name="containerName"> name of the storage container associated </param>
         /// <returns></returns>
-        public StorageService(BlobServiceClient client, string containerName)
+        public AzureBlobStorageService(BlobServiceClient client, string containerName)
         {
             _client = client;
             _containerName = containerName;
