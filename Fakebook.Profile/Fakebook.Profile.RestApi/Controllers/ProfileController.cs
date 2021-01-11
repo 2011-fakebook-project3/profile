@@ -61,11 +61,11 @@ namespace Fakebook.Profile.RestApi.Controllers
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesAsync([FromBody] IEnumerable<string> emails)
         {
             var results = await _repository.GetProfilesByEmailAsync(emails);
-            // convert them to the ApiModel
 
-            return results
+            // convert them to the ApiModel
+            return Ok(results
                 .Select(p => new ProfileApiModel(p))
-                .ToList();
+                .ToList());
         }
 
         /// <summary>
@@ -82,11 +82,12 @@ namespace Fakebook.Profile.RestApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
         {
+            // redundant or incorrect??
             string email = profileEmail is not null ? profileEmail : GetUserEmail();
 
             if (email is null)
             {
-                throw new ArgumentException("Could not find current user's email");
+                throw new ArgumentNullException("Could not find current user's email");
             }
 
             var result = await _repository.GetProfileAsync(email);
@@ -99,6 +100,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="apiModel">The data of the profile to be created</param>
         /// <returns>Created if the model was created successfully, otherwise a 400-based status code</returns>
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -131,22 +133,22 @@ namespace Fakebook.Profile.RestApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UpdateAsync([FromBody] ProfileApiModel apiModel)
         {
+            string email = GetUserEmail();
+            if (email is null)
+            {           
+                throw new ArgumentException("Could not find current user's email");  
+            }
             try
             {
-                string userEmail = GetUserEmail();
-                if(userEmail is null)
-                {           
-                    throw new ArgumentException("Could not find current user's email");
-                }
-
-                await _repository.UpdateProfileAsync(userEmail, apiModel.ToDomainProfile());
+                await _repository.UpdateProfileAsync(email, apiModel.ToDomainProfile());
                 return Ok();
             }
-            catch
+            catch 
             {
-                //should be 404?
                 return BadRequest();
             }
+          
+            
         }
     }
 }
