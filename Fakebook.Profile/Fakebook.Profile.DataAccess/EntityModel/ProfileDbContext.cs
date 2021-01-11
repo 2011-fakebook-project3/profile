@@ -41,8 +41,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired(false);
 
-                //TODO: make consistant with the domain, and update the comment in the Entity Profile
-                // to reflect choice
                 entity.Property(e => e.BirthDate)
                     .IsRequired(true);
 
