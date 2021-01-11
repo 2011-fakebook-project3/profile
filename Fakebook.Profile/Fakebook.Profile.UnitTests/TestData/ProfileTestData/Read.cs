@@ -18,12 +18,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = target,
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -37,32 +34,23 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(target, GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = target,
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -83,12 +71,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -101,12 +86,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -119,12 +101,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -149,12 +128,9 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(target, GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = target,
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
@@ -167,32 +143,23 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new List<DomainProfile>
                     {
-                        new DomainProfile
+                        new DomainProfile(target, GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = target,
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         },
-                        new DomainProfile
+                        new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                         {
-                            FirstName = GenerateRandom.String(),
-                            LastName = GenerateRandom.String(),
                             ProfilePictureUrl = null,
-                            Email = GenerateRandom.Email(),
                             PhoneNumber = GenerateRandom.PhoneNumber(),
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null

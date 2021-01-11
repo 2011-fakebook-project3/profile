@@ -40,11 +40,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             {
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = null,
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
@@ -54,11 +51,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
 
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = new Uri(fakeURI1),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
@@ -68,11 +62,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
 
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = new Uri(fakeURI2),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
@@ -82,11 +73,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
 
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = null,
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
@@ -99,8 +87,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         }
 
         /// <summary>
-        /// generates 3 variants of invalid user profiles:
-        /// invalid first name, last name
+        /// generates 2 variants of invalid user profiles:
         /// invalid email format
         /// invlaid phone number format 
         /// </summary>
@@ -110,9 +97,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             {
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
                         // cannot set to null here, will get exception
                         // FirstName = null,
                         // LastName = null,
@@ -132,11 +118,8 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             {
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        Email = GenerateRandom.Email(),
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = new Uri(fakeURI4),
                         // cannot set to a random string here, will get exception
                         // PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
@@ -154,12 +137,10 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             {
                 yield return new object[]
                 {
-                    new DomainProfile
+                    new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
                         // cannot set to a random string here, will get exception
                         // Email = GenerateRandom.String(), // .Email()
-                        FirstName = GenerateRandom.String(),
-                        LastName = GenerateRandom.String(),
                         ProfilePictureUrl = new Uri(fakeURI5),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
