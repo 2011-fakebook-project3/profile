@@ -98,7 +98,7 @@ namespace Fakebook.Profile.Domain
             set
             {
                 if (value.Date > DateTime.Now.Date) 
-                    throw new ArgumentException();
+                    throw new ArgumentException($"Invalid Date, {value.Date}, is in the future.");
                 _birthDate = value;
             }
         }
