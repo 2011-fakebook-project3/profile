@@ -81,7 +81,7 @@ namespace Fakebook.Profile.RestApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public abstract void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory) {
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory) {
             if (_env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
