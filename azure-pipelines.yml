@@ -3,19 +3,11 @@ trigger:
   branches:
     include:
     - main
-  paths:
-    include:
-    - azure-pipelines.yml
-    - Fakebook.Profile
 
 pr:
   branches:
     include:
     - '*'
-  paths:
-    include:
-    - azure-pipelines.yml
-    - Fakebook.Profile
 
 pool:
   vmImage: ubuntu-latest
