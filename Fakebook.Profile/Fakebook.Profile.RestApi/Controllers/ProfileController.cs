@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
+using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
@@ -15,20 +17,25 @@ namespace Fakebook.Profile.RestApi.Controllers
     /// Controller that handles routes/actions relating to profiles
     /// </summary>
     [Route("api/profiles")]
-    //TODO: uncomment when okta is set up 
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
         private readonly IProfileRepository _repository;
+        private readonly IStorageService _storageService;
+
+
+        private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
         /// Contructor method for creating a Profile Controller
         /// </summary>
         /// <param name="repository">Instance of an IRepository interface that allows for the class to store through different mediums</param>
-        public ProfileController(IProfileRepository repository)
+        public ProfileController(IProfileRepository repository, IStorageService storageService, ILogger<ProfileController> logger)
         {
             _repository = repository;
+            _storageService = storageService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -53,7 +60,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="emails">A collection of emails as strings to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
-        [Authorize]
         [HttpGet("selection/{emails}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,7 +80,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="profileEmail">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
-        [Authorize]
         [HttpGet("")]
         [HttpGet("{profileEmail}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -87,7 +92,8 @@ namespace Fakebook.Profile.RestApi.Controllers
 
             if (email is null)
             {
-                throw new ArgumentNullException("Could not find current user's email");
+                _logger.LogError($"Could not find current user's email. {profileEmail}");
+                throw new ArgumentException("Could not find current user's email");
             }
 
             var result = await _repository.GetProfileAsync(email);
@@ -113,9 +119,11 @@ namespace Fakebook.Profile.RestApi.Controllers
                 await _repository.CreateProfileAsync(domainProfile);
                 return this.CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
             }
-            catch
+            catch(Exception e)
             {
                 // return this because the profile could not be created.
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
                 return BadRequest();
             }
         }
@@ -127,7 +135,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <param name="apiModel">The data to update the currect user with, if it exists</param>
         /// <returns>200 Ok if the process goes successfully; elsewise a 400-based status code</returns>
         [HttpPut]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -142,13 +149,48 @@ namespace Fakebook.Profile.RestApi.Controllers
             {
                 await _repository.UpdateProfileAsync(email, apiModel.ToDomainProfile());
                 return Ok();
-            }
-            catch 
+            }catch(ArgumentException e)
             {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                return NotFound(GetUserEmail());
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                //should be 404?
                 return BadRequest();
             }
           
             
+        }
+
+        [HttpPost("/upload"), DisableRequestSizeLimit]
+        public async Task<ActionResult> Upload()
+        {
+            IFormFile file = Request.Form.Files[0];
+
+            if (file == null)
+                return BadRequest();
+
+            // generate a random guid from the file name
+            string extension = file.FileName
+                .Split('.')
+                .Last();
+
+            string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
+
+            var result = await _storageService.UploadFileContentAsync(
+                file.OpenReadStream(),
+                file.ContentType,
+                newFileName,
+                "fakebook"
+            );
+
+            var toReturn = result.AbsoluteUri;
+
+            return Ok(new { path = toReturn });
         }
     }
 }
