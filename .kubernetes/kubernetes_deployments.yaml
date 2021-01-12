@@ -29,8 +29,11 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: ConnectionStrings__Default
+        - name: FakebookProfile__ConnectionString
           value: 'Host=fakebook-profile-db;Database=postgres;Username=postgres;Password=Pass@word'
+        envFrom:
+        - secretRef:
+          name: fakebook-profile-config
         resources:
           limits:
             cpu: 500m
