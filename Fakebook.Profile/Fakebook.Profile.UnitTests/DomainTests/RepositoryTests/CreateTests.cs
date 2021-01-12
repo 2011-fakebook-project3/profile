@@ -16,6 +16,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
     public class CreateTests
     {
+        /// <summary>
+        /// Checks that valid user info works for domain profiles.
+        /// </summary>
+        /// <param name="mockedProfile">Data for the domain profile.</param>
         [Theory]
         [ClassData(typeof(Create.Valid))]
         public async Task CreateUser_ValidData(DomainProfile user)
