@@ -1,7 +1,6 @@
+using System.Configuration;
 using System.IO;
-
 using Azure.Storage.Blobs;
-
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
@@ -40,7 +39,7 @@ namespace Fakebook.Profile.RestApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins()
+                        builder.WithOrigins("https://fakebook.revaturelabs.com/")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
@@ -53,20 +52,13 @@ namespace Fakebook.Profile.RestApi
                 {
                     options.Authority = "https://dev-7862904.okta.com/oauth2/default";
                     options.Audience = "api://default";
+
                     // Won't send details outside of dev env
                     if (_env.IsDevelopment())
                     {
                         options.IncludeErrorDetails = true;
                     }
-                    options.RequireHttpsMetadata = false;
-                    // Add okta auth
-                }).AddOktaMvc(new OktaMvcOptions
-                {
-                    OktaDomain = "https://dev-7862904okta.com/oauth2/default",
-                    ClientId = "CLIENT_ID_HERE",
-                    ClientSecret = "CLIENT_SECRET_HERE",
-                }
-                );
+                });
 
             services.AddControllers();
 
