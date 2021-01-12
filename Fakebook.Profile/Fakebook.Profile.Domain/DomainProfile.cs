@@ -1,11 +1,7 @@
-﻿using Fakebook.Profile.Domain.Utility;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
+using Fakebook.Profile.Domain.Utility;
 
 namespace Fakebook.Profile.Domain
 {
@@ -15,7 +11,7 @@ namespace Fakebook.Profile.Domain
     public class DomainProfile
     {
         //[anything]@[anything].[anything]
-        private string _email; 
+        private string _email;
         /// <summary>
         /// The user's email.
         /// </summary>
@@ -24,31 +20,25 @@ namespace Fakebook.Profile.Domain
         /// </remarks>
         public string Email
         {
-            get => _email; 
+            get => _email;
             set
             {
-                if(value is null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("Email cannot be null.");
-                }
-                else if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException($"Invalid Email, {value}");
+                    throw new ArgumentException($"Invalid Email, {value}", nameof(value));
                 }
 
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
-                Match m = emailRegex.Match(value);
-                if (!m.Success)
-                    throw new ArgumentException();
+                if (!emailRegex.IsMatch(value))
+                    throw new ArgumentException("", nameof(value));
                 _email = value;
             }
         }
 
-        //should be a url, defualts to an image.
         /// <summary>
         /// A url that is expected to be an image. Technically though, no checks are done to enforce that.
         /// </summary>
-        public Uri ProfilePictureUrl { get; set; } = new Uri("https://publicdomainvectors.org/photos/defaultprofile.png");
+        public Uri ProfilePictureUrl { get; set; }
 
         /// <summary>
         /// Shortcut to get a user's full name. 
@@ -67,20 +57,15 @@ namespace Fakebook.Profile.Domain
             get => _firstName;
             set
             {
-                if(value is null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("First name cannot be null.");
-                }
-                 else if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException($"Invalid first name, {value}");
+                    throw new ArgumentException($"Invalid first name, {value}", nameof(value));
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
                 // throw null exception if value is null
-                Match m = nameRegex.Match(value);
-                if (!m.Success)
-                    throw new ArgumentException();
+                if (!nameRegex.IsMatch(value))
+                    throw new ArgumentException("First name does not match the regex", nameof(value));
                 _firstName = value;
             }
         }
@@ -97,19 +82,14 @@ namespace Fakebook.Profile.Domain
             get => _lastName;
             set
             {
-                if (value is null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("Last name cannot be null.");
-                }
-                else if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException($"Invalid last name, {value}");
+                    throw new ArgumentException($"Invalid last name, {value}", nameof(value));
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
-                Match m = nameRegex.Match(value);
-                if (!m.Success)
-                    throw new ArgumentException();
+                if (!nameRegex.IsMatch(value))
+                    throw new ArgumentException("Last name does not match the regex", nameof(value));
                 _lastName = value;
             }
         }
@@ -125,17 +105,15 @@ namespace Fakebook.Profile.Domain
         {
             get => _phoneNumber;
             set
-            {  
-                if(value is not null)
+            {
+                if (value is not null)
                 {
                     Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
-                    Match m = phoneRegex.Match(value);
-                    if (!m.Success)
-                        throw new ArgumentException();
+                    if (!phoneRegex.IsMatch(value))
+                        throw new ArgumentException($"An invalid phone number was passed in (got '{value}').", nameof(value));
                 }
-                
-                _phoneNumber = value;
 
+                _phoneNumber = value;
             }
         }
 
@@ -151,7 +129,7 @@ namespace Fakebook.Profile.Domain
             get => _birthDate;
             set
             {
-                if (value.Date > DateTime.Now.Date) 
+                if (value.Date > DateTime.Now.Date)
                     throw new ArgumentException($"Invalid Date, {value.Date}, is in the future.");
                 _birthDate = value;
             }
@@ -164,7 +142,8 @@ namespace Fakebook.Profile.Domain
         /// <remarks>
         /// can be null, or reasonable text (sanitized so they don't get funky)
         /// </remarks>
-        public string Status { 
+        public string Status
+        {
             get => _status;
             set
             {
@@ -174,69 +153,65 @@ namespace Fakebook.Profile.Domain
                 }
                 else
                 {
-                    //todo: check for funk, like js, html, and sql injection. Packages can help
+                    var regex = new Regex(RegularExpressions.NoSpecialCharacters);
+                    if (!regex.IsMatch(value))
+                        throw new ArgumentException($"Status passed in is invalid, (got '{value}')", nameof(value));
                     _status = value;
                 }
             }
         }
 
-        public DomainProfile(string email, string firstname, string lastname, DateTime birthdate, Uri pfpuri = null, string phonenumer = null, string status = null )
+        /// <summary>
+        /// Construct a new DomainProfile with all of its properties/backing fields assigned if valid
+        /// </summary>
+        /// <param name="email">The email of the user; must be unique</param>
+        /// <param name="firstName">The first name of the user</param>
+        /// <param name="lastName">The last name of the user</param>
+        /// <param name="birthDate">The user's birthdate</param>
+        /// <param name="profilePictureUri">The URI of the user's profile picture; if null, will default to a valid URI</param>
+        /// <param name="phoneNumber">The phone number of the user's profile; it can be null</param>
+        /// <param name="status">The status message of the user's profile; it can be null</param>
+        public DomainProfile(string email, string firstName, string lastName, DateTime birthDate, Uri profilePictureUri = null, string phoneNumber = null, string status = null)
         {
-            this.Email = email;
-            if (email == null)
-            {
-                throw new ArgumentNullException();            
-            }
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            BirthDate = birthDate;
+            PhoneNumber = phoneNumber;
 
-            this.FirstName = firstname;
-            this.LastName = lastname;  
-            
-            if(pfpuri is null)
-            {
-                this.ProfilePictureUrl = new Uri("https://publicdomainvectors.org/photos/defaultprofile.png");
-            }
-
-            this.BirthDate = birthdate;
-
-            this.PhoneNumber = phonenumer;
-
-            this.Status = status;
+            ProfilePictureUrl = profilePictureUri ?? new Uri(ProfileConfiguration.DefaultUri);
+            Status = status;
         }
 
         /// <summary>
         /// Create a new user with a phone number filled in.
         /// </summary>
-        /// <param name="email">The user's email. Must be uniqeu.</param>
+        /// <param name="email">The user's email. Must be unique.</param>
         /// <param name="phoneNumber">The user's phone number/</param>
-        /// <param name="firstname">The user's first name.</param>
-        /// <param name="lastname">The user's last name.</param>
-        public DomainProfile(string email, string phoneNumber, string firstname, string lastname)
+        /// <param name="firstName">The user's first name.</param>
+        /// <param name="lastName">The user's last name.</param>
+        public DomainProfile(string email, string phoneNumber, string firstName, string lastName)
         {
-            this.Email = email;
-            this.PhoneNumber = phoneNumber;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            FirstName = firstName;
+            LastName = lastName;
 
-            this.FirstName = firstname;
-            this.LastName = lastname;
+            ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
         }
-
-
 
         /// <summary>
         /// Create a basic profile
         /// </summary>
         /// <param name="email">The user's email. Must be Unique.</param>
-        /// <param name="firstname">The user's firstname.</param>
-        /// <param name="lastname">The user's lastname.</param>
-        public DomainProfile(string email, string firstname, string lastname)
+        /// <param name="firstName">The user's firstname.</param>
+        /// <param name="lastName">The user's lastname.</param>
+        public DomainProfile(string email, string firstName, string lastName)
         {
-            this.Email = email;
-            if (email == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            this.FirstName = firstname;
-            this.LastName = lastname;
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
         }
     }
 }

@@ -11,28 +11,46 @@ namespace Fakebook.Profile.RestApi.ApiModel
     /// </summary>
     public class ProfileApiModel
     {
-        //[anything]@[anything].[anything]
+        /// <summary>
+        /// The user's email. The primary key.
+        /// [anything]@[anything].[anything]
+        /// </summary>
         [Required, RegularExpression(RegularExpressions.EmailCharacters)]
         public string Email { get; set; }
 
-        //should be a url
-        //defaults to a default image.
+        /// <summary>
+        /// The Uri of the user's profile picture
+        /// Can be null and default to an image
+        /// </summary>
         public Uri ProfilePictureUrl { get; set; }
 
+        /// <summary>
+        /// The user's first name. Cannot be null.
+        /// </summary>
         [Required, RegularExpression(RegularExpressions.NameCharacters)]
         public string FirstName { get; set; }
 
+        /// <summary>
+        /// The user's last name, cannot be null.
+        /// </summary>
         [Required, RegularExpression(RegularExpressions.NameCharacters)]
         public string LastName { get; set; }
 
+        /// <summary>
+        /// The user's phone number. can be upto 15 characters and can be null. 
+        /// </summary>
         [Required, RegularExpression(RegularExpressions.PhoneNumberCharacters)]
         public string PhoneNumber { get; set; }
 
-        //not future
+        /// <summary>
+        /// The user's birthdate. Can't be null and can't in the future
+        /// </summary>
         [Required, DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        //can be null, or reasonable text (sanitized so they don't get funky)
+        /// <summary>
+        /// The user's current status message. Can be null, but sanitized so they don't get funky
+        /// </summary>
         public string Status { get; set; }
 
         public ProfileApiModel()

@@ -1,22 +1,21 @@
-using System;
+using System.IO;
+
 using Fakebook.Profile.DataAccess.EntityModel;
-using Fakebook.Profile.Domain;
+using Fakebook.Profile.DataAccess.Services;
+using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain.Utility;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Fakebook.Profile.DataAccess.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Okta.AspNetCore;
-using Fakebook.Profile.DataAccess.Services.Interfaces;
-using System.IO;
-using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
+using Okta.AspNetCore;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -32,7 +31,8 @@ namespace Fakebook.Profile.RestApi
         private readonly IWebHostEnvironment _env;
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -45,33 +45,35 @@ namespace Fakebook.Profile.RestApi
                     });
             });
 
-            services.AddAuthentication(                
+            services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://dev-7862904.okta.com/oauth2/default";
                     options.Audience = "api://default";
-                    //Won't send details outside of dev env
+                    // Won't send details outside of dev env
                     if (_env.IsDevelopment())
                     {
                         options.IncludeErrorDetails = true;
-                    }                   
-                    options.RequireHttpsMetadata = false;
-                }).AddOktaMvc(new OktaMvcOptions
-                    {
-                        OktaDomain = "https://dev-7862904okta.com/oauth2/default",
-                        ClientId = "CLIENT_ID_HERE",
-                        ClientSecret = "CLIENT_SECRET_HERE",
                     }
+                    options.RequireHttpsMetadata = false;
+                    // Add okta auth
+                }).AddOktaMvc(new OktaMvcOptions
+                {
+                    OktaDomain = "https://dev-7862904okta.com/oauth2/default",
+                    ClientId = "CLIENT_ID_HERE",
+                    ClientSecret = "CLIENT_SECRET_HERE",
+                }
                 );
 
             services.AddControllers();
 
-            
-            services.AddSwaggerGen(c => {
+
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
-            
+
 
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
@@ -80,12 +82,17 @@ namespace Fakebook.Profile.RestApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory) {
-            if (_env.IsDevelopment()) {
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        {
+            if (_env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
             }
+
+            ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
+            ProfileConfiguration.BlobContainerName = "fakebook"; // a temp value
 
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
@@ -100,7 +107,8 @@ namespace Fakebook.Profile.RestApi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllers();
             });
         }

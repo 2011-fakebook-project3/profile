@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xunit;
-using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
+using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
+
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+
+using Xunit;
 
 namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 {
@@ -70,7 +72,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         /// <returns></returns>
         [Theory]
         [ClassData(typeof(Read.Invalid))]
-        public async Task GetOneProfile_InvalidData(List<DomainProfile> users, string userEmail)      
+        public async Task GetOneProfile_InvalidData(List<DomainProfile> users, string userEmail)
         {
             // Arrange
             using var connection = new SqliteConnection("Data Source=:memory:");
@@ -120,7 +122,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
                 .Options;
-             
+
             // Act
             using (var actingContext = new ProfileDbContext(options))
             {
@@ -128,7 +130,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 var repo = new ProfileRepository(actingContext);
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
             }
- 
+
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
             {
@@ -143,7 +145,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 var userActual = usersActual.Single(u => u.Email == userExpected.Email);
                 Assert.Equal(userExpected.ProfilePictureUrl, userActual.ProfilePictureUrl);
                 Assert.Equal(userExpected.FirstName, userActual.FirstName);
-                Assert.Equal(userExpected.LastName, userActual.LastName);               
+                Assert.Equal(userExpected.LastName, userActual.LastName);
                 Assert.Equal(userExpected.PhoneNumber, userActual.PhoneNumber);
                 Assert.Equal(userExpected.BirthDate, userActual.BirthDate);
                 Assert.Equal(userExpected.Status, userActual.Status);

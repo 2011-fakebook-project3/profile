@@ -135,7 +135,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         }
-                    },                   
+                    },
                 };
 
                 target = GenerateRandom.Email();
@@ -164,7 +164,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                             BirthDate = GenerateRandom.DateTime(),
                             Status = null
                         }
-                    },                   
+                    },
                 };
             }
 

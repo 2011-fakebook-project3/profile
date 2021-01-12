@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
@@ -11,15 +9,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     /// </summary>
     public class EntityProfile
     {
-        /// <summary>
-        /// Copy the profile entity.
-        /// </summary>
-        /// <returns>A copy with the same values for the fields.</returns>
-        public EntityProfile ShallowCopy()
-        {
-            return (EntityProfile)this.MemberwiseClone();
-        }
-
         /// <summary>
         /// The primary key, the user's email.
         /// </summary>
@@ -30,7 +19,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// <summary>
         /// The Uri of the user's profile picture. Can be null.
         /// </summary>
-        public Uri ProfilePictureUrl { get; set;}
+        public Uri ProfilePictureUrl { get; set; }
 
         /// <summary>
         /// The user's first name. Cannot be null.
