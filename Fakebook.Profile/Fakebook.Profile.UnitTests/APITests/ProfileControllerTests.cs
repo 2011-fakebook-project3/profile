@@ -27,6 +27,13 @@ namespace Fakebook.Profile.UnitTests.APITests
         readonly string[] dummyEmails = { "test1@gmail.com", "test2@gmail.com" };
         readonly ProfileApiModel dummyInvalidProfile = new ProfileApiModel();
 
+        /// <summary>
+        /// Get's a valid profile with dummy data for the repo.
+        /// </summary>
+        /// <remarks>
+        /// Intended for getting data to try and retrieve from a moq object durring testing.
+        /// </remarks>
+        /// <returns>A valid user profile.</returns>
         private static DomainProfile GetValidDummyProfile()
         {
             DomainProfile profile = new DomainProfile(
@@ -42,6 +49,13 @@ namespace Fakebook.Profile.UnitTests.APITests
             return profile;
         }
 
+        /// <summary>
+        /// Get's a valid API profile with dummy data for testing.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be returned by moq objects for testing.
+        /// </remarks>
+        /// <returns>A valid API profile.</returns>
         private static ProfileApiModel GetValidAPIDummy()
         {
             ProfileApiModel profile = new ProfileApiModel

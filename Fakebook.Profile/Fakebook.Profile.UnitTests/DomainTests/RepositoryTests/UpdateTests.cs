@@ -15,6 +15,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 {
     public class UpdateTests
     {
+        /// <summary>
+        /// Test if an valid profile can be updated correctly
+        /// </summary>
+        /// <param name="user">profile data</param>
+        /// <param name="userUpdates">profile that contains updates</param>
         [Theory]
         [ClassData(typeof(Update.Valid))]
         public async Task UpdateProfile_ValidData(DomainProfile user, DomainProfile userUpdates)
@@ -49,6 +54,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             }
         }
 
+        /// <summary>
+        /// Test if a profile with an invalid phone number can be updated 
+        /// </summary>
+        /// <param name="user">profile data</param>
+        /// <param name="userUpdates">profile that contains updates</param>
         [Theory]
         [ClassData(typeof(Update.InvalidPhone))]
         public async Task UpdateProfile_InvalidPhone(DomainProfile user, DomainProfile userUpdate)

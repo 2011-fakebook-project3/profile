@@ -155,7 +155,7 @@ namespace Fakebook.Profile.RestApi.Controllers
                 // cannot find the profile to update
                 return NotFound(email);
             }
-            catch
+            catch(Exception e)
             {
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);

@@ -20,7 +20,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
          * - Status: string
          */
 
-        // randomly generate URI throws an exception
+        // randomly generated URI throws an exception
         private static string fakeURI1 = "https://i.imgur.com/FAKE1.jpg";
         private static string fakeURI2 = "https://i.imgur.com/FAKE2.jpg";
         private static string fakeURI3 = "https://i.imgur.com/FAKE3.jpg";
@@ -92,6 +92,10 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         /// invalid email format
         /// invlaid phone number format 
         /// </summary>
+        /// <remarks>
+        /// NOTE: Does currently have a valid placeholder name, should be replaced with null
+        /// or a string with invalid characters for testing.
+        /// </remarks>
         public class InvalidName : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
@@ -132,6 +136,13 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        /// <summary>
+        /// Users with placeholder emails for testing invalid emails.
+        /// </summary>
+        /// <remarks>
+        /// The placeholder emails are valid because it's impossible to create a domain user with an invalid email.
+        /// Instead user generate random string in place of the valid email.
+        /// </remarks>
         public class InvalidEmail : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()

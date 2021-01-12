@@ -17,9 +17,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
     public class CreateTests
     {
         /// <summary>
-        /// Checks that valid user info works for domain profiles.
+        /// Check if an valid user gets created and stored in the database.
         /// </summary>
-        /// <param name="mockedProfile">Data for the domain profile.</param>
+        /// <param name="user">valid data for the domain profile.</param>
         [Theory]
         [ClassData(typeof(Create.Valid))]
         public async Task CreateUser_ValidData(DomainProfile user)
@@ -57,6 +57,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         }
 
         // Invalid split into 3 parts
+        /// <summary>
+        /// Test that creating a user with an invalid phone number throws an execption.
+        /// </summary>
+        /// <param name="user">The valid data for the test.</param>
         [Theory]
         [ClassData(typeof(Create.InvalidPhoneNumber))]
         public async Task CreateUser_InvalidPhone(DomainProfile user)
