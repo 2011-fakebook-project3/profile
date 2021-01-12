@@ -35,7 +35,6 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        //should be a url, defualts to an image.
         /// <summary>
         /// A url that is expected to be an image. Technically though, no checks are done to enforce that.
         /// </summary>
@@ -212,7 +211,6 @@ namespace Fakebook.Profile.Domain
             Email = email;
             FirstName = firstName;
             LastName = lastName;
-
             ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
         }
     }

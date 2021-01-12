@@ -157,7 +157,6 @@ namespace Fakebook.Profile.Domain
         /// Take in a domain profile and create an entity profile
         /// </summary>
         /// <param name="profileData">domain profile used</param>
-        /// <returns>Nothing</returns>
         public async Task CreateProfileAsync(DomainProfile profileData)
         {
 
@@ -179,7 +178,6 @@ namespace Fakebook.Profile.Domain
         /// </summary>
         /// <param name="email">The orignional email of the profile, incase it was chaanged</param>
         /// <param name="domainProfileData">The data for the domain profile to be set to.</param>
-        /// <returns>Nothing.</returns>
         public async Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
         {
             // have to have this try catch block to prevent errors from data base
