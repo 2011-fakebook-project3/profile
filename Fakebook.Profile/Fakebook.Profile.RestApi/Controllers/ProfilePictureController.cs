@@ -7,6 +7,7 @@ using Fakebook.Profile.DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
@@ -22,14 +23,15 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// Service for talking to the backend.
         /// </summary>
         private IStorageService _storageService;
+        private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
         /// constructor for a new instance of the controller/
         /// </summary>
         /// <param name="storageService">Service for uploading files.</param>
-        public ProfilePictureController(IStorageService storageService)
+        public ProfilePictureController(IStorageService storageService, ILogger<ProfileController> logger)
         {
-
+            _logger = logger;
             _storageService = storageService;
         }
 
@@ -40,11 +42,14 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <returns>An Http response</returns>
         [HttpPost, DisableRequestSizeLimit]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Post()
         {
             IFormFile file = Request.Form.Files[0];
             if (file == null)
             {
+                _logger.LogError("File given to image posting was null.");
                 return BadRequest();
             }
             try
@@ -55,6 +60,7 @@ namespace Fakebook.Profile.RestApi.Controllers
                         .Split('.')
                         .Last();
                 string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
+                _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
                 var result = await _storageService.UploadFileContentAsync(
                         file.OpenReadStream(),
@@ -63,12 +69,13 @@ namespace Fakebook.Profile.RestApi.Controllers
                         newFileName);
 
                 var toReturn = result.AbsoluteUri;
+                _logger.LogInformation($"New file uploaded, {newFileName}");
 
                 return Ok(new { path = toReturn });
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
                 throw;
             }
         }
