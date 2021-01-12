@@ -12,6 +12,9 @@ namespace Fakebook.Profile.DataAccess.EntityModel
             base(options)
         { }
         
+        /// <summary>
+        /// The table with all the user profiles.
+        /// </summary>
         public DbSet<EntityProfile> EntityProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

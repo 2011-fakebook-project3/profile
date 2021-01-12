@@ -16,12 +16,12 @@ namespace Fakebook.Profile.Domain
         }
 
         /// <summary>
-        /// Model mapping from entity to domain
+        /// Model mapping from entity to domain.
         /// </summary>
         /// <param name="profile">entity model object used</param>
-        /// <exception type="ArgumentNullException">If the profile, or the profile's email is null,
+        /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
-        /// <returns></returns>
+        /// <returns>A representation of the profile as a Domain Profile.</returns>
         private static DomainProfile ToDomainProfile(EntityProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
@@ -41,15 +41,17 @@ namespace Fakebook.Profile.Domain
         }
 
         /// <summary>
-        /// default model mapping from domain to entity
+        /// Default model mapping from domain to entity.
         /// </summary>
         /// <param name="profile">domain model object used</param>
-        /// <returns></returns>
+        /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
+        /// this will be thrown </exception>
+        /// <returns>A representation of the profile as a DB Entity.</returns>
         private static EntityProfile ToEntityProfile(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
-                throw new ArgumentNullException("Must have a domain profile, with an email.");
+                throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
             }
 
             EntityProfile convertedProfile = new EntityProfile
@@ -63,15 +65,13 @@ namespace Fakebook.Profile.Domain
                 Status = profile.Status
             };
 
-            //will not fill in navigation properties currently 
-            //if there's already an entry for this profile in the DB
             return convertedProfile;
         }
 
         /// <summary>
-        /// Get all users' profiles at once
+        /// Get all users' profiles at once.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all profiles from the database.</returns>
         public async Task<IEnumerable<DomainProfile>> GetAllProfilesAsync()
         {          
             var entity = await _context.EntityProfiles
@@ -86,7 +86,7 @@ namespace Fakebook.Profile.Domain
         /// Get one specific user profile using his email
         /// </summary>
         /// <param name="email">email used to find the user</param>
-        /// <returns></returns>
+        /// <returns>A specific profile with the matching email.</returns>
         public async Task<DomainProfile> GetProfileAsync(string email)
         {
             if(email is null)
@@ -119,7 +119,7 @@ namespace Fakebook.Profile.Domain
         /// Get a group of user profiles using their emails
         /// </summary>
         /// <param name="emails">a collection of emails used</param>
-        /// <returns></returns>
+        /// <returns>A collection of domain profiles matching the emails provided.</returns>
         public async Task<IEnumerable<DomainProfile>> GetProfilesByEmailAsync(IEnumerable<string> emails)
         {
             var userEntities = _context.EntityProfiles;
@@ -150,7 +150,7 @@ namespace Fakebook.Profile.Domain
         /// Take in a domain profile and create an entity profile
         /// </summary>
         /// <param name="profileData">domain profile used</param>
-        /// <returns></returns>
+        /// <returns>Nothing</returns>
         public async Task CreateProfileAsync(DomainProfile profileData)
         {
 
@@ -167,6 +167,12 @@ namespace Fakebook.Profile.Domain
             }
         }
 
+        /// <summary>
+        /// Updates a user's profile
+        /// </summary>
+        /// <param name="email">The orignional email of the profile, incase it was chaanged</param>
+        /// <param name="domainProfileData">The data for the domain profile to be set to.</param>
+        /// <returns>Nothing.</returns>
         public async Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
         {
             // have to have this try catch block to prevent errors from data base
