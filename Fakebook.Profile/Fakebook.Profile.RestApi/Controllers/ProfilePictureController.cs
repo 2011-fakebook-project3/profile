@@ -8,25 +8,38 @@ using Microsoft.AspNetCore.Mvc;
 
 
 using Fakebook.Profile.DataAccess.Services.Interfaces;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Fakebook.Profile.RestApi.Controllers
 {
+    /// <summary>
+    /// A controller for image uploading. 
+    /// </summary>
     [Route("api/ProfilePicture")]
     [ApiController]
     [Authorize]
     public class ProfilePictureController : ControllerBase
     {
-        private IStorageService _blobService;
+        /// <summary>
+        /// Service for talking to the backend.
+        /// </summary>
+        private IStorageService _storageService;
 
-        public ProfilePictureController(IStorageService blobService)
+        /// <summary>
+        /// constructor for a new instance of the controller/
+        /// </summary>
+        /// <param name="storageService">Service for uploading files.</param>
+        public ProfilePictureController(IStorageService storageService)
         {
 
-            _blobService = blobService;
+            _storageService = storageService;
         }
 
 
-        // POST api/<ProfilePictureController>
+        // POST api/ProfilePicture
+        /// <summary>
+        /// Endpoint for uploading an image to the service's storage.
+        /// </summary>
+        /// <returns>An Http response</returns>
         [HttpPost, DisableRequestSizeLimit]
         public async Task<ActionResult> Post()
         {
@@ -44,7 +57,7 @@ namespace Fakebook.Profile.RestApi.Controllers
                         .Last();
                 string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
 
-                var result = await _blobService.UploadFileContentAsync(
+                var result = await _storageService.UploadFileContentAsync(
                         file.OpenReadStream(),
                         "fakebook",
                         file.ContentType,
