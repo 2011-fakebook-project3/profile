@@ -80,8 +80,12 @@ namespace Fakebook.Profile.RestApi
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
 
             // for azure blob
-            services.AddScoped(sp => new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]));
-            services.AddTransient<IStorageService, AzureBlobStorageService>();
+            services.AddTransient<IStorageService, AzureBlobStorageService>(sp
+                => new AzureBlobStorageService(
+                    new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]),
+                    Configuration["BlobStorage:ContainerName"]
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
