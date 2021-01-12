@@ -10,15 +10,15 @@ using Fakebook.Profile.DataAccess.Services.Interfaces;
 namespace Fakebook.Profile.DataAccess.Services
 {
     /// <summary>
-    /// Gets data from/to a NoSQL database.
+    /// Gets data from/to a NoSQL database hosted on Azure Blob.
     /// </summary>
     public class AzureBlobStorageService : IStorageService
     {
         private readonly BlobServiceClient _client;
-        private string _containerName;
+        private readonly string _containerName;
 
         /// <summary>
-        /// Construct a storage service to communicate with a NoSQL database
+        /// Construct a storage service to communicate with a NoSQL database on Azure Blob
         /// </summary>
         /// <param name="client"> an instance of BlobClient</param>
         /// <param name="containerName"> name of the storage container associated </param>
@@ -30,7 +30,7 @@ namespace Fakebook.Profile.DataAccess.Services
         }
 
         /// <summary>
-        /// an async method used to upload content to a NoSQL database
+        /// an async method used to upload content to a NoSQL database on Azure Blob
         /// </summary>
         /// <param name="content"> content to be uploaded</param>
         /// <param name="contentType"> type of content </param>
@@ -41,7 +41,7 @@ namespace Fakebook.Profile.DataAccess.Services
         {
             if (containerName is not null)
             {
-                containerName = this._containerName;
+                containerName = _containerName;
             }
 
             BlobContainerClient client = GetClient(containerName);

@@ -39,7 +39,7 @@ namespace Fakebook.Profile.Domain
         /// <summary>
         /// A url that is expected to be an image. Technically though, no checks are done to enforce that.
         /// </summary>
-        public Uri ProfilePictureUrl { get; set; };
+        public Uri ProfilePictureUrl { get; set; }
 
         /// <summary>
         /// Shortcut to get a user's full name. 
