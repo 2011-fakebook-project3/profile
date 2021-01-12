@@ -24,7 +24,6 @@ namespace Fakebook.Profile.RestApi.Controllers
     {
         private readonly IProfileRepository _repository;
         private readonly IStorageService _storageService;
-
         private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             {
                 var domainProfile = apiModel.ToDomainProfile();
                 await _repository.CreateProfileAsync(domainProfile);
-                return this.CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
+                return CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
             }
             catch (Exception e)
             {
@@ -143,24 +142,24 @@ namespace Fakebook.Profile.RestApi.Controllers
             string email = GetUserEmail();
             if (email is null)
             {
-                throw new ArgumentException("Could not find current user's email");
+                return NotFound(email);
             }
+
             try
             {
                 await _repository.UpdateProfileAsync(email, apiModel.ToDomainProfile());
                 return Ok();
             }
-            catch (ArgumentException e)
+            catch (ArgumentNullException)
             {
-                _logger.LogError(e.Message);
-                _logger.LogError(e.StackTrace);
-                return NotFound(GetUserEmail());
+                // cannot find the profile to update
+                return NotFound(email);
             }
-            catch (Exception e)
+            catch
             {
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);
-                //should be 404?
+                //should be 400?
                 return BadRequest();
             }
         }

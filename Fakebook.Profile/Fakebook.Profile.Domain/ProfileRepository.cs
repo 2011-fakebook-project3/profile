@@ -211,12 +211,15 @@ namespace Fakebook.Profile.Domain
                 // save changes.
                 _context.SaveChanges();
             }
+            catch(ArgumentNullException)
+            {
+                // the user's email is not found
+                throw;
+            }
             catch
             {
                 throw new ArgumentException("Failed to update a profile", nameof(domainProfileData));
             }
         }
     }
-
 }
-
