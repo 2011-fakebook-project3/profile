@@ -140,8 +140,6 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         Status = GenerateRandom.String()
                      },
 
-                    //TODO: moq a profile???
-                    //or delete tests as it's not possible to be in a situation with a profile with invalid phone number
                     new DomainProfile(targetEmail2, GenerateRandom.String(), GenerateRandom.String())
                     {
                         ProfilePictureUrl = new Uri(fakeURI7),

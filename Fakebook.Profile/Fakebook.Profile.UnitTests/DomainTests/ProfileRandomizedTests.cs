@@ -24,6 +24,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         * - Status: string
         */
 
+        /// <summary>
+        /// Check if a valid profile can be read.
+        /// </summary>
         [Theory]
         [ClassData(typeof(Create.Valid))]
         public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile mockedProfile)
@@ -50,6 +53,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
         }
 
+        /// <summary>
+        /// Check if an invalid profile can be read.
+        /// </summary>
         [Theory]
         [ClassData(typeof(Create.InvalidName))]
         public void InvalidUserNameReturnsErrors(DomainProfile mockedProfile)

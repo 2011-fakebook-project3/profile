@@ -123,7 +123,10 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         }
 
 
-        
+        /// <summary>
+        /// Test that a first name can be set to an initial value
+        /// </summary>
+        /// <param name="name"></param>
         [Theory]
         [InlineData("Name")]
         public void SettingFirstNameShouldWork(string name)
@@ -139,7 +142,10 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             Assert.Equal(name, pf.FirstName);
         }
 
-
+        /// <summary>
+        /// Test that a last name can be set to an initial value
+        /// </summary>
+        /// <param name="name"></param>
         [Theory]
         [InlineData("Name")]
         [InlineData("name")]
