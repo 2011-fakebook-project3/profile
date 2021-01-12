@@ -1,6 +1,6 @@
 using System.Configuration;
 using System.IO;
-
+using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
@@ -79,10 +79,9 @@ namespace Fakebook.Profile.RestApi
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
 
-
-            Configuration.GetConnectionString("BlobStorage");
+            services.AddScoped(x => new BlobServiceClient(Configuration.GetConnectionString("BlobStorage")));
             //var test = new AzureBlobStorageService(null, "container name");
-            services.AddTransient<IStorageService, AzureBlobStorageService>(  );
+            services.AddTransient<IStorageService, AzureBlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
