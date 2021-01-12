@@ -24,7 +24,6 @@ namespace Fakebook.Profile.RestApi.Controllers
     {
         private readonly IProfileRepository _repository;
         private readonly IStorageService _storageService;
-
         private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
@@ -160,7 +159,6 @@ namespace Fakebook.Profile.RestApi.Controllers
             {
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);
-                //should be 404?
                 return BadRequest();
             }
         }
