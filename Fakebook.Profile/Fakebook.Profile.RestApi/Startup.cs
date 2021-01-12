@@ -91,6 +91,7 @@ namespace Fakebook.Profile.RestApi
             }
 
             ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
+            ProfileConfiguration.BlobContainerName = "fakebook"; // a temp value
 
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");

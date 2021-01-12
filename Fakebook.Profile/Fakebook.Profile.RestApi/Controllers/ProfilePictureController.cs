@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain.Utility;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,10 +30,8 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <param name="storageService">Service for uploading files.</param>
         public ProfilePictureController(IStorageService storageService)
         {
-
             _storageService = storageService;
         }
-
 
         // POST api/ProfilePicture
         /// <summary>
@@ -58,7 +57,7 @@ namespace Fakebook.Profile.RestApi.Controllers
 
                 var result = await _storageService.UploadFileContentAsync(
                         file.OpenReadStream(),
-                        "fakebook",
+                        ProfileConfiguration.BlobContainerName,
                         file.ContentType,
                         newFileName);
 
