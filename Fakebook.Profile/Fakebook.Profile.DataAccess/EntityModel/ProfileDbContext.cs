@@ -9,6 +9,10 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     /// </summary>
     public class ProfileDbContext : DbContext
     {
+        /// <summary>
+        /// Constructs an isntance of this context
+        /// </summary>
+        /// <param name="options">The optinos that the context will be constructed with</param>
         public ProfileDbContext([NotNull] DbContextOptions options) :
             base(options)
         { }
@@ -18,6 +22,10 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// </summary>
         public DbSet<EntityProfile> EntityProfiles { get; set; }
 
+        /// <summary>
+        /// Override for generatingthe model tables
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder object used with building the tables, their properties, and contraints</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
