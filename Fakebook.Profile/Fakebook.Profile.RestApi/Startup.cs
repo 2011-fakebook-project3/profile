@@ -39,7 +39,7 @@ namespace Fakebook.Profile.RestApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins()
+                        builder.WithOrigins("https://fakebook.revaturelabs.com/")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
