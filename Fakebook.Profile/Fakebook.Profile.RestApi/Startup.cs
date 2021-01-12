@@ -80,7 +80,6 @@ namespace Fakebook.Profile.RestApi
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
 
             services.AddScoped(x => new BlobServiceClient(Configuration.GetConnectionString("BlobStorage")));
-            //var test = new AzureBlobStorageService(null, "container name");
             services.AddTransient<IStorageService, AzureBlobStorageService>();
         }
 
