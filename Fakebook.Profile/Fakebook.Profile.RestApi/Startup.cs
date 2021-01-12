@@ -1,5 +1,7 @@
 using System.IO;
 
+using Azure.Storage.Blobs;
+
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
@@ -68,16 +70,17 @@ namespace Fakebook.Profile.RestApi
 
             services.AddControllers();
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
 
-
+            // for the profile db
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
 
+            // for azure blob
+            services.AddScoped(sp => new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]));
             services.AddTransient<IStorageService, AzureBlobStorageService>();
         }
 
