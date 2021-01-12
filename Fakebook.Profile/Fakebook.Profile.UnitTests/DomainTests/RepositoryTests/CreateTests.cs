@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
+
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
+
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
     public class CreateTests
     {
+        /// <summary>
+        /// Check if an valid user gets created and stored in the database.
+        /// </summary>
+        /// <param name="user">valid data for the domain profile.</param>
         [Theory]
         [ClassData(typeof(Create.Valid))]
         public async Task CreateUser_ValidData(DomainProfile user)
@@ -52,6 +57,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         }
 
         // Invalid split into 3 parts
+        /// <summary>
+        /// Test that creating a user with an invalid phone number throws an execption.
+        /// </summary>
+        /// <param name="user">The valid data for the test.</param>
         [Theory]
         [ClassData(typeof(Create.InvalidPhoneNumber))]
         public async Task CreateUser_InvalidPhone(DomainProfile user)
@@ -80,13 +89,13 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
             // Assert
             using (var assertionContext = new ProfileDbContext(options))
-            { 
+            {
                 var repo = new ProfileRepository(assertionContext);
 
                 var userInDB = await repo.GetProfileAsync(user.Email);
                 Assert.Equal(userInDB.ProfilePictureUrl, user.ProfilePictureUrl);
                 Assert.Equal(userInDB.FirstName, user.FirstName);
-                Assert.Equal(userInDB.LastName, user.LastName);            
+                Assert.Equal(userInDB.LastName, user.LastName);
                 Assert.Null(userInDB.PhoneNumber);
                 Assert.Equal(userInDB.BirthDate, user.BirthDate);
                 Assert.Equal(userInDB.Status, user.Status);

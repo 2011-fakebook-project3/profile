@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain;
+using Fakebook.Profile.RestApi.ApiModel;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using Fakebook.Profile.Domain;
-using Fakebook.Profile.RestApi.ApiModel;
-using Fakebook.Profile.DataAccess.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi.Controllers
@@ -116,9 +117,9 @@ namespace Fakebook.Profile.RestApi.Controllers
             {
                 var domainProfile = apiModel.ToDomainProfile();
                 await _repository.CreateProfileAsync(domainProfile);
-                return this.CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
+                return CreatedAtAction(nameof(GetAsync), new { email = apiModel.Email });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // return this because the profile could not be created.
                 _logger.LogError(e.Message);
@@ -141,20 +142,20 @@ namespace Fakebook.Profile.RestApi.Controllers
         {
             string email = GetUserEmail();
             if (email is null)
-            {           
-                throw new ArgumentException("Could not find current user's email");  
+            {
+                return NotFound(email);
             }
             try
             {
                 await _repository.UpdateProfileAsync(email, apiModel.ToDomainProfile());
                 return Ok();
-            }catch(ArgumentException e)
-            {
-                _logger.LogError(e.Message);
-                _logger.LogError(e.StackTrace);
-                return NotFound(GetUserEmail());
             }
-            catch(Exception e)
+            catch (ArgumentNullException)
+            {
+                // cannot find the profile to update
+                return NotFound(email);
+            }
+            catch (Exception e)
             {
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);

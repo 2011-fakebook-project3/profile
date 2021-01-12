@@ -24,6 +24,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         * - Status: string
         */
 
+
+        /// <summary>
+        /// Checks that valid user info works for domain profiles.
+        /// </summary>
+        /// <param name="mockedProfile">Data for the domain profile.</param>
         [Theory]
         [ClassData(typeof(Create.Valid))]
         public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile mockedProfile)
@@ -31,8 +36,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -50,6 +55,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
         }
 
+        /// <summary>
+        /// Check if a profile with an invalid name returns error.
+        /// </summary>
+        /// <param name="mockedProfile">Invalid profile used.</param>
         [Theory]
         [ClassData(typeof(Create.InvalidName))]
         public void InvalidUserNameReturnsErrors(DomainProfile mockedProfile)
@@ -57,8 +66,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -75,6 +84,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.ThrowsAny<ArgumentNullException>(() => profile.LastName = null);
         }
 
+        /// <summary>
+        /// Check if a profile with an invalid phone number returns error.
+        /// </summary>
+        /// <param name="mockedProfile">Invalid profile used.</param>
         [Theory]
         [ClassData(typeof(Create.InvalidPhoneNumber))]
         public void InvalidUserPhoneNumberReturnsErrors(DomainProfile mockedProfile)
@@ -82,8 +95,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -103,6 +116,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.ThrowsAny<ArgumentException>(() => profile.PhoneNumber = GenerateRandom.String());
         }
 
+        /// <summary>
+        /// Check if a profile with an invalid email returns error.
+        /// </summary>
+        /// <param name="mockedProfile">invalid profile used.</param>
         [Theory]
         [ClassData(typeof(Create.InvalidEmail))]
         public void InvalidUserEmailReturnsErrors(DomainProfile mockedProfile)
@@ -110,8 +127,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -131,6 +148,11 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.ThrowsAny<ArgumentException>(() => profile.Email = GenerateRandom.String());
         }
 
+        /// <summary>
+        /// Test that setting a valid uri won't throw any exceptions.
+        /// </summary>
+        /// <param name="domain">The website's domain.</param>
+        /// <param name="path">The path to the resource within the website.</param>
         [Theory]
         [InlineData("test.com", "test")]
         [InlineData("i.imgur.com", "BCeyxdR.jpg")]
