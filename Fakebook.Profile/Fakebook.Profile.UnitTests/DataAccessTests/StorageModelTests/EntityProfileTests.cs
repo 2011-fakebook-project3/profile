@@ -23,16 +23,15 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetEmailShouldWork(string email)
         {
             //arrange
-            EntityProfile bf = new EntityProfile();
+            EntityProfile profile = new EntityProfile();
 
             //act
-            bf.Email = email;
+            profile.Email = email;
 
             //assert
-            Assert.NotNull(bf.Email);
-            Assert.Equal(email, bf.Email);
+            Assert.NotNull(profile.Email);
+            Assert.Equal(email, profile.Email);
         }
-
 
         /// <summary>
         /// Test that changing the email from an initial value works.
@@ -52,17 +51,16 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangingEmailShouldWork(string email)
         {
             //arrange
-            EntityProfile bf = new EntityProfile();
-            bf.Email = "someOtherEmail@email.com";
+            EntityProfile profile = new EntityProfile();
+            profile.Email = "someOtherEmail@email.com";
 
             //act
-            bf.Email = email;
+            profile.Email = email;
 
             //assert
-            Assert.NotNull(bf.Email);
-            Assert.Equal(email, bf.Email);
+            Assert.NotNull(profile.Email);
+            Assert.Equal(email, profile.Email);
         }
-
 
         //URI Tests
         /// <summary>
@@ -78,20 +76,19 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile pf = new EntityProfile();
-            var builder = new UriBuilder();
+            EntityProfile profile = new EntityProfile();
+            var uriBuilder = new UriBuilder();
 
             //act
-            builder.Host = host;
-            builder.Path = path;
-            pf.ProfilePictureUrl = builder.Uri;
+            uriBuilder.Host = host;
+            uriBuilder.Path = path;
+            profile.ProfilePictureUrl = uriBuilder.Uri;
 
             //assert
-            Assert.NotNull(pf.ProfilePictureUrl);
-            Assert.Equal(host, pf.ProfilePictureUrl.Host);
-            Assert.EndsWith(path, pf.ProfilePictureUrl.AbsolutePath);
+            Assert.NotNull(profile.ProfilePictureUrl);
+            Assert.Equal(host, profile.ProfilePictureUrl.Host);
+            Assert.EndsWith(path, profile.ProfilePictureUrl.AbsolutePath);
         }
-
 
         /// <summary>
         /// Test that a uri can be changed from it's initial value.
@@ -106,40 +103,39 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangeValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile pf = new EntityProfile();
+            EntityProfile profile = new EntityProfile();
             //set to an inital uri, since this is testing that it can change when not null.
-            pf.ProfilePictureUrl = new UriBuilder().Uri;
-            var builder = new UriBuilder();
+            profile.ProfilePictureUrl = new UriBuilder().Uri;
+            var uriBuilder = new UriBuilder();
 
             //act
-            builder.Host = host;
-            builder.Path = path;
-            pf.ProfilePictureUrl = builder.Uri;
+            uriBuilder.Host = host;
+            uriBuilder.Path = path;
+            profile.ProfilePictureUrl = uriBuilder.Uri;
 
             //assert
-            Assert.NotNull(pf.ProfilePictureUrl);
-            Assert.Equal(host, pf.ProfilePictureUrl.Host);
-            Assert.EndsWith(path, pf.ProfilePictureUrl.AbsolutePath);
+            Assert.NotNull(profile.ProfilePictureUrl);
+            Assert.Equal(host, profile.ProfilePictureUrl.Host);
+            Assert.EndsWith(path, profile.ProfilePictureUrl.AbsolutePath);
         }
-
 
         /// <summary>
         /// Test that a first name can be set to an initial value
-        /// </summary>
         /// <param name="name"></param>
+        /// </summary>
         [Theory]
         [InlineData("Name")]
         public void SettingFirstNameShouldWork(string name)
         {
             //arrange
-            EntityProfile pf = new EntityProfile();
+            EntityProfile profile = new EntityProfile();
 
             //act
-            pf.FirstName = name;
+            profile.FirstName = name;
 
             //assert
-            Assert.NotNull(pf.FirstName);
-            Assert.Equal(name, pf.FirstName);
+            Assert.NotNull(profile.FirstName);
+            Assert.Equal(name, profile.FirstName);
         }
 
         /// <summary>
@@ -149,21 +145,20 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("Name")]
         [InlineData("name")]
-        [InlineData("hypen-name")]
+        [InlineData("hyphen-name")]
         [InlineData("Na,me")]
         [InlineData("Mr.Name")]
         public void SettingLastNameShouldWork(string name)
         {
             //arrange
-            EntityProfile pf = new EntityProfile();
+            EntityProfile profile = new EntityProfile();
 
             //act
-            pf.LastName = name;
+            profile.LastName = name;
 
             //assert
-            Assert.NotNull(pf.LastName);
-            Assert.Equal(name, pf.LastName);
+            Assert.NotNull(profile.LastName);
+            Assert.Equal(name, profile.LastName);
         }
-
     }
 }

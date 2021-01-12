@@ -203,7 +203,5 @@ namespace Fakebook.Profile.UnitTests.APITests
             mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Never);
         }
         #endregion
-
-        
     }
 }
