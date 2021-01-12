@@ -211,7 +211,7 @@ namespace Fakebook.Profile.Domain
                 // save changes.
                 _context.SaveChanges();
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 // the user's email is not found
                 throw;
