@@ -33,7 +33,7 @@ spec:
           value: 'Host=fakebook-profile-db;Database=postgres;Username=postgres;Password=Pass@word'
         envFrom:
         - secretRef:
-          name: fakebook-profile-config
+            name: fakebook-profile-config
         resources:
           limits:
             cpu: 500m
