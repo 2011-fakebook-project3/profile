@@ -15,4 +15,3 @@ namespace Fakebook.Profile.Domain
         Task UpdateProfileAsync(string email, DomainProfile domainProfileData);
     }
 }
-
