@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
@@ -11,7 +12,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public ProfileDbContext([NotNull] DbContextOptions options) :
             base(options)
         { }
-        
+
         /// <summary>
         /// The table with all the user profiles.
         /// </summary>

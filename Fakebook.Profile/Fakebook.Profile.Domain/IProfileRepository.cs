@@ -1,5 +1,4 @@
-﻿using Fakebook.Profile.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Fakebook.Profile.Domain

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,7 +29,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// <summary>
         /// The Uri of the user's profile picture. Can be null.
         /// </summary>
-        public Uri ProfilePictureUrl { get; set;}
+        public Uri ProfilePictureUrl { get; set; }
 
         /// <summary>
         /// The user's first name. Cannot be null.

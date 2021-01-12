@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Fakebook.Profile.DataAccess.Services.Interfaces;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
-using Fakebook.Profile.DataAccess.Services.Interfaces;
 
 namespace Fakebook.Profile.RestApi.Controllers
 {

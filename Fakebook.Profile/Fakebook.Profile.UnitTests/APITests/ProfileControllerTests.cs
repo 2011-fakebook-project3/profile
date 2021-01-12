@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xunit;
-using Moq;
-using Fakebook.Profile.RestApi.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Fakebook.Profile.Domain;
-using Fakebook.Profile.UnitTests.TestData;
-using Fakebook.Profile.RestApi.ApiModel;
-using System.Collections;
-using Microsoft.Extensions.Logging.Abstractions;
+
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain;
+using Fakebook.Profile.RestApi.ApiModel;
+using Fakebook.Profile.RestApi.Controllers;
+using Fakebook.Profile.UnitTests.TestData;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
+
+using Moq;
+
+using Xunit;
 
 namespace Fakebook.Profile.UnitTests.APITests
 {
@@ -22,16 +24,17 @@ namespace Fakebook.Profile.UnitTests.APITests
 
         // all dummy data
         readonly string dummyEmail = "test@gmail.com";
-        readonly string[] dummyEmails = { "test1@gmail.com", "test2@gmail.com" };      
+        readonly string[] dummyEmails = { "test1@gmail.com", "test2@gmail.com" };
         readonly ProfileApiModel dummyInvalidProfile = new ProfileApiModel();
-       
+
         private static DomainProfile GetValidDummyProfile()
         {
             DomainProfile profile = new DomainProfile(
                 email: GenerateRandom.Email(),
-                firstname: GenerateRandom.String(),
-                lastname: GenerateRandom.String()
-            ) {
+                firstName: GenerateRandom.String(),
+                lastName: GenerateRandom.String()
+            )
+            {
                 PhoneNumber = GenerateRandom.PhoneNumber(),
                 LastName = GenerateRandom.String(),
                 BirthDate = DateTime.Now
@@ -60,7 +63,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         /// <returns>A Task</returns>
         [Fact]
         public async Task GetSpecificProfileWorks()
-        {          
+        {
             // arrange
             var mockedProfileRepository = new Mock<IProfileRepository>();
             var mockedStorageService = new Mock<IStorageService>();
@@ -82,7 +85,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             Assert.NotNull(result);
             var actionResult = Assert.IsType<ActionResult<ProfileApiModel>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var returnValue = Assert.IsType<ProfileApiModel>(okObjectResult.Value);                   
+            var returnValue = Assert.IsType<ProfileApiModel>(okObjectResult.Value);
             Assert.Equal(dummy.Email, returnValue.Email);
             Assert.Equal(dummy.BirthDate, returnValue.BirthDate);
             Assert.Equal(dummy.FirstName, returnValue.FirstName);
@@ -109,7 +112,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             {
                 expectedResults.Add(GetValidDummyProfile());
             }
-            
+
             // Set it up to mimic the profile found
             mockedProfileRepository
                 .Setup(mpr => mpr.GetProfilesByEmailAsync(It.IsAny<IEnumerable<string>>()))
@@ -123,7 +126,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var actionResult = Assert.IsType<ActionResult<IEnumerable<ProfileApiModel>>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
             var returnValues = Assert.IsAssignableFrom<IEnumerable<ProfileApiModel>>(okObjectResult.Value);
-          
+
             foreach (DomainProfile dummy in expectedResults)
             {
                 //get the matching profile
@@ -157,7 +160,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             mockedProfileRepository
                 .Setup(repo => repo.CreateProfileAsync(It.IsAny<DomainProfile>()))
                 .Verifiable();
-          
+
             // act
             var result = await controller.CreateAsync(dummy);
 
@@ -179,8 +182,8 @@ namespace Fakebook.Profile.UnitTests.APITests
             var mockedProfileRepository = new Mock<IProfileRepository>();
             var mockedStorageService = new Mock<IStorageService>();
             var controller = new ProfileController(
-                mockedProfileRepository.Object, 
-                mockedStorageService.Object, 
+                mockedProfileRepository.Object,
+                mockedStorageService.Object,
                 new NullLogger<ProfileController>()
             );
 
@@ -197,7 +200,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var actionResult = Assert.IsAssignableFrom<ActionResult>(result);
             var badRequestResult = Assert.IsType<BadRequestResult>(result);
             // shortcircuited by converter
-            mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Never);          
+            mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Never);
         }
         #endregion
 

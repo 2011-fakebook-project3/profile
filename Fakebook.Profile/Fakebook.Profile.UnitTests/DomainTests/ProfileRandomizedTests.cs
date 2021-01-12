@@ -31,8 +31,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -57,8 +57,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -82,8 +82,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act
@@ -110,8 +110,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // arrange
             DomainProfile profile = new DomainProfile(
                 email: mockedProfile.Email,
-                firstname: mockedProfile.FirstName,
-                lastname: mockedProfile.LastName
+                firstName: mockedProfile.FirstName,
+                lastName: mockedProfile.LastName
             )
             {
                 // act

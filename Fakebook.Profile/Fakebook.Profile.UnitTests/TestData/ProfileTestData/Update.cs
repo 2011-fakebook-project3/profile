@@ -123,7 +123,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-        public class InvalidPhone: IEnumerable<object[]>
+        public class InvalidPhone : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {

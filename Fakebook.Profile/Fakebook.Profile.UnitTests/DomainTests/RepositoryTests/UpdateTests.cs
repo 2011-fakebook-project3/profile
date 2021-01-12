@@ -1,11 +1,14 @@
+using System;
+using System.Threading.Tasks;
+
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
+
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
+
 using Xunit;
 
 namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
@@ -85,8 +88,8 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 Assert.NotEqual(user.LastName, userActual.LastName);
                 Assert.NotEqual(user.PhoneNumber, userActual.PhoneNumber);
                 Assert.NotEqual(user.BirthDate, userActual.BirthDate);
-                Assert.NotEqual(user.Status, userActual.Status); 
+                Assert.NotEqual(user.Status, userActual.Status);
             }
-        } 
+        }
     }
 }

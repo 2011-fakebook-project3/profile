@@ -1,9 +1,11 @@
-﻿using Fakebook.Profile.DataAccess.EntityModel;
-using Microsoft.EntityFrameworkCore;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Fakebook.Profile.DataAccess.EntityModel;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.Domain
 {
@@ -73,13 +75,13 @@ namespace Fakebook.Profile.Domain
         /// </summary>
         /// <returns>A list of all profiles from the database.</returns>
         public async Task<IEnumerable<DomainProfile>> GetAllProfilesAsync()
-        {          
+        {
             var entity = await _context.EntityProfiles
                 .ToListAsync();
 
             // model mapping
             var users = entity.Select(e => ToDomainProfile(e));
-            return users;         
+            return users;
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace Fakebook.Profile.Domain
         /// <returns>A specific profile with the matching email.</returns>
         public async Task<DomainProfile> GetProfileAsync(string email)
         {
-            if(email is null)
+            if (email is null)
             {
                 throw new ArgumentNullException("Cannot get a null email from DB.");
             }
@@ -104,10 +106,10 @@ namespace Fakebook.Profile.Domain
             var profileFound = _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
             if (profileFound == null)
             {
-                throw new ArgumentNullException("Email not found"); 
+                throw new ArgumentNullException("Email not found");
             }
 
-            var entity = await entities                
+            var entity = await entities
                 .FirstOrDefaultAsync(e => e.Email == email);
 
             // model mapping
@@ -132,7 +134,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentException("Not all emails requested are present.");
             }
 
-            var users = await userEntities            
+            var users = await userEntities
                 .ToListAsync();
 
             if (!emails.Any() || !users.Any())
@@ -159,7 +161,7 @@ namespace Fakebook.Profile.Domain
             {
                 var newUser = ToEntityProfile(profileData); // convert
                 await _context.AddAsync(newUser);
-                await _context.SaveChangesAsync();             
+                await _context.SaveChangesAsync();
             }
             catch
             {
