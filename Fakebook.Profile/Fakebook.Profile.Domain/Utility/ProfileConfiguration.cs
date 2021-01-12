@@ -5,7 +5,7 @@
     /// </summary>
     public static class ProfileConfiguration
     {
-        public static string DefaultUri;
+        public static string DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
         public static string BlobContainerName;
     }
 }
