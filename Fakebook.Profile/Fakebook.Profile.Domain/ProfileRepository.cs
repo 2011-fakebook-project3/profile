@@ -29,11 +29,9 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentNullException("Must have a entity profile, with an email.");
             }
 
-            DomainProfile convertedProfile = new DomainProfile(profile.Email)
+            DomainProfile convertedProfile = new DomainProfile(profile.Email, profile.FirstName, profile.LastName)
             {
                 ProfilePictureUrl = profile.ProfilePictureUrl,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
                 PhoneNumber = profile.PhoneNumber,
                 BirthDate = profile.BirthDate,
                 Status = profile.Status
@@ -91,6 +89,11 @@ namespace Fakebook.Profile.Domain
         /// <returns></returns>
         public async Task<DomainProfile> GetProfileAsync(string email)
         {
+            if(email is null)
+            {
+                throw new ArgumentNullException("Cannot get a null email from DB.");
+            }
+
             var entities = _context.EntityProfiles;
 
             if (!entities.Any())

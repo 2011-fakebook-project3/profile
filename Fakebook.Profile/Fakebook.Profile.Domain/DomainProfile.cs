@@ -18,6 +18,15 @@ namespace Fakebook.Profile.Domain
             get => _email; 
             set
             {
+                if(value is null)
+                {
+                    throw new ArgumentNullException("Email cannot be null.");
+                }
+                else if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid Email, {value}");
+                }
+
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
                 Match m = emailRegex.Match(value);
                 if (!m.Success)
@@ -38,7 +47,11 @@ namespace Fakebook.Profile.Domain
             get => _firstName;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if(value is null)
+                {
+                    throw new ArgumentNullException("First name cannot be null.");
+                }
+                 else if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException($"Invalid first name, {value}");
                 }
@@ -58,9 +71,13 @@ namespace Fakebook.Profile.Domain
             get => _lastName;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (value is null)
                 {
-                    throw new ArgumentException($"Invalid first name, {value}");
+                    throw new ArgumentNullException("Last name cannot be null.");
+                }
+                else if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException($"Invalid last name, {value}");
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
@@ -121,22 +138,63 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        public DomainProfile() { }
-
-        public DomainProfile(string email)
+        public DomainProfile(string email, string firstname, string lastname, DateTime birthdate, Uri pfpuri = null, string phonenumer = null, string status = null )
         {
             this.Email = email;
             if (email == null)
             {
                 throw new ArgumentNullException();            
             }
+
+            this.FirstName = firstname;
+            this.LastName = lastname;  
             
+            if(pfpuri is null)
+            {
+                this.ProfilePictureUrl = new Uri("https://publicdomainvectors.org/photos/defaultprofile.png");
+            }
+
+            this.BirthDate = birthdate;
+
+            this.PhoneNumber = phonenumer;
+
+            this.Status = status;
         }
 
-        public DomainProfile(string email, string phoneNumber)
+        /// <summary>
+        /// Create a new user with a phone number filled in.
+        /// </summary>
+        /// <param name="email">The user's email. Must be uniqeu.</param>
+        /// <param name="phoneNumber">The user's phone number/</param>
+        /// <param name="firstname">The user's first name.</param>
+        /// <param name="lastname">The user's last name.</param>
+        public DomainProfile(string email, string phoneNumber, string firstname, string lastname)
         {
             this.Email = email;
             this.PhoneNumber = phoneNumber;
+
+            this.FirstName = firstname;
+            this.LastName = lastname;
+        }
+
+
+
+        /// <summary>
+        /// Create a basic profile
+        /// </summary>
+        /// <param name="email">The user's email. Must be Unique.</param>
+        /// <param name="firstname">The user's firstname.</param>
+        /// <param name="lastname">The user's lastname.</param>
+        public DomainProfile(string email, string firstname, string lastname)
+        {
+            this.Email = email;
+            if (email == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            this.FirstName = firstname;
+            this.LastName = lastname;
         }
     }
 }
