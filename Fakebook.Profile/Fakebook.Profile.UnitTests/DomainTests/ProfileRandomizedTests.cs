@@ -55,7 +55,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
         }
 
-
         /// <summary>
         /// Check if a profile with an invalid name returns error.
         /// </summary>

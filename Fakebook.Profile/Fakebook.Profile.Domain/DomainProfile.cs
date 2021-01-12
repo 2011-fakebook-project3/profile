@@ -25,12 +25,12 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException($"Invalid Email, {value}", nameof(value));
+                    throw new ArgumentNullException($"Invalid Email, {value}", nameof(value));
                 }
 
                 Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
                 if (!emailRegex.IsMatch(value))
-                    throw new ArgumentException("", nameof(value));
+                    throw new ArgumentException("The email doesn't max the regex", nameof(value));
                 _email = value;
             }
         }
@@ -59,7 +59,7 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException($"Invalid first name, {value}", nameof(value));
+                    throw new ArgumentNullException($"Invalid first name, {value}", nameof(value));
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
@@ -84,7 +84,7 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException($"Invalid last name, {value}", nameof(value));
+                    throw new ArgumentNullException($"Invalid last name, {value}", nameof(value));
                 }
 
                 Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
