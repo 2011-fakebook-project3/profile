@@ -1,4 +1,3 @@
-using System.Configuration;
 using System.IO;
 using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
@@ -15,8 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
-using Okta.AspNetCore;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -69,7 +66,7 @@ namespace Fakebook.Profile.RestApi
 
             // for the profile db
             services.AddDbContext<ProfileDbContext>(options
-                => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
+                => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
 
             // for azure blob
             services.AddTransient<IStorageService, AzureBlobStorageService>(sp
