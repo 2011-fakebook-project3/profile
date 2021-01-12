@@ -11,6 +11,8 @@ using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.RestApi.ApiModel;
 using System.Collections;
+using Microsoft.Extensions.Logging.Abstractions;
+using Fakebook.Profile.DataAccess.Services.Interfaces;
 
 namespace Fakebook.Profile.UnitTests.APITests
 {
@@ -25,11 +27,12 @@ namespace Fakebook.Profile.UnitTests.APITests
        
         private static DomainProfile GetValidDummyProfile()
         {
-            DomainProfile profile = new DomainProfile
-            {
-                Email = GenerateRandom.Email(),
+            DomainProfile profile = new DomainProfile(
+                email: GenerateRandom.Email(),
+                firstname: GenerateRandom.String(),
+                lastname: GenerateRandom.String()
+            ) {
                 PhoneNumber = GenerateRandom.PhoneNumber(),
-                FirstName = GenerateRandom.String(),
                 LastName = GenerateRandom.String(),
                 BirthDate = DateTime.Now
             };
@@ -60,7 +63,12 @@ namespace Fakebook.Profile.UnitTests.APITests
         {          
             // arrange
             var mockedProfileRepository = new Mock<IProfileRepository>();
-            var controller = new ProfileController(mockedProfileRepository.Object);
+            var mockedStorageService = new Mock<IStorageService>();
+            var controller = new ProfileController(
+                mockedProfileRepository.Object,
+                mockedStorageService.Object,
+                new NullLogger<ProfileController>()
+            );
 
             DomainProfile dummy = GetValidDummyProfile();
             mockedProfileRepository
@@ -89,7 +97,12 @@ namespace Fakebook.Profile.UnitTests.APITests
         {
             // arrange
             var mockedProfileRepository = new Mock<IProfileRepository>();
-            var controller = new ProfileController(mockedProfileRepository.Object);
+            var mockedStorageService = new Mock<IStorageService>();
+            var controller = new ProfileController(
+                mockedProfileRepository.Object,
+                mockedStorageService.Object,
+                new NullLogger<ProfileController>()
+            );
 
             var expectedResults = new List<DomainProfile>();
             for (int i = 0; i < 5; i++)
@@ -133,7 +146,12 @@ namespace Fakebook.Profile.UnitTests.APITests
         {
             // arrange
             var mockedProfileRepository = new Mock<IProfileRepository>();
-            var controller = new ProfileController(mockedProfileRepository.Object);
+            var mockedStorageService = new Mock<IStorageService>();
+            var controller = new ProfileController(
+                mockedProfileRepository.Object,
+                mockedStorageService.Object,
+                new NullLogger<ProfileController>()
+            );
 
             ProfileApiModel dummy = GetValidAPIDummy();
             mockedProfileRepository
@@ -159,7 +177,12 @@ namespace Fakebook.Profile.UnitTests.APITests
         {
             // arrange
             var mockedProfileRepository = new Mock<IProfileRepository>();
-            var controller = new ProfileController(mockedProfileRepository.Object);
+            var mockedStorageService = new Mock<IStorageService>();
+            var controller = new ProfileController(
+                mockedProfileRepository.Object, 
+                mockedStorageService.Object, 
+                new NullLogger<ProfileController>()
+            );
 
             // throw set up will be shortcircuited by converter
             // remove replicated exception handling
