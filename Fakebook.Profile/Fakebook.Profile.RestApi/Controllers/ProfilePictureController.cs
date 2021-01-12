@@ -26,9 +26,10 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
-        /// constructor for a new instance of the controller/
+        /// Constructor for a new instance of the controller.
         /// </summary>
         /// <param name="storageService">Service for uploading files.</param>
+        /// <param name="logger">Logger for logging errors and information.</param>
         public ProfilePictureController(IStorageService storageService, ILogger<ProfileController> logger)
         {
             _logger = logger;
@@ -40,7 +41,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <summary>
         /// Endpoint for uploading an image to the service's storage.
         /// </summary>
-        /// <returns>An Http response</returns>
+        /// <returns>An Http response.</returns>
         [HttpPost, DisableRequestSizeLimit]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
