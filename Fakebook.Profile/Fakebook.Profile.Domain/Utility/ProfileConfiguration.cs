@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fakebook.Profile.Domain.Utility
+﻿namespace Fakebook.Profile.Domain.Utility
 {
     public static class ProfileConfiguration
     {

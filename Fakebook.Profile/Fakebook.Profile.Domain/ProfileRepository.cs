@@ -96,20 +96,22 @@ namespace Fakebook.Profile.Domain
         {
             if (email is null)
             {
-                throw new ArgumentNullException("Cannot get a null email from DB.");
+                throw new ArgumentNullException("Cannot get a null email from DB.", nameof(email));
             }
 
             var entities = _context.EntityProfiles;
 
             if (!entities.Any())
             {
-                throw new ArgumentException("Source is empty");
+                throw new ArgumentException("Source is empty", nameof(entities));
             }
 
-            var profileFound = _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
+            var profileFound = _context.EntityProfiles
+                .FirstOrDefaultAsync(x => x.Email == email);
+
             if (profileFound == null)
             {
-                throw new ArgumentNullException("Email not found");
+                throw new ArgumentNullException("Email not found", nameof(email));
             }
 
             var entity = await entities
@@ -134,7 +136,7 @@ namespace Fakebook.Profile.Domain
 
             if (!emails.All(e => userEmails.Contains(e)))
             {
-                throw new ArgumentException("Not all emails requested are present.");
+                throw new ArgumentException("Not all emails requested are present.", nameof(emails));
             }
 
             var users = await userEntities
@@ -188,13 +190,13 @@ namespace Fakebook.Profile.Domain
                 var entities = _context.EntityProfiles;
                 if (!entities.Any())
                 {
-                    throw new ArgumentException("Source is empty");
+                    throw new ArgumentException("Source is empty", nameof(entities));
                 }
 
                 var profileFound = _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
                 if (profileFound == null)
                 {
-                    throw new ArgumentNullException("Email not found");
+                    throw new ArgumentNullException("Email not found", nameof(email));
                 }
 
                 var entity = await entities.FirstOrDefaultAsync(x => x.Email == email);
@@ -213,7 +215,7 @@ namespace Fakebook.Profile.Domain
             }
             catch
             {
-                throw new ArgumentException("Failed to update a profile");
+                throw new ArgumentException("Failed to update a profile", nameof(domainProfileData));
             }
         }
     }
