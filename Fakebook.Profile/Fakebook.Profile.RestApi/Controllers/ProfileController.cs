@@ -166,7 +166,14 @@ namespace Fakebook.Profile.RestApi.Controllers
             
         }
 
+        /// <summary>
+        /// Allows a user to upload an image.
+        /// </summary>
+        /// <returns>Http response code.</returns>
         [HttpPost("/upload"), DisableRequestSizeLimit]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Upload()
         {
             IFormFile file = Request.Form.Files[0];
