@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.Domain
 {
+    /// <summary>
+    /// Repository for profile storage. 
+    /// </summary>
     public class ProfileRepository : IProfileRepository
     {
         private readonly ProfileDbContext _context;
