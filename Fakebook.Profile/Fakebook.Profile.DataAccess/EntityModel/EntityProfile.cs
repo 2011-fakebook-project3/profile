@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
     /// <summary>
@@ -10,15 +9,6 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     /// </summary>
     public class EntityProfile
     {
-        /// <summary>
-        /// Copy the profile entity.
-        /// </summary>
-        /// <returns>A copy with the same values for the fields.</returns>
-        public EntityProfile ShallowCopy()
-        {
-            return (EntityProfile)this.MemberwiseClone();
-        }
-
         /// <summary>
         /// The primary key, the user's email.
         /// </summary>
