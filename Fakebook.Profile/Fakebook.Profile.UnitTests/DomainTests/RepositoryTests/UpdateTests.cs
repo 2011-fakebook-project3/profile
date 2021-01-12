@@ -87,46 +87,6 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 Assert.NotEqual(user.BirthDate, userActual.BirthDate);
                 Assert.NotEqual(user.Status, userActual.Status); 
             }
-        }
-
-        [Theory]
-        [ClassData(typeof(Update.InvalidName))]
-        public async Task UpdateProfile_InvalidName(DomainProfile user, DomainProfile userUpdate)
-        {
-            // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
-            var options = new DbContextOptionsBuilder<ProfileDbContext>()
-                .UseSqlite(connection)
-                .Options;
-
-            // Act
-            using (var actingContext = new ProfileDbContext(options))
-            {
-                actingContext.Database.EnsureCreated();
-                var repo = new ProfileRepository(actingContext);
-
-                // Create the user data
-                await repo.CreateProfileAsync(user);
-            }
-
-            // Assert          
-            using (var assertionContext = new ProfileDbContext(options))
-            {
-                var repo = new ProfileRepository(assertionContext);
-
-                // Create the entity profile with an incomplete user profile                                      
-                // first name and last name are not set -> invalid (from Repository UpdateProfileAsync)
-                await Assert.ThrowsAsync<ArgumentException>( async() => await repo.UpdateProfileAsync(user.Email, userUpdate));
-
-                var userActual = await repo.GetProfileAsync(user.Email);
-                Assert.Equal(user.ProfilePictureUrl, userActual.ProfilePictureUrl);
-                Assert.Equal(user.FirstName, userActual.FirstName);
-                Assert.Equal(user.LastName, userActual.LastName);
-                Assert.Equal(user.PhoneNumber, userActual.PhoneNumber);
-                Assert.Equal(user.BirthDate, userActual.BirthDate);
-                Assert.Equal(user.Status, userActual.Status);
-            }
-        }
+        } 
     }
 }

@@ -19,7 +19,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             string email = null;
             //act
             //assert
-            Assert.ThrowsAny<ArgumentNullException>(() => new DomainProfile(email));
+            Assert.ThrowsAny<ArgumentNullException>(() => new DomainProfile(null, "first", "last"));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             //arrange
             //act
             //assert
-            Assert.ThrowsAny<ArgumentException>(() => new DomainProfile(email));
+            Assert.ThrowsAny<ArgumentException>(() => new DomainProfile(email, "first", "last"));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         {
             //arrange
             //act
-            DomainProfile profile = new DomainProfile(email);
+            DomainProfile profile = new DomainProfile(email, "first", "last");
 
             //assert
             Assert.NotNull(profile.Email);
@@ -70,7 +70,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         {
             //arrange
             Uri url = null;
-            DomainProfile profile = new DomainProfile("test@test.test");
+            DomainProfile profile = new DomainProfile("test@test.test", "first", "last");
 
             //act
             profile.ProfilePictureUrl = url;
@@ -94,7 +94,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void ValidUrlWorks(string host, string path)
         {
             //arrange
-            DomainProfile profile = new DomainProfile("test@test.com");
+            DomainProfile profile = new DomainProfile("test@test.com", "first", "last");
             UriBuilder uriBuilder = new UriBuilder();
             uriBuilder.Host = host;
             uriBuilder.Path = path;
@@ -121,7 +121,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void NameReturnsProperFormat(string first, string last)
         {
             //arrange
-            DomainProfile profile = new DomainProfile("example@email.com");
+            DomainProfile profile = new DomainProfile("example@email.com", "first", "last");
 
             profile.FirstName = first;
             profile.LastName = last;
@@ -149,7 +149,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void ValidNameAccepted(string name)
         {
             //arrange
-            DomainProfile profile = new DomainProfile("email@example.com");
+            DomainProfile profile = new DomainProfile("email@example.com", "first", "last");
 
             //act
             profile.FirstName = name;
@@ -173,7 +173,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidNameRejected(string name)
         {
             //arrange
-            DomainProfile profile = new DomainProfile("email@example.com");
+            DomainProfile profile = new DomainProfile("email@example.com", "first", "last");
 
             //act
             //assert
@@ -197,7 +197,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void ValidPhoneNumberWorks(string phoneNumber)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DomainProfile profile = new DomainProfile("testemail@email.com", "first", "last");
 
             // act
             profile.PhoneNumber = phoneNumber;
@@ -217,7 +217,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidPhoneNumberThrowsException(string phoneNumber)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DomainProfile profile = new DomainProfile("testemail@email.com", "first", "last");
 
             // act
             // assert
@@ -238,7 +238,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void ValidBirthDataShouldBeInThePast(string birthDate)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DomainProfile profile = new DomainProfile("testemail@email.com", "first", "last");
             DateTime bDate = DateTime.Parse(birthDate);
 
             // act
@@ -259,7 +259,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidBirthdateShouldThrowAnException(string birthDate)
         {
             // arrange 
-            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DomainProfile profile = new DomainProfile("testemail@email.com", "first", "last");
             DateTime bDate = DateTime.Parse(birthDate);
 
             // act + assert        
@@ -273,7 +273,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void EarlyerTodayIsValid()
         {
             // arrange 
-            DomainProfile profile = new DomainProfile("testemail@email.com");
+            DomainProfile profile = new DomainProfile("testemail@email.com", "first", "last");
             DateTime earlyerToday = DateTime.Now;
             earlyerToday = earlyerToday.AddMilliseconds(-1);
 

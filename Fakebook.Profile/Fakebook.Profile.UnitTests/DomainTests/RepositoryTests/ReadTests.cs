@@ -50,9 +50,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
                 var usersActual = await repo.GetAllProfilesAsync();
                 Assert.True(usersActual.Any());
+                Assert.NotNull(usersActual);
 
-                var userData = users.FirstOrDefault(x => x.Email == userEmail);
-                var userActual = await repo.GetProfileAsync(userEmail);
+                var userData = users.First(x => x.Email == userEmail);
+                var userActual = await repo.GetProfileAsync(userData.Email);
                 Assert.NotNull(userActual);
 
                 Assert.Equal(userData.FirstName, userActual.FirstName);
