@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
 using Fakebook.Profile.UnitTests.TestData;
@@ -25,16 +26,21 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
         [Theory]
         [ClassData(typeof(Create.Valid))]
-        public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile MockedProfile)
+        public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(MockedProfile.Email, MockedProfile.FirstName, MockedProfile.LastName);
-
-            // act
-            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.PhoneNumber = MockedProfile.PhoneNumber;
-            profile.BirthDate = MockedProfile.BirthDate;
-            profile.Status = MockedProfile.Status;
+            DomainProfile profile = new DomainProfile(
+                email: mockedProfile.Email,
+                firstname: mockedProfile.FirstName,
+                lastname: mockedProfile.LastName
+            )
+            {
+                // act
+                ProfilePictureUrl = mockedProfile.ProfilePictureUrl,
+                PhoneNumber = mockedProfile.PhoneNumber,
+                BirthDate = mockedProfile.BirthDate,
+                Status = mockedProfile.Status
+            };
 
             // assert
             Assert.NotNull(profile.Name);
@@ -46,17 +52,22 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
         [Theory]
         [ClassData(typeof(Create.InvalidName))]
-        public void InvalidUserNameReturnsErrors(DomainProfile MockedProfile)
+        public void InvalidUserNameReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(MockedProfile.Email, "first", "last");
+            DomainProfile profile = new DomainProfile(
+                email: mockedProfile.Email,
+                firstname: mockedProfile.FirstName,
+                lastname: mockedProfile.LastName
+            )
+            {
+                // act
+                ProfilePictureUrl = mockedProfile.ProfilePictureUrl,
+                PhoneNumber = mockedProfile.PhoneNumber,
+                BirthDate = mockedProfile.BirthDate,
+                Status = mockedProfile.Status
+            };
 
-            // act
-            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.PhoneNumber = MockedProfile.PhoneNumber;
-            profile.BirthDate = MockedProfile.BirthDate;
-            profile.Status = MockedProfile.Status;
-            
             // assert
             Assert.Matches(RegularExpressions.EmailCharacters, profile.Email);
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
@@ -66,57 +77,59 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
         [Theory]
         [ClassData(typeof(Create.InvalidPhoneNumber))]
-        public void InvalidUserPhoneNumberReturnsErrors(DomainProfile MockedProfile)
+        public void InvalidUserPhoneNumberReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(MockedProfile.Email, MockedProfile.FirstName, MockedProfile.LastName);
-
-            // act
-            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.BirthDate = MockedProfile.BirthDate;
-            profile.Status = MockedProfile.Status;
+            DomainProfile profile = new DomainProfile(
+                email: mockedProfile.Email,
+                firstname: mockedProfile.FirstName,
+                lastname: mockedProfile.LastName
+            )
+            {
+                // act
+                ProfilePictureUrl = mockedProfile.ProfilePictureUrl,
+                FirstName = mockedProfile.FirstName,
+                LastName = mockedProfile.LastName,
+                BirthDate = mockedProfile.BirthDate,
+                Status = mockedProfile.Status
+            };
 
             // assert
             Assert.NotNull(profile.Name);
             Assert.NotNull(profile.FirstName);
             Assert.NotNull(profile.LastName);
             Assert.Matches(RegularExpressions.EmailCharacters, profile.Email);
+            // Assert.DoesNotMatch(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
             Assert.ThrowsAny<ArgumentException>(() => profile.PhoneNumber = GenerateRandom.String());
         }
 
         [Theory]
         [ClassData(typeof(Create.InvalidEmail))]
-        public void InvalidUserEmailReturnsErrors(DomainProfile MockedProfile)
+        public void InvalidUserEmailReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("valid@email.com", MockedProfile.FirstName, MockedProfile.LastName);
-
-            // act
-            profile.ProfilePictureUrl = MockedProfile.ProfilePictureUrl;
-            profile.PhoneNumber = MockedProfile.PhoneNumber;
-            profile.BirthDate = MockedProfile.BirthDate;
-            profile.Status = MockedProfile.Status;
+            DomainProfile profile = new DomainProfile(
+                email: mockedProfile.Email,
+                firstname: mockedProfile.FirstName,
+                lastname: mockedProfile.LastName
+            )
+            {
+                // act
+                ProfilePictureUrl = mockedProfile.ProfilePictureUrl,
+                FirstName = mockedProfile.FirstName,
+                LastName = mockedProfile.LastName,
+                PhoneNumber = mockedProfile.PhoneNumber,
+                BirthDate = mockedProfile.BirthDate,
+                Status = mockedProfile.Status
+            };
 
             // assert
-            Assert.NotNull(profile.Email);
             Assert.NotNull(profile.Name);
             Assert.NotNull(profile.FirstName);
             Assert.NotNull(profile.LastName);
             Assert.Matches(RegularExpressions.PhoneNumberCharacters, profile.PhoneNumber);
             Assert.ThrowsAny<ArgumentException>(() => profile.Email = GenerateRandom.String());
         }
-
-
-        [Theory]
-        [ClassData(typeof(Create.InvalidEmail))]
-        public void InvalidUserEmailReturnsErrorsInConstructor(DomainProfile MockedProfile)
-        {
-            // arrange
-            // act
-            // assert
-            Assert.ThrowsAny<ArgumentException>(() => new DomainProfile(GenerateRandom.String(), MockedProfile.FirstName, MockedProfile.LastName));
-        }
-
 
         [Theory]
         [InlineData("test.com", "test")]
@@ -126,7 +139,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void SetUri(string domain, string path)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("email@test.com", "first", "last");
+            DomainProfile profile = new DomainProfile("test@email.com", "First", "Last");
 
             //act
             var builder = new UriBuilder();
