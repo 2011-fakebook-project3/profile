@@ -24,7 +24,6 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly IProfileRepository _repository;
         private readonly IStorageService _storageService;
 
-
         private readonly ILogger<ProfileController> _logger;
 
         /// <summary>
@@ -162,35 +161,6 @@ namespace Fakebook.Profile.RestApi.Controllers
                 //should be 404?
                 return BadRequest();
             }
-          
-            
-        }
-
-        [HttpPost("/upload"), DisableRequestSizeLimit]
-        public async Task<ActionResult> Upload()
-        {
-            IFormFile file = Request.Form.Files[0];
-
-            if (file == null)
-                return BadRequest();
-
-            // generate a random guid from the file name
-            string extension = file.FileName
-                .Split('.')
-                .Last();
-
-            string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
-
-            var result = await _storageService.UploadFileContentAsync(
-                file.OpenReadStream(),
-                file.ContentType,
-                newFileName,
-                "fakebook"
-            );
-
-            var toReturn = result.AbsoluteUri;
-
-            return Ok(new { path = toReturn });
         }
     }
 }
