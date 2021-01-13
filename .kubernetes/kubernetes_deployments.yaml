@@ -29,9 +29,15 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: ConnectionStrings__Default
+        - name: FakebookProfile__ConnectionString
           value: 'Host=fakebook-profile-db;Database=postgres;Username=postgres;Password=Pass@word'
+        envFrom:
+        - secretRef:
+            name: fakebook-profile-config
         resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
           limits:
             cpu: 500m
             memory: 512Mi
@@ -49,6 +55,8 @@ spec:
     matchLabels:
       app: fakebook-profile
       role: db
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -68,6 +76,9 @@ spec:
           name: db-volume
           subPath: data
         resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
           limits:
             cpu: 500m
             memory: 512Mi

@@ -1,5 +1,5 @@
 using System.IO;
-
+using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
@@ -14,8 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
-using Okta.AspNetCore;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -38,7 +36,7 @@ namespace Fakebook.Profile.RestApi
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins()
+                        builder.WithOrigins("https://fakebook.revaturelabs.com/")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
@@ -51,34 +49,32 @@ namespace Fakebook.Profile.RestApi
                 {
                     options.Authority = "https://dev-7862904.okta.com/oauth2/default";
                     options.Audience = "api://default";
+
                     // Won't send details outside of dev env
                     if (_env.IsDevelopment())
                     {
                         options.IncludeErrorDetails = true;
                     }
-                    options.RequireHttpsMetadata = false;
-                    // Add okta auth
-                }).AddOktaMvc(new OktaMvcOptions
-                {
-                    OktaDomain = "https://dev-7862904okta.com/oauth2/default",
-                    ClientId = "CLIENT_ID_HERE",
-                    ClientSecret = "CLIENT_SECRET_HERE",
-                }
-                );
+                });
 
             services.AddControllers();
-
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
 
-
+            // for the profile db
             services.AddDbContext<ProfileDbContext>(options
-                => options.UseNpgsql(Configuration["FakebookProfile:ConnectionString"]));
+                => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
 
-            services.AddTransient<IStorageService, AzureBlobStorageService>();
+            // for azure blob
+            services.AddTransient<IStorageService, AzureBlobStorageService>(sp
+                => new AzureBlobStorageService(
+                    new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]),
+                    Configuration["BlobStorage:ContainerName"]
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
