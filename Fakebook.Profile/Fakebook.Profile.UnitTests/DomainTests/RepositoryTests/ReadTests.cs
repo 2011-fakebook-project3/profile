@@ -123,10 +123,13 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 .UseSqlite(connection)
                 .Options;
 
+            int initialCount;
+
             // Act
             using (var actingContext = new ProfileDbContext(options))
             {
                 actingContext.Database.EnsureCreated();
+                initialCount = actingContext.EntityProfiles.Count();
                 var repo = new ProfileRepository(actingContext);
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
             }
@@ -138,7 +141,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
                 var usersActual = await repo.GetAllProfilesAsync();
                 Assert.True(usersActual.Any());
-                Assert.True(usersActual.Count() == users.Count());
+                Assert.True(usersActual.Count() == initialCount + users.Count);
 
                 // testing the first element
                 var userExpected = users.First();
