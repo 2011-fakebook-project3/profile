@@ -53,32 +53,27 @@ namespace Fakebook.Profile.RestApi.Controllers
                 _logger.LogError("File given to image posting was null.");
                 return BadRequest();
             }
-            try
-            {
-                // generate a random guid from the file name
-                string extension = file
-                    .FileName
-                        .Split('.')
-                        .Last();
-                string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
-                _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
-                var result = await _storageService.UploadFileContentAsync(
-                        file.OpenReadStream(),
-                        ProfileConfiguration.BlobContainerName,
-                        file.ContentType,
-                        newFileName);
+            // generate a random guid from the file name
+            string extension = file
+                .FileName
+                    .Split('.')
+                    .Last();
+            string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
+            _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
-                var toReturn = result.AbsoluteUri;
-                _logger.LogInformation($"New file uploaded, {newFileName}");
+            // use the stream, and allow for it to close once this scope exits
+            using var stream = file.OpenReadStream();
 
-                return Ok(new { path = toReturn });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            var result = await _storageService.UploadFileContentAsync(
+                stream,
+                ProfileConfiguration.BlobContainerName,
+                file.ContentType,
+                newFileName);
+
+            _logger.LogInformation($"New file uploaded, {newFileName}");
+
+            return Created(result, null);
         }
     }
 }
