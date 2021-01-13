@@ -31,9 +31,6 @@ namespace Fakebook.Profile.RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
-            ProfileConfiguration.BlobContainerName = "profile-image"; // a temp value
-
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -59,11 +56,13 @@ namespace Fakebook.Profile.RestApi
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
 
+            var blobContainerName = Configuration["ProfileConfig:BlobContainer"];
+
             // for azure blob
             services.AddTransient<IStorageService, AzureBlobStorageService>(sp
                 => new AzureBlobStorageService(
                     new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]),
-                    ProfileConfiguration.BlobContainerName
+                    blobContainerName
                 )
             );
         }
