@@ -31,18 +31,6 @@ namespace Fakebook.Profile.RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("https://fakebook.revaturelabs.com/")
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    });
-            });
-
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -68,11 +56,13 @@ namespace Fakebook.Profile.RestApi
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
 
+            var blobContainerName = Configuration["ProfileConfig:BlobContainer"];
+
             // for azure blob
             services.AddTransient<IStorageService, AzureBlobStorageService>(sp
                 => new AzureBlobStorageService(
                     new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]),
-                    Configuration["BlobStorage:ContainerName"]
+                    blobContainerName
                 )
             );
         }
@@ -86,9 +76,6 @@ namespace Fakebook.Profile.RestApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
             }
-
-            ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
-            ProfileConfiguration.BlobContainerName = "fakebook"; // a temp value
 
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");

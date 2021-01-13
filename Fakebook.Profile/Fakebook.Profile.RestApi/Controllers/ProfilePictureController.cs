@@ -8,6 +8,7 @@ using Fakebook.Profile.Domain.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Fakebook.Profile.RestApi.Controllers
@@ -25,15 +26,17 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         private IStorageService _storageService;
         private readonly ILogger<ProfileController> _logger;
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Constructor for a new instance of the controller.
         /// </summary>
         /// <param name="storageService">Service for uploading files.</param>
         /// <param name="logger">Logger for logging errors and information.</param>
-        public ProfilePictureController(IStorageService storageService, ILogger<ProfileController> logger)
+        public ProfilePictureController(IStorageService storageService, ILogger<ProfileController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this._configuration = configuration;
             _storageService = storageService;
         }
 
@@ -53,32 +56,30 @@ namespace Fakebook.Profile.RestApi.Controllers
                 _logger.LogError("File given to image posting was null.");
                 return BadRequest();
             }
-            try
-            {
-                // generate a random guid from the file name
-                string extension = file
-                    .FileName
-                        .Split('.')
-                        .Last();
-                string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
-                _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
-                var result = await _storageService.UploadFileContentAsync(
-                        file.OpenReadStream(),
-                        ProfileConfiguration.BlobContainerName,
-                        file.ContentType,
-                        newFileName);
+            // generate a random guid from the file name
+            string extension = file
+                .FileName
+                    .Split('.')
+                    .Last();
+            string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
+            _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
-                var toReturn = result.AbsoluteUri;
-                _logger.LogInformation($"New file uploaded, {newFileName}");
+            var profileConfigOptions = new ProfileConfigOptions();
+            _configuration.GetSection(ProfileConfigOptions.ProfileConfig).Bind(profileConfigOptions);
 
-                return Ok(new { path = toReturn });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            // use the stream, and allow for it to close once this scope exits
+            using var stream = file.OpenReadStream();
+
+            var result = await _storageService.UploadFileContentAsync(
+                stream,
+                profileConfigOptions.BlobContainerName,
+                file.ContentType,
+                newFileName);
+
+            _logger.LogInformation($"New file uploaded, {newFileName}");
+
+            return Created(result, null);
         }
     }
 }

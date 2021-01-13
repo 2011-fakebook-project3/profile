@@ -191,23 +191,20 @@ namespace Fakebook.Profile.Domain
                     throw new ArgumentException("Source is empty", nameof(entities));
                 }
 
-                var profileFound = _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
-                if (profileFound == null)
+                var profile = await _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
+                if (profile == null)
                 {
                     throw new ArgumentNullException("Email not found", nameof(email));
                 }
 
-                var entity = await entities.FirstOrDefaultAsync(x => x.Email == email);
                 // assign all the values
-                {
-                    entity.Email = userEntity.Email;
-                    entity.ProfilePictureUrl = userEntity.ProfilePictureUrl;
-                    entity.FirstName = userEntity.FirstName;
-                    entity.LastName = userEntity.LastName;
-                    entity.PhoneNumber = userEntity.PhoneNumber;
-                    entity.BirthDate = userEntity.BirthDate;
-                    entity.Status = userEntity.Status;
-                }
+                profile.Email = userEntity.Email;
+                profile.ProfilePictureUrl = userEntity.ProfilePictureUrl;
+                profile.FirstName = userEntity.FirstName;
+                profile.LastName = userEntity.LastName;
+                profile.PhoneNumber = userEntity.PhoneNumber;
+                profile.BirthDate = userEntity.BirthDate;
+                profile.Status = userEntity.Status;
                 // save changes.
                 _context.SaveChanges();
             }

@@ -79,7 +79,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         ProfilePictureUrl = null,
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
-                        Status = GenerateRandom.String(),
+                        Status = "✔λΔΩ",
                     }
                 };
             }

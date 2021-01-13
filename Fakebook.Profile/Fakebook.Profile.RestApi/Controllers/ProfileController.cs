@@ -122,8 +122,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             catch (Exception e)
             {
                 // return this because the profile could not be created.
-                _logger.LogError(e.Message);
-                _logger.LogError(e.StackTrace);
+                _logger.LogInformation(e.Message, e);
                 return BadRequest();
             }
         }
