@@ -31,18 +31,6 @@ namespace Fakebook.Profile.RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("https://fakebook.revaturelabs.com/")
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    });
-            });
-
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -88,7 +76,7 @@ namespace Fakebook.Profile.RestApi
             }
 
             ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
-            ProfileConfiguration.BlobContainerName = "fakebook"; // a temp value
+            ProfileConfiguration.BlobContainerName = "profile-image"; // a temp value
 
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
