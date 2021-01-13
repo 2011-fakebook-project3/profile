@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="EntityModel\NewFile1.txt" />
-    <None Remove="Services\Interfaces\NewFile1.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0" />
- 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
