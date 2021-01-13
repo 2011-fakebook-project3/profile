@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -56,6 +58,29 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                 entity.Property(e => e.Status)
                     .IsRequired(false);
             });
+
+            modelBuilder.Entity<EntityProfile>()
+                .HasData(new EntityProfile[]
+                {
+                    new EntityProfile
+                    {
+                        Email = "david.barnes@revature.net",
+                        FirstName = "David",
+                        LastName = "Barnes",
+                        BirthDate = new DateTime(1994, 6, 30),
+                        ProfilePictureUrl = new Uri("https://images.unsplash.com/photo-1489533119213-66a5cd877091"),
+                        Status = "deployed my app feeling good about today's presentation"
+                    },
+                    new EntityProfile
+                    {
+                        Email = "testaccount@gmail.com",
+                        FirstName = "Jay",
+                        LastName = "Shin",
+                        BirthDate = new DateTime(1994, 9, 17),
+                        ProfilePictureUrl = new Uri("https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800"),
+                        Status = null
+                    }
+                });
         }
     }
 }
