@@ -5,11 +5,7 @@
         /// <summary>
         /// Regex string representing restrictions on characters.
         /// </summary>
-        public const string NoSpecialCharacters = @"^[A-Za-z0-9 '\-_%,.#?:!/]*$";
-        /// <summary>
-        /// Regex string for valid name characters.
-        /// </summary>
-        public const string NameCharacters = @"^[A-Za-z \-,.]*$";
+        public const string NoSpecialCharacters = @"^[^0-9]+[^\\\|\<\>\;\:\[\]\{\}\=\+\(\)]+$";
         /// <summary>
         /// Regex string for valid email addresses.
         /// </summary>

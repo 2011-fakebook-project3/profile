@@ -27,13 +27,13 @@ namespace Fakebook.Profile.RestApi.ApiModel
         /// <summary>
         /// The user's first name. Cannot be null.
         /// </summary>
-        [Required, RegularExpression(RegularExpressions.NameCharacters)]
+        [Required, RegularExpression(RegularExpressions.NoSpecialCharacters)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// The user's last name, cannot be null.
         /// </summary>
-        [Required, RegularExpression(RegularExpressions.NameCharacters)]
+        [Required, RegularExpression(RegularExpressions.NoSpecialCharacters)]
         public string LastName { get; set; }
 
         /// <summary>

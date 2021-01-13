@@ -50,7 +50,7 @@ namespace Fakebook.Profile.Domain
         /// The user's first name.
         /// </summary>
         /// <remarks>
-        /// A-Z, ', ., - are the only valid characters for first and last name.
+        /// Disallow any prohibited characters, but allow for emojis and any other characters
         /// </remarks>
         public string FirstName
         {
@@ -62,7 +62,7 @@ namespace Fakebook.Profile.Domain
                     throw new ArgumentNullException($"Invalid first name, {value}", nameof(value));
                 }
 
-                Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
+                Regex nameRegex = new Regex(RegularExpressions.NoSpecialCharacters);
                 // throw null exception if value is null
                 if (!nameRegex.IsMatch(value))
                     throw new ArgumentException("First name does not match the regex", nameof(value));
@@ -87,7 +87,7 @@ namespace Fakebook.Profile.Domain
                     throw new ArgumentNullException($"Invalid last name, {value}", nameof(value));
                 }
 
-                Regex nameRegex = new Regex(RegularExpressions.NameCharacters);
+                Regex nameRegex = new Regex(RegularExpressions.NoSpecialCharacters);
                 if (!nameRegex.IsMatch(value))
                     throw new ArgumentException("Last name does not match the regex", nameof(value));
                 _lastName = value;

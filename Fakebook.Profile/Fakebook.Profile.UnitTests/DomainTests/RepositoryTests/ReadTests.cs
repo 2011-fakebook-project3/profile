@@ -113,7 +113,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         /// <param name="userEmail">a targeted email</param>
         /// <returns></returns>
         [Theory]
-        [ClassData(typeof(Read.ValidColletion))]
+        [ClassData(typeof(Read.ValidCollection))]
         public async Task GetAllProfiles_ValidData(List<DomainProfile> users)
         {
             // Arrange

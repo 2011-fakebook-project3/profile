@@ -145,7 +145,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         [InlineData("name")]
         [InlineData("hypen-name")]
         [InlineData("Na,me")]
-        [InlineData("Mr.Name")] // <- forgot periods
+        [InlineData("Mr.Name")]
+        [InlineData("X Æ A-12")]
+        [InlineData("l33t")]
         public void ValidNameAccepted(string name)
         {
             //arrange
@@ -166,9 +168,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// </summary>
         /// <param name="name">The name to test</param>
         [Theory]
-        [InlineData("X Æ A-12")]
         [InlineData("1234567")]
-        [InlineData("l33t")]
         [InlineData("!@#$%^&*()_+")]
         public void InvalidNameRejected(string name)
         {
@@ -270,7 +270,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// Check that one milisecond ago is valid because it's in the past.
         /// </summary>
         [Fact]
-        public void EarlyerTodayIsValid()
+        public void EarlierTodayIsValid()
         {
             // arrange 
             DomainProfile profile = new DomainProfile("testemail@email.com", "First", "Last");

@@ -119,7 +119,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         /// <summary>
         /// Test data for GetAllProfiles() onle
         /// </summary>
-        public class ValidColletion : IEnumerable<object[]>
+        public class ValidCollection : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
