@@ -35,7 +35,7 @@ namespace Fakebook.Profile.RestApi
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://dev-7862904.okta.com/oauth2/default";
+                    options.Authority = "https://dev-2875280.okta.com/oauth2/default";
                     options.Audience = "api://default";
 
                     // Won't send details outside of dev env
