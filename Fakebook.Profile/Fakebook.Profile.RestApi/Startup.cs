@@ -31,6 +31,9 @@ namespace Fakebook.Profile.RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
+            ProfileConfiguration.BlobContainerName = "profile-image"; // a temp value
+
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -60,7 +63,7 @@ namespace Fakebook.Profile.RestApi
             services.AddTransient<IStorageService, AzureBlobStorageService>(sp
                 => new AzureBlobStorageService(
                     new BlobServiceClient(Configuration["BlobStorage:ConnectionString"]),
-                    Configuration["BlobStorage:ContainerName"]
+                    ProfileConfiguration.BlobContainerName
                 )
             );
         }
@@ -74,9 +77,6 @@ namespace Fakebook.Profile.RestApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakebook.ProfileRestApi v1"));
             }
-
-            ProfileConfiguration.DefaultUri = "https://publicdomainvectors.org/photos/defaultprofile.png";
-            ProfileConfiguration.BlobContainerName = "profile-image"; // a temp value
 
             var path = Directory.GetCurrentDirectory();
             loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
