@@ -53,6 +53,8 @@ namespace Fakebook.Profile.RestApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
 
+            services.AddTransient<IProfileRepository, ProfileRepository>();
+
             // for the profile db
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
