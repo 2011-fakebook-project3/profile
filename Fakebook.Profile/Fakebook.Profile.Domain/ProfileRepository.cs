@@ -107,7 +107,7 @@ namespace Fakebook.Profile.Domain
             }
 
             var profile = await _context.EntityProfiles
-                .FirstOrDefaultAsync(x => x.Email == email);
+                .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
 
             if (profile == null)
             {
@@ -128,10 +128,10 @@ namespace Fakebook.Profile.Domain
         {
             var userEntities = _context.EntityProfiles;
             var userEmails = userEntities
-                .Select(u => u.Email)
+                .Select(u => u.Email.ToUpper())
                 .ToList();
 
-            if (!emails.All(e => userEmails.Contains(e)))
+            if (!emails.All(e => userEmails.Contains(e.ToUpper())))
             {
                 throw new ArgumentException("Not all emails requested are present.", nameof(emails));
             }
@@ -188,7 +188,9 @@ namespace Fakebook.Profile.Domain
                     throw new ArgumentException("Source is empty", nameof(entities));
                 }
 
-                var profile = await _context.EntityProfiles.FirstOrDefaultAsync(x => x.Email == email);
+                var profile = await _context.EntityProfiles
+                    .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
+
                 if (profile == null)
                 {
                     throw new ArgumentNullException("Email not found", nameof(email));
