@@ -5,8 +5,6 @@
     /// </summary>
     public class ProfileConfigOptions
     {
-        public const string ProfileConfig = "ProfileConfig";
-
-        public string BlobContainerName { get; set; }
+        public const string ProfileConfig = "ProfileConfig:BlobContainer";
     }
 }

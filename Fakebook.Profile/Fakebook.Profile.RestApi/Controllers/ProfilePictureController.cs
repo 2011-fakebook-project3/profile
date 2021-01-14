@@ -36,7 +36,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         public ProfilePictureController(IStorageService storageService, ILogger<ProfileController> logger, IConfiguration configuration)
         {
             _logger = logger;
-            this._configuration = configuration;
+            _configuration = configuration;
             _storageService = storageService;
         }
 
@@ -58,22 +58,20 @@ namespace Fakebook.Profile.RestApi.Controllers
             }
 
             // generate a random guid from the file name
-            string extension = file
-                .FileName
+            string extension = file.FileName
                     .Split('.')
                     .Last();
             string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
             _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
-            var profileConfigOptions = new ProfileConfigOptions();
-            _configuration.GetSection(ProfileConfigOptions.ProfileConfig).Bind(profileConfigOptions);
-
             // use the stream, and allow for it to close once this scope exits
             using var stream = file.OpenReadStream();
 
+            var containerName = _configuration[ProfileConfigOptions.ProfileConfig];
+
             var result = await _storageService.UploadFileContentAsync(
                 stream,
-                profileConfigOptions.BlobContainerName,
+                containerName,
                 file.ContentType,
                 newFileName);
 
