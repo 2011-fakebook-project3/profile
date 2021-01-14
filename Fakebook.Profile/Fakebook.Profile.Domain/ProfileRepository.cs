@@ -106,19 +106,16 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentException("Source is empty", nameof(entities));
             }
 
-            var profileFound = _context.EntityProfiles
+            var profile = await _context.EntityProfiles
                 .FirstOrDefaultAsync(x => x.Email == email);
 
-            if (profileFound == null)
+            if (profile == null)
             {
                 throw new ArgumentNullException("Email not found", nameof(email));
             }
 
-            var entity = await entities
-                .FirstOrDefaultAsync(e => e.Email == email);
-
             // model mapping
-            var user = ToDomainProfile(entity);
+            var user = ToDomainProfile(profile);
             return user;
         }
 
