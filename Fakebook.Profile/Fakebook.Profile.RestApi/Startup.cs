@@ -1,4 +1,5 @@
 using System.IO;
+
 using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
@@ -35,7 +36,7 @@ namespace Fakebook.Profile.RestApi
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://dev-7862904.okta.com/oauth2/default";
+                    options.Authority = "https://dev-2875280.okta.com/oauth2/default";
                     options.Audience = "api://default";
 
                     // Won't send details outside of dev env
@@ -56,7 +57,7 @@ namespace Fakebook.Profile.RestApi
             services.AddDbContext<ProfileDbContext>(options
                 => options.UseNpgsql(Configuration.GetConnectionString("FakebookProfile")));
 
-            var blobContainerName = Configuration["ProfileConfig:BlobContainer"];
+            var blobContainerName = Configuration[ProfileConfigOptions.ProfileConfig];
 
             // for azure blob
             services.AddTransient<IStorageService, AzureBlobStorageService>(sp
