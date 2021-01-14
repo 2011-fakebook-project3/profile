@@ -4,6 +4,7 @@ using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
