@@ -49,7 +49,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 var repo = new ProfileRepository(assertionContext);
                 var userInDB = await repo.GetProfileAsync(user.Email);
                 Assert.NotNull(userInDB);
-                Assert.Equal(user.Email, userInDB.Email);
+                Assert.Equal(user.Email.ToUpper(), userInDB.Email);
                 Assert.Equal(user.FirstName, userInDB.FirstName);
                 Assert.Equal(user.LastName, userInDB.LastName);
                 Assert.Equal(user.BirthDate, userInDB.BirthDate);
@@ -92,7 +92,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             {
                 var repo = new ProfileRepository(assertionContext);
 
-                var userInDB = await repo.GetProfileAsync(user.Email);
+                var userInDB = await repo.GetProfileAsync(user.Email.ToUpper());
                 Assert.Equal(userInDB.ProfilePictureUrl, user.ProfilePictureUrl);
                 Assert.Equal(userInDB.FirstName, user.FirstName);
                 Assert.Equal(userInDB.LastName, user.LastName);

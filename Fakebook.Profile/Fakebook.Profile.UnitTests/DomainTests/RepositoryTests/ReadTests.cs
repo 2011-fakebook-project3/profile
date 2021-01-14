@@ -145,7 +145,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
                 // testing the first element
                 var userExpected = users.First();
-                var userActual = usersActual.Single(u => u.Email == userExpected.Email);
+                var userActual = usersActual.Single(u => u.Email == userExpected.Email.ToUpper());
                 Assert.Equal(userExpected.ProfilePictureUrl, userActual.ProfilePictureUrl);
                 Assert.Equal(userExpected.FirstName, userActual.FirstName);
                 Assert.Equal(userExpected.LastName, userActual.LastName);
@@ -155,7 +155,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
 
                 // testing the last element
                 var userLastExpected = users.Last();
-                var userLastActual = usersActual.Single(u => u.Email == userLastExpected.Email);
+                var userLastActual = usersActual.Single(u => u.Email == userLastExpected.Email.ToUpper());
                 Assert.Equal(userLastExpected.ProfilePictureUrl, userLastActual.ProfilePictureUrl);
                 Assert.Equal(userLastExpected.FirstName, userLastActual.FirstName);
                 Assert.Equal(userLastExpected.LastName, userLastActual.LastName);

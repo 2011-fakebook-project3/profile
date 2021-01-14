@@ -107,7 +107,7 @@ namespace Fakebook.Profile.Domain
             }
 
             var profile = await _context.EntityProfiles
-                .FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+                .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
 
             if (profile == null)
             {
@@ -128,10 +128,10 @@ namespace Fakebook.Profile.Domain
         {
             var userEntities = _context.EntityProfiles;
             var userEmails = userEntities
-                .Select(u => u.Email.ToLower())
+                .Select(u => u.Email.ToUpper())
                 .ToList();
 
-            if (!emails.All(e => userEmails.Contains(e.ToLower())))
+            if (!emails.All(e => userEmails.Contains(e.ToUpper())))
             {
                 throw new ArgumentException("Not all emails requested are present.", nameof(emails));
             }
@@ -189,7 +189,7 @@ namespace Fakebook.Profile.Domain
                 }
 
                 var profile = await _context.EntityProfiles
-                    .FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+                    .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
 
                 if (profile == null)
                 {
