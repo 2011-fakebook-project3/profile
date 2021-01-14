@@ -4,6 +4,7 @@ using Azure.Storage.Blobs;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
+using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -52,6 +53,8 @@ namespace Fakebook.Profile.RestApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fakebook.ProfileRestApi", Version = "v1" });
             });
+
+            services.AddTransient<IProfileRepository, ProfileRepository>();
 
             // for the profile db
             services.AddDbContext<ProfileDbContext>(options
