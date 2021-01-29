@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Fakebook.Profile.Domain
 {
     /// <summary>
-    /// Repository for profile storage. 
+    /// Repository for profile storage.
     /// </summary>
     public class ProfileRepository : IProfileRepository
     {
@@ -34,7 +34,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentNullException("Must have a entity profile, with an email.");
             }
 
-            DomainProfile convertedProfile = new DomainProfile(profile.Email, profile.FirstName, profile.LastName)
+            DomainProfile convertedProfile = new(profile.Email, profile.FirstName, profile.LastName)
             {
                 ProfilePictureUrl = profile.ProfilePictureUrl,
                 PhoneNumber = profile.PhoneNumber,
@@ -59,7 +59,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
             }
 
-            EntityProfile convertedProfile = new EntityProfile
+            EntityProfile convertedProfile = new()
             {
                 Email = profile.Email,
                 ProfilePictureUrl = profile.ProfilePictureUrl,
@@ -96,7 +96,7 @@ namespace Fakebook.Profile.Domain
         {
             if (email is null)
             {
-                throw new ArgumentNullException("Cannot get a null email from DB.", nameof(email));
+                throw new ArgumentNullException(nameof(email), "Cannot get a null email from DB.");
             }
 
             var entities = _context.EntityProfiles;
@@ -111,7 +111,7 @@ namespace Fakebook.Profile.Domain
 
             if (profile == null)
             {
-                throw new ArgumentNullException("Email not found", nameof(email));
+                throw new ArgumentNullException(nameof(email), "Email not found");
             }
 
             // model mapping
@@ -193,7 +193,7 @@ namespace Fakebook.Profile.Domain
 
                 if (profile == null)
                 {
-                    throw new ArgumentNullException("Email not found", nameof(email));
+                    throw new ArgumentNullException(nameof(email), "Email not found");
                 }
 
                 // assign all the values

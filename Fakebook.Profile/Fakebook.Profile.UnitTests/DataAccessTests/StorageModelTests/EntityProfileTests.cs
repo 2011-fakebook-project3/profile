@@ -23,7 +23,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetEmailShouldWork(string email)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
+            EntityProfile profile = new();
 
             //act
             profile.Email = email;
@@ -38,7 +38,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// </summary>
         /// <remarks>
         /// Maybe this shouldn't be allowed, but for now
-        /// it's the model's responsibility for validation 
+        /// it's the model's responsibility for validation
         /// </remarks>
         /// <param name="email"></param>
         [Theory]
@@ -51,7 +51,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangingEmailShouldWork(string email)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
+            EntityProfile profile = new();
             profile.Email = "someOtherEmail@email.com";
 
             //act
@@ -76,8 +76,8 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
-            var uriBuilder = new UriBuilder();
+            EntityProfile profile = new();
+            UriBuilder uriBuilder = new();
 
             //act
             uriBuilder.Host = host;
@@ -103,14 +103,17 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangeValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
-            //set to an inital uri, since this is testing that it can change when not null.
-            profile.ProfilePictureUrl = new UriBuilder().Uri;
-            var uriBuilder = new UriBuilder();
-
-            //act
-            uriBuilder.Host = host;
-            uriBuilder.Path = path;
+            EntityProfile profile = new()
+            {
+                //set to an initial uri, since this is testing that it can change when not null.
+                ProfilePictureUrl = new UriBuilder().Uri
+            };
+            UriBuilder uriBuilder = new()
+            {
+                //act
+                Host = host,
+                Path = path
+            };
             profile.ProfilePictureUrl = uriBuilder.Uri;
 
             //assert
@@ -128,7 +131,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SettingFirstNameShouldWork(string name)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
+            EntityProfile profile = new();
 
             //act
             profile.FirstName = name;
@@ -151,7 +154,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SettingLastNameShouldWork(string name)
         {
             //arrange
-            EntityProfile profile = new EntityProfile();
+            EntityProfile profile = new();
 
             //act
             profile.LastName = name;

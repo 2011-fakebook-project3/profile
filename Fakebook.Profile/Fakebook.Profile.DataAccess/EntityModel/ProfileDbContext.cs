@@ -62,7 +62,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
             modelBuilder.Entity<EntityProfile>()
                 .HasData(new EntityProfile[]
                 {
-                    new EntityProfile
+                    new()
                     {
                         Email = "david.barnes@revature.net",
                         FirstName = "David",
@@ -71,7 +71,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                         ProfilePictureUrl = new Uri("https://images.unsplash.com/photo-1489533119213-66a5cd877091"),
                         Status = "deployed my app feeling good about today's presentation"
                     },
-                    new EntityProfile
+                    new()
                     {
                         Email = "testaccount@gmail.com",
                         FirstName = "Jay",

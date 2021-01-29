@@ -27,7 +27,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task GetOneProfile_ValidData(List<DomainProfile> users, string userEmail)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
@@ -35,10 +35,10 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
                 // Create the user data
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
@@ -46,9 +46,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
                 var usersActual = await repo.GetAllProfilesAsync();
                 Assert.True(usersActual.Any());
@@ -75,14 +75,14 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task GetOneProfile_InvalidData(List<DomainProfile> users, string userEmail)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
                 var repo = new ProfileRepository(actingContext);
@@ -92,16 +92,16 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
                 var usersActual = await repo.GetAllProfilesAsync();
                 Assert.True(usersActual.Any());
                 // 0. only emails are invalid
                 // 1. invalid emails that don't fit regex -> ArgumentException (from DomainProfile Email)
                 // 2. null -> ArgumentNullException (from ProfileRepository mapper)
-                // throwsany catches parent and derived 
+                // throwsany catches parent and derived
                 await Assert.ThrowsAnyAsync<ArgumentException>(async () => await repo.GetProfileAsync(userEmail));
             }
         }
@@ -117,7 +117,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task GetAllProfiles_ValidData(List<DomainProfile> users)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
@@ -126,18 +126,18 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             int initialCount;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
                 initialCount = actingContext.EntityProfiles.Count();
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
                 var usersActual = await repo.GetAllProfilesAsync();
                 Assert.True(usersActual.Any());

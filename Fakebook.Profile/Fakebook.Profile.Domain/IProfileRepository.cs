@@ -37,7 +37,7 @@ namespace Fakebook.Profile.Domain
         /// <summary>
         /// Updates a user's profile with the information provided.
         /// </summary>
-        /// <param name="email">The orignional email of the profile, incase it was changed.</param>
+        /// <param name="email">The original email of the profile, incase it was changed.</param>
         /// <param name="domainProfileData">The data for the domain profile to be set to.</param>
         Task UpdateProfileAsync(string email, DomainProfile domainProfileData);
     }

@@ -24,7 +24,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// <summary>
         /// Service for talking to the backend.
         /// </summary>
-        private IStorageService _storageService;
+        private readonly IStorageService _storageService;
         private readonly ILogger<ProfileController> _logger;
         private readonly IConfiguration _configuration;
 
@@ -61,7 +61,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             string extension = file.FileName
                     .Split('.')
                     .Last();
-            string newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
+            var newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
             _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
             // use the stream, and allow for it to close once this scope exits
