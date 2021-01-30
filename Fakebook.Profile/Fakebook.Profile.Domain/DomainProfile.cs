@@ -153,7 +153,7 @@ namespace Fakebook.Profile.Domain
                 }
                 else
                 {
-                    var regex = new Regex(RegularExpressions.NoSpecialCharacters);
+                    Regex regex = new(RegularExpressions.NoSpecialCharacters);
                     if (!regex.IsMatch(value))
                         throw new ArgumentException($"Status passed in is invalid, (got '{value}')", nameof(value));
                     _status = value;

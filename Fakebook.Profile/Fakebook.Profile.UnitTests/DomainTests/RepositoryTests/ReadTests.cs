@@ -85,7 +85,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
             using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
                 // Create valid user data
                 users.ForEach(async user => await repo.CreateProfileAsync(user));
