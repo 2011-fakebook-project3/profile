@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Fakebook.Profile.DataAccess.EntityModel;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.Domain
@@ -92,16 +90,21 @@ namespace Fakebook.Profile.Domain
         /// </summary>
         /// <param name="email">email used to find the user</param>
         /// <returns>A specific profile with the matching email.</returns>
-        public async Task<DomainProfile> GetProfileAsync(string email)
+        public Task<DomainProfile> GetProfileAsync(string email)
         {
             if (email is null)
             {
                 throw new ArgumentNullException(nameof(email), "Cannot get a null email from DB.");
             }
 
-            var entities = _context.EntityProfiles;
+            return GetProfileInternalAsync(email);
+        }
 
-            if (!entities.Any())
+        private async Task<DomainProfile> GetProfileInternalAsync(string email)
+        {
+            DbSet<EntityProfile> entities = _context.EntityProfiles;
+
+            if (!await entities.AnyAsync())
             {
                 throw new ArgumentException("Source is empty", nameof(entities));
             }
@@ -173,7 +176,7 @@ namespace Fakebook.Profile.Domain
         /// <summary>
         /// Updates a user's profile
         /// </summary>
-        /// <param name="email">The orignional email of the profile, incase it was chaanged</param>
+        /// <param name="email">The original email of the profile, in case it was chaanged</param>
         /// <param name="domainProfileData">The data for the domain profile to be set to.</param>
         public async Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
         {
