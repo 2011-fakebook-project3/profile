@@ -25,26 +25,26 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task UpdateProfile_ValidData(DomainProfile user, DomainProfile userUpdates)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
                 // Create the user data
                 await repo.CreateProfileAsync(user);
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
                 await repo.UpdateProfileAsync(user.Email, userUpdates);
                 var alteredUser = await repo.GetProfileAsync(user.Email);
@@ -55,7 +55,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         }
 
         /// <summary>
-        /// Test if a profile with an invalid phone number can be updated 
+        /// Test if a profile with an invalid phone number can be updated
         /// </summary>
         /// <param name="user">profile data</param>
         /// <param name="userUpdates">profile that contains updates</param>
@@ -64,31 +64,31 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task UpdateProfile_InvalidPhone(DomainProfile user, DomainProfile userUpdate)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
                 .UseSqlite(connection)
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
                 // Create the user data
                 await repo.CreateProfileAsync(user);
             }
 
-            // Assert          
-            using (var assertionContext = new ProfileDbContext(options))
+            // Assert
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
-                // Create the entity profile with an incomplete user profile                                       
-                // set it to a phone number that violates the regex (from DomainProfile PhoneNumber)  
+                // Create the entity profile with an incomplete user profile
+                // set it to a phone number that violates the regex (from DomainProfile PhoneNumber)
                 Assert.Throws<ArgumentException>(() => userUpdate.PhoneNumber = GenerateRandom.String());
-                // phone number is not set, but it is not required, is still valid  
+                // phone number is not set, but it is not required, is still valid
                 await repo.UpdateProfileAsync(user.Email, userUpdate);
 
                 // used to be Equal

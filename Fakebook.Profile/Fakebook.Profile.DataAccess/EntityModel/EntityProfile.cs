@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Fakebook.Profile.DataAccess.EntityModel
 {
     /// <summary>
-    /// Database model of a profile. 
+    /// Database model of a profile.
     /// </summary>
     public class EntityProfile
     {
@@ -32,7 +32,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public string LastName { get; set; }
 
         /// <summary>
-        /// The user's phone number. can be upto 15 characters. (?) Can be null. 
+        /// The user's phone number. can be up to 15 characters. (?) Can be null.
         /// </summary>
         [MaxLength(15)]
         public string PhoneNumber { get; set; }

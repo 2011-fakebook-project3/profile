@@ -25,10 +25,10 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException($"Invalid Email, {value}", nameof(value));
+                    throw new ArgumentNullException(nameof(value), $"Invalid Email, {value}");
                 }
 
-                Regex emailRegex = new Regex(RegularExpressions.EmailCharacters);
+                Regex emailRegex = new(RegularExpressions.EmailCharacters);
                 if (!emailRegex.IsMatch(value))
                     throw new ArgumentException("The email doesn't max the regex", nameof(value));
                 _email = value;
@@ -41,7 +41,7 @@ namespace Fakebook.Profile.Domain
         public Uri ProfilePictureUrl { get; set; }
 
         /// <summary>
-        /// Shortcut to get a user's full name. 
+        /// Shortcut to get a user's full name.
         /// </summary>
         public string Name => $"{FirstName} {LastName}";
 
@@ -59,10 +59,10 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException($"Invalid first name, {value}", nameof(value));
+                    throw new ArgumentNullException(nameof(value), $"Invalid first name, {value}");
                 }
 
-                Regex nameRegex = new Regex(RegularExpressions.NoSpecialCharacters);
+                Regex nameRegex = new(RegularExpressions.NoSpecialCharacters);
                 // throw null exception if value is null
                 if (!nameRegex.IsMatch(value))
                     throw new ArgumentException("First name does not match the regex", nameof(value));
@@ -84,10 +84,10 @@ namespace Fakebook.Profile.Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException($"Invalid last name, {value}", nameof(value));
+                    throw new ArgumentNullException(nameof(value), $"Invalid last name, {value}");
                 }
 
-                Regex nameRegex = new Regex(RegularExpressions.NoSpecialCharacters);
+                Regex nameRegex = new(RegularExpressions.NoSpecialCharacters);
                 if (!nameRegex.IsMatch(value))
                     throw new ArgumentException("Last name does not match the regex", nameof(value));
                 _lastName = value;
@@ -108,7 +108,7 @@ namespace Fakebook.Profile.Domain
             {
                 if (value is not null)
                 {
-                    Regex phoneRegex = new Regex(RegularExpressions.PhoneNumberCharacters);
+                    Regex phoneRegex = new(RegularExpressions.PhoneNumberCharacters);
                     if (!phoneRegex.IsMatch(value))
                         throw new ArgumentException($"An invalid phone number was passed in (got '{value}').", nameof(value));
                 }
@@ -119,7 +119,7 @@ namespace Fakebook.Profile.Domain
 
         private DateTime _birthDate;
         /// <summary>
-        /// The user's birthdate. 
+        /// The user's birthdate.
         /// </summary>
         /// <remarks>
         /// Can't be null, but will default to all zeros.
@@ -135,7 +135,7 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        string _status;
+        private string _status;
         /// <summary>
         /// The user's current status message.
         /// </summary>
@@ -153,7 +153,7 @@ namespace Fakebook.Profile.Domain
                 }
                 else
                 {
-                    var regex = new Regex(RegularExpressions.NoSpecialCharacters);
+                    Regex regex = new(RegularExpressions.NoSpecialCharacters);
                     if (!regex.IsMatch(value))
                         throw new ArgumentException($"Status passed in is invalid, (got '{value}')", nameof(value));
                     _status = value;

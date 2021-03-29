@@ -4,7 +4,7 @@ namespace Fakebook.Profile.UnitTests.TestData
 {
     public static class GenerateRandom
     {
-        public static Random s_random = new Random();
+        public static Random s_random = new();
 
         public static int GenerateInRange(int min, int max)
         {
@@ -17,14 +17,14 @@ namespace Fakebook.Profile.UnitTests.TestData
         /// <returns></returns>
         public static string PhoneNumber()
         {
-            int[] ints = new int[10];
+            var ints = new int[10];
 
-            for (int i = 0; i < ints.Length; i++)
+            for (var i = 0; i < ints.Length; i++)
             {
                 ints[i] = GenerateInRange(0, 9);
             }
 
-            int c = 0;
+            var c = 0;
             return $"({ints[c++]}{ints[c++]}{ints[c++]}) {ints[c++]}{ints[c++]}{ints[c++]}-{ints[c++]}{ints[c++]}{ints[c++]}{ints[c++]}";
         }
 
@@ -38,7 +38,7 @@ namespace Fakebook.Profile.UnitTests.TestData
             int day = GenerateInRange(1, 28);
             int year = GenerateInRange(1880, 2020);
 
-            return new DateTime(year, month, day);
+            return new(year, month, day);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Fakebook.Profile.UnitTests.TestData
         public static string String()
         {
             int length = GenerateInRange(8, 16);
-            char[] chars = new char[length];
+            var chars = new char[length];
 
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 int min, max;
                 bool uppercase = s_random.Next(2) == 1;
@@ -67,7 +67,7 @@ namespace Fakebook.Profile.UnitTests.TestData
                 int temp = GenerateInRange(min, max);
                 chars[i] = (char)temp;
             }
-            return new string(chars);
+            return new(chars);
         }
 
         /// <summary>

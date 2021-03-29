@@ -25,7 +25,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task CreateUser_ValidData(DomainProfile user)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
@@ -33,20 +33,20 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
 
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
                 // Create the entity profile with a complete user profile
                 await repo.CreateProfileAsync(user);
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
                 var userInDB = await repo.GetProfileAsync(user.Email);
                 Assert.NotNull(userInDB);
                 Assert.Equal(user.Email, userInDB.Email);
@@ -66,7 +66,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
         public async Task CreateUser_InvalidPhone(DomainProfile user)
         {
             // Arrange
-            using var connection = new SqliteConnection("Data Source=:memory:");
+            using SqliteConnection connection = new("Data Source=:memory:");
             connection.Open();
 
             var options = new DbContextOptionsBuilder<ProfileDbContext>()
@@ -74,23 +74,23 @@ namespace Fakebook.Profile.UnitTests.DomainTests.RepositoryTests
                 .Options;
 
             // Act
-            using (var actingContext = new ProfileDbContext(options))
+            using (ProfileDbContext actingContext = new(options))
             {
                 actingContext.Database.EnsureCreated();
 
-                var repo = new ProfileRepository(actingContext);
+                ProfileRepository repo = new(actingContext);
 
-                // Create the entity profile with an incomplete user profile                                       
-                // set it to a phone number that violates the regex (from DomainProfile PhoneNumber)              
+                // Create the entity profile with an incomplete user profile
+                // set it to a phone number that violates the regex (from DomainProfile PhoneNumber)
                 Assert.Throws<ArgumentException>(() => user.PhoneNumber = GenerateRandom.String());
-                // phone number is not set, but it is not required, is still valid  
+                // phone number is not set, but it is not required, is still valid
                 await repo.CreateProfileAsync(user);
             }
 
             // Assert
-            using (var assertionContext = new ProfileDbContext(options))
+            using (ProfileDbContext assertionContext = new(options))
             {
-                var repo = new ProfileRepository(assertionContext);
+                ProfileRepository repo = new(assertionContext);
 
                 var userInDB = await repo.GetProfileAsync(user.Email.ToUpper());
                 Assert.Equal(userInDB.ProfilePictureUrl, user.ProfilePictureUrl);

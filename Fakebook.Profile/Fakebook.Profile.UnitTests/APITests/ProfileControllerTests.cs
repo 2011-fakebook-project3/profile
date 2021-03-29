@@ -23,9 +23,9 @@ namespace Fakebook.Profile.UnitTests.APITests
         // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing?view=aspnetcore-5.0
 
         // all dummy data
-        readonly string dummyEmail = "test@gmail.com";
-        readonly string[] dummyEmails = { "test1@gmail.com", "test2@gmail.com" };
-        readonly ProfileApiModel dummyInvalidProfile = new ProfileApiModel();
+        private readonly string dummyEmail = "test@gmail.com";
+        private readonly string[] dummyEmails = { "test1@gmail.com", "test2@gmail.com" };
+        private readonly ProfileApiModel dummyInvalidProfile = new();
 
         /// <summary>
         /// Get's a valid profile with dummy data for the repo.
@@ -36,7 +36,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         /// <returns>A valid user profile.</returns>
         private static DomainProfile GetValidDummyProfile()
         {
-            DomainProfile profile = new DomainProfile(
+            DomainProfile profile = new(
                 email: GenerateRandom.Email(),
                 firstName: GenerateRandom.String(),
                 lastName: GenerateRandom.String()
@@ -58,7 +58,7 @@ namespace Fakebook.Profile.UnitTests.APITests
         /// <returns>A valid API profile.</returns>
         private static ProfileApiModel GetValidAPIDummy()
         {
-            ProfileApiModel profile = new ProfileApiModel
+            ProfileApiModel profile = new()
             {
                 Email = GenerateRandom.Email(),
                 PhoneNumber = GenerateRandom.PhoneNumber(),
@@ -79,9 +79,9 @@ namespace Fakebook.Profile.UnitTests.APITests
         public async Task GetSpecificProfileWorks()
         {
             // arrange
-            var mockedProfileRepository = new Mock<IProfileRepository>();
-            var mockedStorageService = new Mock<IStorageService>();
-            var controller = new ProfileController(
+            Mock<IProfileRepository> mockedProfileRepository = new();
+            Mock<IStorageService> mockedStorageService = new();
+            ProfileController controller = new(
                 mockedProfileRepository.Object,
                 mockedStorageService.Object,
                 new NullLogger<ProfileController>()
@@ -113,16 +113,16 @@ namespace Fakebook.Profile.UnitTests.APITests
         public async Task GetSetofProfilesWorks()
         {
             // arrange
-            var mockedProfileRepository = new Mock<IProfileRepository>();
-            var mockedStorageService = new Mock<IStorageService>();
-            var controller = new ProfileController(
+            Mock<IProfileRepository> mockedProfileRepository = new();
+            Mock<IStorageService> mockedStorageService = new();
+            ProfileController controller = new(
                 mockedProfileRepository.Object,
                 mockedStorageService.Object,
                 new NullLogger<ProfileController>()
             );
 
-            var expectedResults = new List<DomainProfile>();
-            for (int i = 0; i < 5; i++)
+            List<DomainProfile> expectedResults = new();
+            for (var i = 0; i < 5; i++)
             {
                 expectedResults.Add(GetValidDummyProfile());
             }
@@ -135,7 +135,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             // act
             var result = await controller.SelectProfilesAsync(dummyEmails);
 
-            // assert    
+            // assert
             Assert.NotNull(result);
             var actionResult = Assert.IsType<ActionResult<IEnumerable<ProfileApiModel>>>(result);
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
@@ -162,9 +162,9 @@ namespace Fakebook.Profile.UnitTests.APITests
         public async Task CreateProfileWorksForValidData()
         {
             // arrange
-            var mockedProfileRepository = new Mock<IProfileRepository>();
-            var mockedStorageService = new Mock<IStorageService>();
-            var controller = new ProfileController(
+            Mock<IProfileRepository> mockedProfileRepository = new();
+            Mock<IStorageService> mockedStorageService = new();
+            ProfileController controller = new(
                 mockedProfileRepository.Object,
                 mockedStorageService.Object,
                 new NullLogger<ProfileController>()
@@ -193,9 +193,9 @@ namespace Fakebook.Profile.UnitTests.APITests
         public async Task CreateProfileReturnsErrorForInvalidData()
         {
             // arrange
-            var mockedProfileRepository = new Mock<IProfileRepository>();
-            var mockedStorageService = new Mock<IStorageService>();
-            var controller = new ProfileController(
+            Mock<IProfileRepository> mockedProfileRepository = new();
+            Mock<IStorageService> mockedStorageService = new();
+            ProfileController controller = new(
                 mockedProfileRepository.Object,
                 mockedStorageService.Object,
                 new NullLogger<ProfileController>()

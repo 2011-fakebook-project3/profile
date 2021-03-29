@@ -11,21 +11,21 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         /*
          * User:
          * - Email: string
-         * - ProfilePictureUrl: string 
+         * - ProfilePictureUrl: string
          * - Name : string
          * - FirstName: string
-         * - Lastname: string              
+         * - Lastname: string
          * - PhoneNumber: string
          * - BirthDate: DateTime
          * - Status: string
          */
 
         // randomly generated URI throws an exception
-        private static string fakeURI1 = "https://i.imgur.com/FAKE1.jpg";
-        private static string fakeURI2 = "https://i.imgur.com/FAKE2.jpg";
-        private static string fakeURI3 = "https://i.imgur.com/FAKE3.jpg";
-        private static string fakeURI4 = "https://i.imgur.com/FAKE4.jpg";
-        private static string fakeURI5 = "https://i.imgur.com/FAKE5.jpg";
+        private static readonly string fakeUri1 = "https://i.imgur.com/FAKE1.jpg";
+        private static readonly string fakeUri2 = "https://i.imgur.com/FAKE2.jpg";
+        private static readonly string fakeUri3 = "https://i.imgur.com/FAKE3.jpg";
+        private static readonly string fakeUri4 = "https://i.imgur.com/FAKE4.jpg";
+        private static readonly string fakeUri5 = "https://i.imgur.com/FAKE5.jpg";
 
         public class Valid : IEnumerable<object[]>
         {
@@ -54,7 +54,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI1),
+                        ProfilePictureUrl = new Uri(fakeUri1),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
@@ -65,7 +65,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI2),
+                        ProfilePictureUrl = new Uri(fakeUri2),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = null,
@@ -90,7 +90,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         /// <summary>
         /// generates 2 variants of invalid user profiles:
         /// invalid email format
-        /// invlaid phone number format 
+        /// invlaid phone number format
         /// </summary>
         /// <remarks>
         /// NOTE: Does currently have a valid placeholder name, should be replaced with null
@@ -107,13 +107,14 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                         // cannot set to null here, will get exception
                         // FirstName = null,
                         // LastName = null,
-                        ProfilePictureUrl = new Uri(fakeURI3),
+                        ProfilePictureUrl = new Uri(fakeUri3),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),
                     }
                 };
             }
+
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
@@ -125,7 +126,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile(GenerateRandom.Email(), GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI4),
+                        ProfilePictureUrl = new Uri(fakeUri4),
                         // cannot set to a random string here, will get exception
                         // PhoneNumber = GenerateRandom.String(), // .PhoneNumber()
                         BirthDate = GenerateRandom.DateTime(),
@@ -133,6 +134,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                     }
                 };
             }
+
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
@@ -153,7 +155,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                     {
                         // cannot set to a random string here, will get exception
                         // Email = GenerateRandom.String(), // .Email()
-                        ProfilePictureUrl = new Uri(fakeURI5),
+                        ProfilePictureUrl = new Uri(fakeUri5),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String(),

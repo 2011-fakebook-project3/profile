@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Fakebook.Profile.DataAccess.EntityModel;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.Domain
 {
     /// <summary>
-    /// Repository for profile storage. 
+    /// Repository for profile storage.
     /// </summary>
     public class ProfileRepository : IProfileRepository
     {
@@ -34,7 +32,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentNullException("Must have a entity profile, with an email.");
             }
 
-            DomainProfile convertedProfile = new DomainProfile(profile.Email, profile.FirstName, profile.LastName)
+            DomainProfile convertedProfile = new(profile.Email, profile.FirstName, profile.LastName)
             {
                 ProfilePictureUrl = profile.ProfilePictureUrl,
                 PhoneNumber = profile.PhoneNumber,
@@ -59,7 +57,7 @@ namespace Fakebook.Profile.Domain
                 throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
             }
 
-            EntityProfile convertedProfile = new EntityProfile
+            EntityProfile convertedProfile = new()
             {
                 Email = profile.Email,
                 ProfilePictureUrl = profile.ProfilePictureUrl,
@@ -92,16 +90,21 @@ namespace Fakebook.Profile.Domain
         /// </summary>
         /// <param name="email">email used to find the user</param>
         /// <returns>A specific profile with the matching email.</returns>
-        public async Task<DomainProfile> GetProfileAsync(string email)
+        public Task<DomainProfile> GetProfileAsync(string email)
         {
             if (email is null)
             {
-                throw new ArgumentNullException("Cannot get a null email from DB.", nameof(email));
+                throw new ArgumentNullException(nameof(email), "Cannot get a null email from DB.");
             }
 
-            var entities = _context.EntityProfiles;
+            return GetProfileInternalAsync(email);
+        }
 
-            if (!entities.Any())
+        private async Task<DomainProfile> GetProfileInternalAsync(string email)
+        {
+            DbSet<EntityProfile> entities = _context.EntityProfiles;
+
+            if (!await entities.AnyAsync())
             {
                 throw new ArgumentException("Source is empty", nameof(entities));
             }
@@ -111,7 +114,7 @@ namespace Fakebook.Profile.Domain
 
             if (profile == null)
             {
-                throw new ArgumentNullException("Email not found", nameof(email));
+                throw new ArgumentNullException(nameof(email), "Email not found");
             }
 
             // model mapping
@@ -173,7 +176,7 @@ namespace Fakebook.Profile.Domain
         /// <summary>
         /// Updates a user's profile
         /// </summary>
-        /// <param name="email">The orignional email of the profile, incase it was chaanged</param>
+        /// <param name="email">The original email of the profile, in case it was chaanged</param>
         /// <param name="domainProfileData">The data for the domain profile to be set to.</param>
         public async Task UpdateProfileAsync(string email, DomainProfile domainProfileData)
         {
@@ -193,7 +196,7 @@ namespace Fakebook.Profile.Domain
 
                 if (profile == null)
                 {
-                    throw new ArgumentNullException("Email not found", nameof(email));
+                    throw new ArgumentNullException(nameof(email), "Email not found");
                 }
 
                 // assign all the values

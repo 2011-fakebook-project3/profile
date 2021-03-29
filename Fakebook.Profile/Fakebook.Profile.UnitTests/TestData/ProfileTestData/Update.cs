@@ -11,23 +11,23 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         /*
          * User:
          * - Email: string
-         * - ProfilePictureUrl: string 
+         * - ProfilePictureUrl: string
          * - Name : string
          * - FirstName: string
-         * - Lastname: string              
+         * - Lastname: string
          * - PhoneNumber: string
          * - BirthDate: DateTime
          * - Status: string
          */
 
         // randomly generate URI throws an exception
-        private static string fakeURI1 = "https://i.imgur.com/FAKE1.jpg";
-        private static string fakeURI2 = "https://i.imgur.com/FAKE2.jpg";
-        private static string fakeURI3 = "https://i.imgur.com/FAKE3.jpg";
-        private static string fakeURI4 = "https://i.imgur.com/FAKE4.jpg";
-        private static string fakeURI5 = "https://i.imgur.com/FAKE5.jpg";
-        private static string fakeURI6 = "https://i.imgur.com/FAKE6.jpg";
-        private static string fakeURI7 = "https://i.imgur.com/FAKE7.jpg";
+        private static readonly string fakeUri1 = "https://i.imgur.com/FAKE1.jpg";
+        private static readonly string fakeUri2 = "https://i.imgur.com/FAKE2.jpg";
+        private static readonly string fakeUri3 = "https://i.imgur.com/FAKE3.jpg";
+        private static readonly string fakeUri4 = "https://i.imgur.com/FAKE4.jpg";
+        private static readonly string fakeUri5 = "https://i.imgur.com/FAKE5.jpg";
+        private static readonly string fakeUri6 = "https://i.imgur.com/FAKE6.jpg";
+        private static readonly string fakeUri7 = "https://i.imgur.com/FAKE7.jpg";
 
 
         public class Valid : IEnumerable<object[]>
@@ -84,14 +84,14 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                     {
                         // Invalid URI format
                         // ProfilePictureUrl = new Uri(GenerateRandom.String())
-                        ProfilePictureUrl = new Uri(fakeURI1),
+                        ProfilePictureUrl = new Uri(fakeUri1),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = null
                     },
                     new DomainProfile(targetEmail3, GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI2),
+                        ProfilePictureUrl = new Uri(fakeUri2),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String()
@@ -105,7 +105,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile(targetEmail4, GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI3),
+                        ProfilePictureUrl = new Uri(fakeUri3),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String()
@@ -134,7 +134,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
                 {
                     new DomainProfile(targetEmail2, GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI6),
+                        ProfilePictureUrl = new Uri(fakeUri6),
                         PhoneNumber = GenerateRandom.PhoneNumber(),
                         BirthDate = GenerateRandom.DateTime(),
                         Status = GenerateRandom.String()
@@ -142,7 +142,7 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
 
                     new DomainProfile(targetEmail2, GenerateRandom.String(), GenerateRandom.String())
                     {
-                        ProfilePictureUrl = new Uri(fakeURI7),
+                        ProfilePictureUrl = new Uri(fakeUri7),
                         // cannot set here, will get exception
                         // PhoneNumber = GenerateRandom.String(),
                         BirthDate = GenerateRandom.DateTime(),
@@ -154,4 +154,3 @@ namespace Fakebook.Profile.UnitTests.TestData.ProfileTestData
         }
     }
 }
-

@@ -1,7 +1,5 @@
 ﻿using System;
-
 using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Fakebook.Profile.DataAccess.EntityModel
@@ -14,7 +12,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// <summary>
         /// Constructs an isntance of this context.
         /// </summary>
-        /// <param name="options">The optinos that the context will be constructed with.</param>
+        /// <param name="options">The options that the context will be constructed with.</param>
         public ProfileDbContext([NotNull] DbContextOptions options) :
             base(options)
         { }
@@ -25,7 +23,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         public DbSet<EntityProfile> EntityProfiles { get; set; }
 
         /// <summary>
-        /// Override for generatingthe model tables.
+        /// Override for generating the model tables.
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder object used with building the tables, their properties, and contraints.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,8 +32,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
             modelBuilder.Entity<EntityProfile>(entity =>
             {
-                // Table | Schema
-                entity.ToTable("Profile", "Fakebook");
+                entity.ToTable(name: "Profile", schema: "Fakebook");
 
                 entity.Property(e => e.Email)
                     .IsRequired(true);
@@ -60,7 +57,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
             });
 
             modelBuilder.Entity<EntityProfile>()
-                .HasData(new EntityProfile[]
+                .HasData(new[]
                 {
                     new EntityProfile
                     {

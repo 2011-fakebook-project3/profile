@@ -18,7 +18,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         * - ProfilePictureUrl: Uri
         * - Name : string
         * - FirstName: string
-        * - Lastname: string              
+        * - Lastname: string
         * - PhoneNumber: string
         * - BirthDate: DateTime
         * - Status: string
@@ -34,7 +34,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void ValidUserInfoShouldReturnWithoutErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(
+            DomainProfile profile = new(
                 email: mockedProfile.Email,
                 firstName: mockedProfile.FirstName,
                 lastName: mockedProfile.LastName
@@ -64,7 +64,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidUserNameReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(
+            DomainProfile profile = new(
                 email: mockedProfile.Email,
                 firstName: mockedProfile.FirstName,
                 lastName: mockedProfile.LastName
@@ -93,7 +93,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidUserPhoneNumberReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(
+            DomainProfile profile = new(
                 email: mockedProfile.Email,
                 firstName: mockedProfile.FirstName,
                 lastName: mockedProfile.LastName
@@ -125,7 +125,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void InvalidUserEmailReturnsErrors(DomainProfile mockedProfile)
         {
             // arrange
-            DomainProfile profile = new DomainProfile(
+            DomainProfile profile = new(
                 email: mockedProfile.Email,
                 firstName: mockedProfile.FirstName,
                 lastName: mockedProfile.LastName
@@ -161,12 +161,14 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         public void SetUri(string domain, string path)
         {
             // arrange
-            DomainProfile profile = new DomainProfile("test@email.com", "First", "Last");
+            DomainProfile profile = new("test@email.com", "First", "Last");
 
             //act
-            var builder = new UriBuilder();
-            builder.Host = domain;
-            builder.Path = path;
+            UriBuilder builder = new()
+            {
+                Host = domain,
+                Path = path
+            };
             profile.ProfilePictureUrl = builder.Uri;
 
             //assert

@@ -37,7 +37,7 @@ namespace Fakebook.Profile.RestApi.ApiModel
         public string LastName { get; set; }
 
         /// <summary>
-        /// The user's phone number. can be upto 15 characters and can be null. 
+        /// The user's phone number. can be upto 15 characters and can be null.
         /// </summary>
         [Required, RegularExpression(RegularExpressions.PhoneNumberCharacters)]
         public string PhoneNumber { get; set; }
@@ -70,7 +70,7 @@ namespace Fakebook.Profile.RestApi.ApiModel
 
         public DomainProfile ToDomainProfile()
         {
-            return new DomainProfile(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status);
+            return new(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status);
         }
     }
 }
