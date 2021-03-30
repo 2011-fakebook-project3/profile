@@ -1,0 +1,22 @@
+﻿version: '3'
+
+# run in foreground: `docker-compose up`
+# run in background: `docker-compose up -d`
+# stop in background: `docker-compose down`
+# reset the db: `docker-compose down -v && docker-compose build`
+
+services:
+  db:
+    build:
+      context: ./Fakebook.Profile
+      dockerfile: db.dockerfile
+    image: fakebookprofile-db:latest
+    ports:
+    - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: Pass@word
+    volumes:
+    - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

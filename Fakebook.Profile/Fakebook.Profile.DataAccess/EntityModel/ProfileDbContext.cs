@@ -61,9 +61,9 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                 {
                     new EntityProfile
                     {
-                        Email = "david.barnes@revature.net",
-                        FirstName = "David",
-                        LastName = "Barnes",
+                        Email = "john.werner@revature.net",
+                        FirstName = "John",
+                        LastName = "Werner",
                         BirthDate = new DateTime(1994, 6, 30),
                         ProfilePictureUrl = new Uri("https://images.unsplash.com/photo-1489533119213-66a5cd877091"),
                         Status = "deployed my app feeling good about today's presentation"
