@@ -33,11 +33,23 @@ namespace Fakebook.Profile.RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://fakebook.revaturelabs.com/")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://dev-2875280.okta.com/oauth2/default";
+                    options.Authority = "https://revature-p3.okta.com/oauth2/default";
                     options.Audience = "api://default";
 
                     // Won't send details outside of dev env
