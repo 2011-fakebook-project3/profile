@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Fakebook.Profile.Domain;
+using Fakebook.Profile.Domain.Utility;
+using System.Text.RegularExpressions;
 
 using Xunit;
 
@@ -288,26 +290,17 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// Check that follower emails have the correct format.
         /// </summary>
         [Fact]
-        public void InvalidFollowerEmails() 
+        public void TestAddFollowerEmail() 
         {
             // arrange
-            List<string> followerEmails = new List<string>();
-            followerEmails.Add("testermail1@testing@net");
-            followerEmails.Add("email@test.com");
-            followerEmails.Add("@test.com.mail");
-
-            List<string> followingEmails = new List<string>();
-            followingEmails.Add("testermail1.email.com");
-            followingEmails.Add("testermail2@gmail.com");
-            followingEmails.Add("testermail3@outlook.com");
-
-            // DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields", followerEmails, followingEmails);
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
 
             // act
-            // profile.Follower = profile.followers;
+            // profile.AddFollower(followerEmail);
 
-            // assert (test will fail since Followers does not exist in DomainProfile yet; and the same applies with Following).
-            // Assert.Equals(profile.followers, profile.Follower);
+            // assert
+            // Assert.Contains(followerEmail, profile.FollowerEmails);
 
         }
 
@@ -315,26 +308,17 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// Check that following emails have the correct format.
         /// </summary>
         [Fact]
-        public void InvalidFollowingEmails()
+        public void TestAddFollowingEmail()
         {
             // arrange
-            List<string> followingEmails = new List<string>();
-            followingEmails.Add("testermail1@testing@net");
-            followingEmails.Add("email@test.com");
-            followingEmails.Add("@test.com.mail");
-
-            List<string> followerEmails = new List<string>();
-            followerEmails.Add("testermail1@email.com");
-            followerEmails.Add("testermail2@gmail.com");
-            followerEmails.Add("@testermail3@outlook.com");
-
-            // DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields", followerEmails, followingEmails);
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followEmail = "testermail@gmail.com";
 
             // act
-            // profile.Follow = profile.following;
+            // profile.AddFollow(followerEmail);
 
             // assert
-            // Assert.Equals(profile.following, profile.Follow);
+            // Assert.Contains(followEmail, profile.FollowEmails);
         }
 
     }
