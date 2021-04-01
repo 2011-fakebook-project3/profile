@@ -56,7 +56,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var result = await controller.UploadProfilePicture();
 
             // assert
-            Assert.NotNull(result);
+            Assert.IsNotType<BadRequestResult>(await controller.UploadProfilePicture());
         }
 
         [Fact]
