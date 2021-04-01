@@ -34,7 +34,7 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
             byte[] data = new byte[1000];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 0, "Data", "dummy.jpeg")
+            var file = new FormFile(stream, 0, 1000, "Data", "dummy.jpeg")
             {
                 Headers = new HeaderDictionary(),
                 ContentType = "image/jpeg"
@@ -56,7 +56,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var result = await controller.UploadProfilePicture();
 
             // assert
-            Assert.NotNull(result);
+            Assert.IsNotType<BadRequestResult>(await controller.UploadProfilePicture());
         }
 
         [Fact]
@@ -68,9 +68,9 @@ namespace Fakebook.Profile.UnitTests.APITests
             mockedStorageService
                 .Setup(x => x.UploadFileContentAsync(It.IsAny<Stream>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>()))
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
-            byte[] data = new byte[2 * 1024 * 1024];
+            byte[] data = new byte[3 * 1024 * 1024];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 1000, "Data", "dummy.jpeg")
+            var file = new FormFile(stream, 0, 3 * 1024 * 1024, "Data", "dummy.jpeg")
             {
                 Headers = new HeaderDictionary(),
                 ContentType = "image/jpeg"
@@ -90,7 +90,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             };
 
             // act and assert
-            await Assert.ThrowsAsync<Exception>(() => controller.UploadProfilePicture());
+            Assert.IsType<BadRequestResult>(await controller.UploadProfilePicture());
         }
     }
 }
