@@ -1,6 +1,7 @@
 using System.IO;
 
 using Azure.Storage.Blobs;
+using Fakebook.Profile.DataAccess;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;

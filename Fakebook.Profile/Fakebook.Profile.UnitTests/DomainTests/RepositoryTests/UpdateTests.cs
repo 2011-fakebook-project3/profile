@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-
+using Fakebook.Profile.DataAccess;
 using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
