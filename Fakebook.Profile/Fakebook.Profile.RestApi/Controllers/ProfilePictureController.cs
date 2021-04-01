@@ -27,6 +27,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly IStorageService _storageService;
         private readonly ILogger<ProfileController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly int _maxFileSize;
 
         /// <summary>
         /// Constructor for a new instance of the controller.
@@ -38,11 +39,12 @@ namespace Fakebook.Profile.RestApi.Controllers
             _logger = logger;
             _configuration = configuration;
             _storageService = storageService;
+            _maxFileSize = 2 * 1024 * 1024; // 2 MB
         }
 
         // POST api/ProfilePicture
         /// <summary>
-        /// Endpoint for uploading an image to the service's storage.
+        /// Endpoint for uploading an image to the service's storage. Arbitrary limit of 2 MB.
         /// </summary>
         /// <returns>An Http response.</returns>
         [HttpPost, DisableRequestSizeLimit]
@@ -54,6 +56,12 @@ namespace Fakebook.Profile.RestApi.Controllers
             if (file == null)
             {
                 _logger.LogError("File given to image posting was null.");
+                return BadRequest();
+            }
+
+            if (file.Length > _maxFileSize)
+            {
+                _logger.LogError("File give to image was too large");
                 return BadRequest();
             }
 
