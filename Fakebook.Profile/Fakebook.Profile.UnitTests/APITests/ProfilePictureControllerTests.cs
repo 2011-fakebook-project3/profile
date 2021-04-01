@@ -24,7 +24,7 @@ namespace Fakebook.Profile.UnitTests.APITests
     public class ProfilePictureControllerTests
     {
         [Fact]
-        public async Task uploadValidImageSize()
+        public async Task UploadValidImageSize()
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
@@ -53,14 +53,14 @@ namespace Fakebook.Profile.UnitTests.APITests
             };
 
             // act
-            var result = await controller.uploadProfilePicture();
+            var result = await controller.UploadProfilePicture();
 
             // assert
             Assert.NotNull(result);
         }
 
         [Fact]
-        public async Task uploadInvalidImageSize()
+        public async Task UploadInvalidImageSize()
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
@@ -90,7 +90,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             };
 
             // act and assert
-            await Assert.ThrowsAsync<Exception>(() => controller.uploadProfilePicture());
+            await Assert.ThrowsAsync<Exception>(() => controller.UploadProfilePicture());
         }
     }
 }

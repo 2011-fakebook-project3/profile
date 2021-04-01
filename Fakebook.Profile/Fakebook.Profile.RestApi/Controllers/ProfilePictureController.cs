@@ -48,7 +48,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpPost, DisableRequestSizeLimit]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> uploadProfilePicture()
+        public async Task<ActionResult> UploadProfilePicture()
         {
             IFormFile file = Request.Form.Files[0];
             if (file == null)
