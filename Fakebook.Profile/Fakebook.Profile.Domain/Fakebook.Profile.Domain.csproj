@@ -4,8 +4,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Fakebook.Profile.DataAccess\Fakebook.Profile.DataAccess.csproj" />
-  </ItemGroup>
-
 </Project>

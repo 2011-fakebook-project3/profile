@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fakebook.Profile.DataAccess.EntityModel;
+using Fakebook.Profile.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fakebook.Profile.Domain
-{
+namespace Fakebook.Profile.DataAccess {
     /// <summary>
     /// Repository for profile storage.
     /// </summary>
