@@ -28,6 +28,8 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly ILogger<ProfileController> _logger;
         private readonly IConfiguration _configuration;
         private readonly int _maxFileSize;
+        private const int _numMb = 2;
+        private const int _sizeOfByte = 1024;
 
         /// <summary>
         /// Constructor for a new instance of the controller.
@@ -39,7 +41,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             _logger = logger;
             _configuration = configuration;
             _storageService = storageService;
-            _maxFileSize = 2 * 1024 * 1024; // 2 MB
+            _maxFileSize = _numMb * _sizeOfByte * _sizeOfByte;
         }
 
         // POST api/ProfilePicture
