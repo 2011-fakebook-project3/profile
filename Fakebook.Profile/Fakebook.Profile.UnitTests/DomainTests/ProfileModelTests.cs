@@ -337,5 +337,58 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             // Assert.Equals(profile.following, profile.Follow);
         }
 
+        /// <summary>
+        /// Check that follower emails have the correct format.
+        /// </summary>
+        [Fact]
+        public void InvalidFollowerEmails()
+        {
+            // arrange
+            List<string> followerEmails = new List<string>();
+            followerEmails.Add("testermail1@testing@net");
+            followerEmails.Add("email@test.com");
+            followerEmails.Add("@test.com.mail");
+
+            List<string> followingEmails = new List<string>();
+            followingEmails.Add("testermail1.email.com");
+            followingEmails.Add("testermail2@gmail.com");
+            followingEmails.Add("testermail3@outlook.com");
+
+            // DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields", followerEmails, followingEmails);
+
+            // act
+            // profile.Follower = profile.followers;
+
+            // assert (test will fail since Followers does not exist in DomainProfile yet; and the same applies with Following).
+            // Assert.Equals(profile.followers, profile.Follower);
+
+        }
+
+        /// <summary>
+        /// Check that following emails have the correct format.
+        /// </summary>
+        [Fact]
+        public void InvalidFollowingEmails()
+        {
+            // arrange
+            List<string> followingEmails = new List<string>();
+            followingEmails.Add("testermail1@testing@net");
+            followingEmails.Add("email@test.com");
+            followingEmails.Add("@test.com.mail");
+
+            List<string> followerEmails = new List<string>();
+            followerEmails.Add("testermail1@email.com");
+            followerEmails.Add("testermail2@gmail.com");
+            followerEmails.Add("@testermail3@outlook.com");
+
+            // DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields", followerEmails, followingEmails);
+
+            // act
+            // profile.Follow = profile.following;
+
+            // assert
+            // Assert.Equals(profile.following, profile.Follow);
+        }
+
     }
 }
