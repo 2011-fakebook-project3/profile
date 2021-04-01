@@ -89,8 +89,8 @@ namespace Fakebook.Profile.UnitTests.APITests
                 ControllerContext = controllerContext
             };
 
-            // act
-            var result = await controller.uploadProfilePicture();
+            // act and assert
+            await Assert.ThrowsAsync<Exception>(() => controller.uploadProfilePicture());
         }
     }
 }
