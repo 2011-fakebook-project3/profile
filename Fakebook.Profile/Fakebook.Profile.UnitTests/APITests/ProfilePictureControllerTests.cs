@@ -87,7 +87,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             }
             else
             {
-                Assert.IsAssignableFrom<BadRequestResult>(result);
+                Assert.IsAssignableFrom<BadRequestObjectResult>(result);
             }
         }
     }

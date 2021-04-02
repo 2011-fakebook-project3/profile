@@ -79,8 +79,9 @@ namespace Fakebook.Profile.RestApi.Controllers
             // validate file extension to be valid image
             if (!validExtensions.Contains(extension))
             {
-                _logger.LogError("File is not a valid image.");
-                return BadRequest();
+                string errorMessage = $"{extension} is not a valid image extension.";
+                _logger.LogError(errorMessage);
+                return BadRequest(errorMessage);
             }
 
             // generate a random guid from the file name
