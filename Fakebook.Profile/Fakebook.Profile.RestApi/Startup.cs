@@ -6,6 +6,7 @@ using Fakebook.Profile.DataAccess.Services;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.Domain.Utility;
+using Fakebook.Profile.DataAccess;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
