@@ -15,6 +15,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// </summary>
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
         /// <summary>
