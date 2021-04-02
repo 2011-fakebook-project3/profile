@@ -5,6 +5,7 @@ using Fakebook.Profile.DataAccess.EntityModel;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.UnitTests.TestData;
 using Fakebook.Profile.UnitTests.TestData.ProfileTestData;
+using Fakebook.Profile.DataAccess;
 
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
