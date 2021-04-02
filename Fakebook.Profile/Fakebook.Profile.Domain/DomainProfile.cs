@@ -170,7 +170,7 @@ namespace Fakebook.Profile.Domain
         {
             if (string.IsNullOrWhiteSpace(followingEmail))
             {
-                throw new ArgumentException(nameof(followingEmail), $"Invalid Email, {followingEmail}");
+                throw new ArgumentException("Invalid Email", nameof(followingEmail));
             }
 
             Regex followingMailRegex = new(RegularExpressions.EmailCharacters);
@@ -191,7 +191,7 @@ namespace Fakebook.Profile.Domain
         {
             if (string.IsNullOrWhiteSpace(followerEmail))
             {
-                throw new ArgumentException(nameof(followerEmail), $"Invalid Email, {followerEmail}");
+                throw new ArgumentException("Invalid Email", nameof(followerEmail));
             }
 
             Regex followerMailRegex = new(RegularExpressions.EmailCharacters);
