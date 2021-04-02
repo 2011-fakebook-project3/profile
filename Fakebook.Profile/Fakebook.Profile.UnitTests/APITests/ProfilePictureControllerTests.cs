@@ -66,7 +66,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             };
 
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers.Add("Content-Type", "octet-stream");
+            httpContext.Request.Headers.Add("Content-Type", "multipart/form-data");
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), new FormFileCollection { file });
             var controllerContext = new ControllerContext()
             {
@@ -77,18 +77,17 @@ namespace Fakebook.Profile.UnitTests.APITests
                 ControllerContext = controllerContext
             };
 
+            // act
+            var result = await controller.UploadProfilePicture();
+
+            // assert
             if (successExpected)
             {
-                // act
-                var result = await controller.UploadProfilePicture();
-
-                // assert
-                Assert.IsNotType<BadRequestResult>(await controller.UploadProfilePicture());
+                Assert.IsAssignableFrom<CreatedResult>(result);
             }
             else
             {
-                // act and assert
-                Assert.IsType<BadRequestResult>(await controller.UploadProfilePicture());
+                Assert.IsAssignableFrom<BadRequestResult>(result);
             }
         }
     }
