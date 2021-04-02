@@ -1,6 +1,8 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Fakebook.Profile.Domain;
+using Fakebook.Profile.Domain.Utility;
+using System.Text.RegularExpressions;
 
 using Xunit;
 
@@ -283,5 +285,73 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Equal(earlierToday, profile.BirthDate);
         }
         #endregion
+
+        /// <summary>
+        /// Check that follower emails have the correct format.
+        /// </summary>
+        [Fact]
+        public void TestAddFollowerEmail() 
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
+
+            // act
+            profile.AddFollower(followerEmail);
+
+            // assert
+            Assert.Contains(followerEmail, profile.FollowerEmails);
+
+        }
+
+        /// <summary>
+        /// Check that following emails have the correct format.
+        /// </summary>
+        [Fact]
+        public void TestAddFollowingEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followingEmail = "testermail@gmail.com";
+
+            // act
+            profile.AddFollow(followingEmail);
+
+            // assert
+            Assert.Contains(followingEmail, profile.FollowingEmails);
+        }
+
+        /// <summary>
+        /// Check the method AddFollower throws an exception when the follower email has an invalid format.
+        /// </summary>
+        [Fact]
+        public void TestAddInvalidFollowerEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "@gmail.com.tester";
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(followerEmail));
+
+        }
+
+        /// <summary>
+        /// Check the method AddFollower throws an exception when the follower email has an invalid format.
+        /// </summary>
+        [Fact]
+        public void TestAddInvalidFollowingEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followingEmail = "@gmail.com.tester";
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(followingEmail));
+
+        }
+
     }
 }
