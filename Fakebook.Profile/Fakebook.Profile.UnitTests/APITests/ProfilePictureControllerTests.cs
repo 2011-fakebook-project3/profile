@@ -23,8 +23,16 @@ namespace Fakebook.Profile.UnitTests.APITests
 {
     public class ProfilePictureControllerTests
     {
-        [Fact]
-        public async Task UploadValidImageExtension()
+        [Theory]
+        [InlineData("jpeg")]
+        [InlineData("png")]
+        [InlineData("gif")]
+        [InlineData("jpg")]
+        [InlineData("svg")]
+        [InlineData("webp")]
+        [InlineData("avif")]
+        [InlineData("apng")]
+        public async Task UploadValidImageExtension(string extension)
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
@@ -34,10 +42,10 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
             byte[] data = new byte[1000];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 1000, "Data", "dummy.jpeg")
+            var file = new FormFile(stream, 0, 1000, "Data", $"dummy.{extension}")
             {
                 Headers = new HeaderDictionary(),
-                ContentType = "image/jpeg"
+                ContentType = $"image/{extension}"
             };
 
             var httpContext = new DefaultHttpContext();
@@ -59,8 +67,11 @@ namespace Fakebook.Profile.UnitTests.APITests
             Assert.IsNotType<BadRequestResult>(await controller.UploadProfilePicture());
         }
 
-        [Fact]
-        public async Task UploadInvalidImageExtension()
+        [Theory]
+        [InlineData("json")]
+        [InlineData("xml")]
+        [InlineData("bmp")]
+        public async Task UploadInvalidImageExtension(string extension)
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
@@ -70,12 +81,11 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
             byte[] data = new byte[1000];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 1000, "Data", "dummy.json")
+            var file = new FormFile(stream, 0, 1000, "Data", $"dummy.{extension}")
             {
                 Headers = new HeaderDictionary(),
-                ContentType = "image/json"
+                ContentType = $"image/{extension}"
             };
-            file.ContentType = "image/json";
 
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Content-Type", "multipart/form-data");
