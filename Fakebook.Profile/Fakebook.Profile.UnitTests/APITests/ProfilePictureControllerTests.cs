@@ -32,6 +32,9 @@ namespace Fakebook.Profile.UnitTests.APITests
         [InlineData("webp")]
         [InlineData("avif")]
         [InlineData("apng")]
+        [InlineData("jfif")]
+        [InlineData("pjpeg")]
+        [InlineData("pjp")]
         public async Task UploadValidImageExtension(string extension)
         {
             // arrange

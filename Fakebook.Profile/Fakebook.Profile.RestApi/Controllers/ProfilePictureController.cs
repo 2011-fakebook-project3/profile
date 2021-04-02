@@ -63,7 +63,19 @@ namespace Fakebook.Profile.RestApi.Controllers
                     .Last()
                     .ToUpperInvariant();
 
-            var validExtensions = new List<string> { "PNG", "JPEG", "GIF", "JPG", "SVG", "WEBP", "AVIF", "APNG" };
+            var validExtensions = new List<string> { 
+                "PNG", 
+                "JPEG", 
+                "GIF", 
+                "JPG",
+                "JFIF",
+                "PJPEG",
+                "PJP",
+                "SVG", 
+                "WEBP", 
+                "AVIF", 
+                "APNG"
+            };
             // validate file extension to be valid image
             if (!validExtensions.Contains(extension))
             {
