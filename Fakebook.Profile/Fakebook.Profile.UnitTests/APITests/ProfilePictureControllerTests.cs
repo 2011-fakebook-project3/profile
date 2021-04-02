@@ -70,7 +70,7 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
             byte[] data = new byte[1000];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 3 * 1024 * 1024, "Data", "dummy.json")
+            var file = new FormFile(stream, 0, 1000, "Data", "dummy.json")
             {
                 Headers = new HeaderDictionary(),
                 ContentType = "image/json"
