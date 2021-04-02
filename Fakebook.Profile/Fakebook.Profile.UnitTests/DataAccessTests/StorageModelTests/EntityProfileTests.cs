@@ -163,5 +163,23 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             Assert.NotNull(profile.LastName);
             Assert.Equal(name, profile.LastName);
         }
+        
+        /// <summary>
+        /// Test that a UserId can be set to an initial value
+        /// <param name="userId"></param>
+        /// </summary>
+        [Fact]
+        public void Profile_GetUserId()
+        {
+            // arrange
+            EntityProfile profile = new EntityProfile();
+
+            // act
+            profile.UserId = 12;
+
+            // assert
+            Assert.NotNull(profile.UserId);
+            Assert.Equal(12, profile.UserId);
+        }
     }
 }
