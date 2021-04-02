@@ -23,8 +23,33 @@ namespace Fakebook.Profile.UnitTests.APITests
 {
     public class ProfilePictureControllerTests
     {
-        [Fact]
-        public async Task UploadValidImageExtension()
+        [Theory]
+        [InlineData("jpeg")]
+        [InlineData("png")]
+        [InlineData("gif")]
+        [InlineData("jpg")]
+        [InlineData("svg")]
+        [InlineData("webp")]
+        [InlineData("avif")]
+        [InlineData("apng")]
+        [InlineData("jfif")]
+        [InlineData("pjpeg")]
+        [InlineData("pjp")]
+        public async Task UploadValidImageExtension(string extension)
+        {
+            await UploadImageExtension(extension, true);
+        }
+
+        [Theory]
+        [InlineData("json")]
+        [InlineData("xml")]
+        [InlineData("bmp")]
+        public async Task UploadInvalidImageExtension(string extension)
+        {
+            await UploadImageExtension(extension, false);
+        }
+
+        internal async Task UploadImageExtension(string extension, bool successExpected)
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
@@ -34,10 +59,10 @@ namespace Fakebook.Profile.UnitTests.APITests
                 .Returns(Task.FromResult(new Uri("https://www.fake.com")));
             byte[] data = new byte[1000];
             var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 1000, "Data", "dummy.jpeg")
+            var file = new FormFile(stream, 0, 1000, "Data", $"dummy.{extension}")
             {
                 Headers = new HeaderDictionary(),
-                ContentType = "image/jpeg"
+                ContentType = "application/octet-stream"
             };
 
             var httpContext = new DefaultHttpContext();
@@ -56,41 +81,14 @@ namespace Fakebook.Profile.UnitTests.APITests
             var result = await controller.UploadProfilePicture();
 
             // assert
-            Assert.IsNotType<BadRequestResult>(await controller.UploadProfilePicture());
-        }
-
-        [Fact]
-        public async Task UploadInvalidImageExtension()
-        {
-            // arrange
-            Mock<IConfiguration> mockedStorageConfiguration = new();
-            Mock<IStorageService> mockedStorageService = new();
-            mockedStorageService
-                .Setup(x => x.UploadFileContentAsync(It.IsAny<Stream>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>()))
-                .Returns(Task.FromResult(new Uri("https://www.fake.com")));
-            byte[] data = new byte[1000];
-            var stream = new MemoryStream(data);
-            var file = new FormFile(stream, 0, 1000, "Data", "dummy.json")
+            if (successExpected)
             {
-                Headers = new HeaderDictionary(),
-                ContentType = "image/json"
-            };
-            file.ContentType = "image/json";
-
-            var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers.Add("Content-Type", "multipart/form-data");
-            httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), new FormFileCollection { file });
-            var controllerContext = new ControllerContext()
+                Assert.IsAssignableFrom<CreatedResult>(result);
+            }
+            else
             {
-                HttpContext = httpContext,
-            };
-            var controller = new ProfilePictureController(mockedStorageService.Object, new NullLogger<ProfileController>(), mockedStorageConfiguration.Object)
-            {
-                ControllerContext = controllerContext
-            };
-
-            // act and assert
-            Assert.IsType<BadRequestResult>(await controller.UploadProfilePicture());
+                Assert.IsAssignableFrom<BadRequestResult>(result);
+            }
         }
     }
 }
