@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 using Fakebook.Profile.Domain.Utility;
@@ -12,6 +13,10 @@ namespace Fakebook.Profile.Domain
     {
         //[anything]@[anything].[anything]
         private string _email;
+
+        public List<string> FollowerEmails;
+        public List<string> FollowingEmails;
+
         /// <summary>
         /// The user's email.
         /// </summary>
@@ -161,6 +166,16 @@ namespace Fakebook.Profile.Domain
             }
         }
 
+        public void AddFollow(string followingEmail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddFollower(string followerEmail)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Construct a new DomainProfile with all of its properties/backing fields assigned if valid
         /// </summary>
@@ -212,6 +227,9 @@ namespace Fakebook.Profile.Domain
             FirstName = firstName;
             LastName = lastName;
             ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
+            FollowerEmails = new List<string>();
+            FollowingEmails = new List<string>();
         }
+
     }
 }
