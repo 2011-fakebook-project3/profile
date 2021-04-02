@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Fakebook.Profile.DataAccess.EntityModel;
 
@@ -162,6 +163,29 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             //assert
             Assert.NotNull(profile.LastName);
             Assert.Equal(name, profile.LastName);
+        }
+
+        /// <summary>
+        /// Test that a follower email can be added to a list of FollowerEmails
+        /// </summary>
+        /// <param name="email"></param>
+        [Theory]
+        [InlineData("test@email.com")]
+        [InlineData("random@email.com")]
+        [InlineData("Simple@email.com")]
+        [InlineData("Other@email.test")]
+        public void AddingFollowerEmailShouldWork(string email)
+        {
+            //arrange
+            EntityProfile profile = new();
+            List<string> followerEmails = new List<string>();
+
+            //act
+            followerEmails.Add(email);
+
+            //assert
+            Assert.NotEmpty(followerEmails);
+            Assert.Equal(followerEmails[0], email);
         }
     }
 }
