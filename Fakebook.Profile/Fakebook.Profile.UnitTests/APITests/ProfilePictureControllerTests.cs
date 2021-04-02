@@ -48,11 +48,11 @@ namespace Fakebook.Profile.UnitTests.APITests
             var file = new FormFile(stream, 0, 1000, "Data", $"dummy.{extension}")
             {
                 Headers = new HeaderDictionary(),
-                ContentType = $"image/{extension}"
+                ContentType = "application/octet-stream"
             };
 
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers.Add("Content-Type", "multipart/form-data");
+            httpContext.Request.Headers.Add("Content-Type", "octet-stream");
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), new FormFileCollection { file });
             var controllerContext = new ControllerContext()
             {
@@ -87,11 +87,11 @@ namespace Fakebook.Profile.UnitTests.APITests
             var file = new FormFile(stream, 0, 1000, "Data", $"dummy.{extension}")
             {
                 Headers = new HeaderDictionary(),
-                ContentType = $"image/{extension}"
+                ContentType = "application/octet-stream"
             };
 
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers.Add("Content-Type", "multipart/form-data");
+            httpContext.Request.Headers.Add("Content-Type", "octet-stream");
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues>(), new FormFileCollection { file });
             var controllerContext = new ControllerContext()
             {
