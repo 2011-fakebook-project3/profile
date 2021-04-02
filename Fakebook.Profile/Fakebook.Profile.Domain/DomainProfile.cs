@@ -26,7 +26,7 @@ namespace Fakebook.Profile.Domain
         public List<string> FollowingEmails 
         { 
             get => _followingEmail;
-            set => _followerEmail = new List<string>(); 
+            set => _followingEmail = new List<string>(); 
         }
 
         /// <summary>
