@@ -312,13 +312,13 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         {
             // arrange
             DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followEmail = "testermail@gmail.com";
+            string followingEmail = "testermail@gmail.com";
 
             // act
-            profile.AddFollow(followerEmail);
+            profile.AddFollow(followingEmail);
 
             // assert
-            Assert.Contains(followEmail, profile.FollowEmails);
+            Assert.Contains(followingEmail, profile.FollowingEmails);
         }
 
     }
