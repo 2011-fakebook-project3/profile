@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,7 +49,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [HttpPost, DisableRequestSizeLimit]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Post()
+        public async Task<ActionResult> UploadProfilePicture()
         {
             IFormFile file = Request.Form.Files[0];
             if (file == null)
@@ -57,10 +58,33 @@ namespace Fakebook.Profile.RestApi.Controllers
                 return BadRequest();
             }
 
-            // generate a random guid from the file name
             string extension = file.FileName
                     .Split('.')
-                    .Last();
+                    .Last()
+                    .ToUpperInvariant();
+
+            var validExtensions = new List<string> { 
+                "PNG", 
+                "JPEG", 
+                "GIF", 
+                "JPG",
+                "JFIF",
+                "PJPEG",
+                "PJP",
+                "SVG", 
+                "WEBP", 
+                "AVIF", 
+                "APNG"
+            };
+            // validate file extension to be valid image
+            if (!validExtensions.Contains(extension))
+            {
+                string errorMessage = $"{extension} is not a valid image extension.";
+                _logger.LogError(errorMessage);
+                return BadRequest(errorMessage);
+            }
+
+            // generate a random guid from the file name
             var newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
             _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
