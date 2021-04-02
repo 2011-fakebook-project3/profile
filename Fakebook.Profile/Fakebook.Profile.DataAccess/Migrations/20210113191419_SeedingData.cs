@@ -35,8 +35,8 @@ namespace Fakebook.Profile.DataAccess.Migrations
                 columns: new[] { "UserId", "Email", "BirthDate", "FirstName", "LastName", "PhoneNumber", "ProfilePictureUrl", "Status" },
                 values: new object[,]
                 {
-                    { "david.barnes@revature.net", new DateTime(1, 1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "David", "Barnes", null, "https://images.unsplash.com/photo-1489533119213-66a5cd877091", "deployed my app feeling good about today's presentation" },
-                    { "testaccount@gmail.com", new DateTime(2, 1994, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jay", "Shin", null, "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800", null }
+                    { 1, "david.barnes@revature.net", new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "David", "Barnes", null, "https://images.unsplash.com/photo-1489533119213-66a5cd877091", "deployed my app feeling good about today's presentation" },
+                    { 2, "testaccount@gmail.com", new DateTime(1994, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jay", "Shin", null, "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800", null }
                 });
         }
 
