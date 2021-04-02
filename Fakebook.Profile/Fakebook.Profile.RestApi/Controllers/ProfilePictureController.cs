@@ -61,6 +61,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             string extension = file.FileName
                     .Split('.')
                     .Last();
+
             var validExtensions = new List<string> { "png", "jpeg", "gif" };
             // validate file extension to be valid image
             if (!validExtensions.Contains(extension))
