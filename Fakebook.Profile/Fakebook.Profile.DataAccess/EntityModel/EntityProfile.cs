@@ -7,13 +7,20 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     /// <summary>
     /// Database model of a profile.
     /// </summary>
+    [Table("Profile")]
     public class EntityProfile
     {
         /// <summary>
-        /// The primary key, the user's email.
+        /// The user's ID, the primary key. Cannot be null.
         /// </summary>
         [Key]
-        [Column(name: nameof(Email))]
+        [Required]
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// The user's unique email. Cannot be null.
+        /// </summary>
+        [Required]
         public string Email { get; set; }
 
         /// <summary>
