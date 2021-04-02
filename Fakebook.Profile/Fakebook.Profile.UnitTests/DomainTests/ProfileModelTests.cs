@@ -321,5 +321,37 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Contains(followingEmail, profile.FollowingEmails);
         }
 
+        /// <summary>
+        /// Check the method AddFollower throws an exception when the follower email has an invalid format.
+        /// </summary>
+        [Fact]
+        public void TestAddInvalidFollowerEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "@gmail.com.tester";
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(followerEmail));
+
+        }
+
+        /// <summary>
+        /// Check the method AddFollower throws an exception when the follower email has an invalid format.
+        /// </summary>
+        [Fact]
+        public void TestAddInvalidFollowingEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followingEmail = "@gmail.com.tester";
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(followingEmail));
+
+        }
+
     }
 }
