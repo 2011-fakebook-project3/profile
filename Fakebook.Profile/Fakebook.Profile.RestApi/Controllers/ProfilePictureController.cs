@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,10 +58,19 @@ namespace Fakebook.Profile.RestApi.Controllers
                 return BadRequest();
             }
 
-            // generate a random guid from the file name
             string extension = file.FileName
                     .Split('.')
                     .Last();
+
+            var validExtensions = new List<string> { "png", "jpeg", "gif" };
+            // validate file extension to be valid image
+            if (!validExtensions.Contains(extension))
+            {
+                _logger.LogError("File is not a valid image.");
+                return BadRequest();
+            }
+
+            // generate a random guid from the file name
             var newFileName = $"{Request.Form["userId"]}-{Guid.NewGuid()}.{extension}";
             _logger.LogInformation($"New file named to be uploaded, {newFileName}");
 
