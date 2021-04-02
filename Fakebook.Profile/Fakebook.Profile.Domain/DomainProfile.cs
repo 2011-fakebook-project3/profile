@@ -14,19 +14,18 @@ namespace Fakebook.Profile.Domain
         //[anything]@[anything].[anything]
         private string _email;
 
-        //private List<string> FollowerEmails;
-        private List<string> _followerEmail;
-        private List<string> _followingEmail;
+        private List<string> _followerEmails;
+        private List<string> _followingEmails;
 
         public List<string> FollowerEmails
         {
-            get => _followerEmail;
-            set => _followerEmail = new List<string>();
+            get => _followerEmails;
+            set => _followerEmails = value;
         }
         public List<string> FollowingEmails 
         { 
-            get => _followingEmail;
-            set => _followingEmail = new List<string>(); 
+            get => _followingEmails;
+            set => _followingEmails = value;
         }
 
         /// <summary>
