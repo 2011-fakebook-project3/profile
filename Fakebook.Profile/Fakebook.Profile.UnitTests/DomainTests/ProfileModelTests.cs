@@ -354,7 +354,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollower throws an exemption when the follower email is empty.
+        /// Check the method AddFollower throws an exception when the follower email is empty.
         /// </summary>
         [Fact]
         public void TestEmptyFollowerEmail() 
@@ -369,7 +369,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollow throws an exemption when the following email is empty.
+        /// Check the method AddFollow throws an exception when the following email is empty.
         /// </summary>
         [Fact]
         public void TestEmptyFollowingEmail()
@@ -384,7 +384,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollower throws an exemption when a duplicate follower email is added to the list of follower emails.
+        /// Check the method AddFollower throws an exception when a duplicate follower email is added to the list of follower emails.
         /// </summary>
         [Fact]
         public void TestDuplicateFollowerEmail() 
@@ -401,7 +401,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollow throws an exemption when a duplicate following email is added to the list of following emails.
+        /// Check the method AddFollow throws an exception when a duplicate following email is added to the list of following emails.
         /// </summary>
         [Fact]
         public void TestDuplicateFollowingEmail()
