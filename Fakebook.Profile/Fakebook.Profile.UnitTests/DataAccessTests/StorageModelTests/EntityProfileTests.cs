@@ -163,5 +163,265 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             Assert.NotNull(profile.LastName);
             Assert.Equal(name, profile.LastName);
         }
+
+        /// <summary>
+        /// Test that EntityProfile constructor works
+        /// </summary>
+        [Fact]
+        public void ProfileMinimumConstructor_Pass()
+        {
+            // arrange
+            const string email = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
+            
+            // assert
+            Assert.NotNull(profile);
+        }
+
+        /// <summary>
+        /// Test that an empty email will throw an exception
+        /// </summary>
+        [Fact]
+        public void EmptyEmail_Exception()
+        {
+            // arrange
+            const string email = "";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+            
+            // assert
+            Assert.Throws<ArgumentNullException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that an empty FirstName will throw an exception
+        /// </summary>
+        [Fact]
+        public void EmptyFirstName_Exception()
+        {
+            // arrange
+            const string email = "test@someemail.com";
+            const string firstName = "";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+            
+            // assert
+            Assert.Throws<ArgumentNullException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that an empty LastName will throw an exception
+        /// </summary>
+        [Fact]
+        public void EmptyLastName_Exception()
+        {
+            // arrange
+            const string email = "test@someemail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+            
+            // assert
+            Assert.Throws<ArgumentNullException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that an empty BirthDate will throw an exception
+        /// </summary>
+        [Fact]
+        public void EmptyDOB_Exception()
+        {
+            // arrange
+            const string email = "test@someemail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dobDateTime = new DateTime();
+
+            // act
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dobDateTime);
+            
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that setting an email greater than 45 characters fails
+        /// </summary>
+        /// <param name="email"></param>
+        [Theory]
+        [InlineData("reallyreallyreallyreallyreallyreallyreallylongemail@email.com")]
+        [InlineData("aaaaaaaaaaaaabbbbbbbbbbbcccccccccccccccccccccccccc@zmail.com")]
+        public void TooLongEmail_Fails(string email) 
+        {
+            // arrange
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that setting an email shorter than 5 characters fails
+        /// </summary>
+        /// <param name="email"></param>
+        [Theory]
+        [InlineData("1@.a")]
+        [InlineData("g@m.")]
+        public void TooShortEmail_Fails(string email) 
+        {
+            // arrange
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that setting a FirstName longer than 25 characters fails
+        /// </summary>
+        /// <param name="firstName"></param>
+        [Theory]
+        [InlineData("JohnJacobJenkleHeimerSchmidt")]
+        [InlineData("Anotherreallylongfirstname")]
+        public void TooLongFirstName_Fails(string firstName) 
+        {
+            // arrange
+            const string email = "SpongeBob@network.com";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that setting a LastName longer than 25 characters fails
+        /// </summary>
+        /// <param name="lastName"></param>
+        [Theory]
+        [InlineData("Reallyaveryveryveryverylongfirstname")]
+        [InlineData("Markantonyceasaraugustusthefourth")]
+        public void TooLongLastName_Fails(string lastName) 
+        {
+            // arrange
+            const string email = "SpongeBob@network.com";
+            const string firstName = "SpongeBob";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that setting a LastName shorter than 2 characters fails
+        /// </summary>
+        /// <param name="lastName"></param>
+        [Theory]
+        [InlineData("J")]
+        [InlineData("K")]
+        public void TooShortLastName_Fails(string lastName) 
+        {
+            // arrange
+            const string email = "SpongeBob@network.com";
+            const string firstName = "SpongeBob";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// If user is less than 13 years old throws an argument exception
+        /// </summary>
+        /// <param name="birthDate">date of birth as a string</param>
+        [Theory]
+        [InlineData("5/11/2011")]
+        [InlineData("2/28/2010")]
+        [InlineData("12/31/2009")]
+        public void InvalidBirthdate_ThrowsException(string birthDate)
+        {
+            // arrange
+            const string email = "test@someemail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+
+            // act
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, DateTime.Parse(birthDate));
+            
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
+
+        /// <summary>
+        /// Test that EntityProfile status works
+        /// </summary>
+        [Theory]
+        [InlineData("Here is a random status")]
+        [InlineData("Something something coffee something")]
+        public void ProfileStatus_Pass(string status)
+        {
+            // arrange
+            EntityProfile profile = new EntityProfile();
+
+            // act
+            profile.Status = status;
+            
+            // assert
+            Assert.Equal(status, profile.Status);
+        }
+
+        /// <summary>
+        /// Test that an invalid (too long) EntityProfile status throws exception
+        /// </summary>
+        [Theory]
+        [InlineData("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel ultrices tellus, sed malesuada eros. Proin sed sollicitudin tortor. Fusce dictum lorem non tellus imperdiet rhoncus. Nunc maximus justo non enim vestibulum, eu pellentesque augue accumsan. Donec purus elit, dignissim id varius elementum, suscipit vitae nibh.")]
+        public void ProfileStatusTooLong_ThrowsException(string status)
+        {
+            // arrange
+            const string email = "SpongeBob@network.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+
+            // act 
+            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob, status);
+
+            // assert
+            Assert.Throws<ArgumentException>(constructProfile);
+        }
     }
 }
