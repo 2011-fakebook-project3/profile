@@ -168,11 +168,6 @@ namespace Fakebook.Profile.Domain
 
         public void AddFollow(string followingEmail)
         {
-            if (string.IsNullOrWhiteSpace(followingEmail))
-            {
-                throw new ArgumentException("Invalid Email", nameof(followingEmail));
-            }
-
             Regex followingMailRegex = new(RegularExpressions.EmailCharacters);
             if (!followingMailRegex.IsMatch(followingEmail))
             {
@@ -189,11 +184,6 @@ namespace Fakebook.Profile.Domain
 
         public void AddFollower(string followerEmail)
         {
-            if (string.IsNullOrWhiteSpace(followerEmail))
-            {
-                throw new ArgumentException("Invalid Email", nameof(followerEmail));
-            }
-
             Regex followerMailRegex = new(RegularExpressions.EmailCharacters);
             if (!followerMailRegex.IsMatch(followerEmail))
             {
