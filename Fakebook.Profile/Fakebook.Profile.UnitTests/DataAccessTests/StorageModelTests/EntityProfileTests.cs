@@ -187,7 +187,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// Test that an empty email will throw an exception
         /// </summary>
         [Fact]
-        public void EmptyEmail_Exception()
+        public void EmptyEmail_ThrowsException()
         {
             // arrange
             const string email = "";
@@ -206,7 +206,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// Test that an empty FirstName will throw an exception
         /// </summary>
         [Fact]
-        public void EmptyFirstName_Exception()
+        public void EmptyFirstName_ThrowsException()
         {
             // arrange
             const string email = "test@someemail.com";
@@ -225,7 +225,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// Test that an empty LastName will throw an exception
         /// </summary>
         [Fact]
-        public void EmptyLastName_Exception()
+        public void EmptyLastName_ThrowsException()
         {
             // arrange
             const string email = "test@someemail.com";
@@ -244,7 +244,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// Test that an empty BirthDate will throw an exception
         /// </summary>
         [Fact]
-        public void EmptyDOB_Exception()
+        public void EmptyDOB_ThrowsException()
         {
             // arrange
             const string email = "test@someemail.com";
@@ -266,7 +266,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("reallyreallyreallyreallyreallyreallyreallylongemail@email.com")]
         [InlineData("aaaaaaaaaaaaabbbbbbbbbbbcccccccccccccccccccccccccc@zmail.com")]
-        public void TooLongEmail_Fails(string email) 
+        public void TooLongEmail_ThrowsException(string email) 
         {
             // arrange
             const string firstName = "SpongeBob";
@@ -287,7 +287,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("1@.a")]
         [InlineData("g@m.")]
-        public void TooShortEmail_Fails(string email) 
+        public void TooShortEmail_ThrowsException(string email) 
         {
             // arrange
             const string firstName = "SpongeBob";
@@ -308,7 +308,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("JohnJacobJenkleHeimerSchmidt")]
         [InlineData("Anotherreallylongfirstname")]
-        public void TooLongFirstName_Fails(string firstName) 
+        public void TooLongFirstName_ThrowsException(string firstName) 
         {
             // arrange
             const string email = "SpongeBob@network.com";
@@ -329,7 +329,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("Reallyaveryveryveryverylongfirstname")]
         [InlineData("Markantonyceasaraugustusthefourth")]
-        public void TooLongLastName_Fails(string lastName) 
+        public void TooLongLastName_ThrowsException(string lastName) 
         {
             // arrange
             const string email = "SpongeBob@network.com";
@@ -350,7 +350,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [Theory]
         [InlineData("J")]
         [InlineData("K")]
-        public void TooShortLastName_Fails(string lastName) 
+        public void TooShortLastName_ThrowsException(string lastName) 
         {
             // arrange
             const string email = "SpongeBob@network.com";
