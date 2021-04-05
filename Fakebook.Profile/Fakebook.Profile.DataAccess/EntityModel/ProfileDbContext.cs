@@ -34,6 +34,9 @@ namespace Fakebook.Profile.DataAccess.EntityModel
             {
                 entity.ToTable(name: "Profile", schema: "Fakebook");
 
+                entity.Property(e => e.Id)
+                    .IsRequired(true);
+
                 entity.Property(e => e.Email)
                     .IsRequired(true);
 
@@ -61,6 +64,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                 {
                     new EntityProfile
                     {
+                        Id = 1,
                         Email = "john.werner@revature.net",
                         FirstName = "John",
                         LastName = "Werner",
@@ -70,6 +74,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                     },
                     new EntityProfile
                     {
+                        Id = 2,
                         Email = "testaccount@gmail.com",
                         FirstName = "Jay",
                         LastName = "Shin",

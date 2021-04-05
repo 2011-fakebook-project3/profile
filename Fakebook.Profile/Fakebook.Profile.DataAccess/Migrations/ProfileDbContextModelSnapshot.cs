@@ -21,6 +21,10 @@ namespace Fakebook.Profile.DataAccess.Migrations
 
             modelBuilder.Entity("Fakebook.Profile.DataAccess.EntityModel.EntityProfile", b =>
                 {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
                     b.Property<string>("Email")
                         .HasColumnType("text")
                         .HasColumnName("Email");
@@ -46,13 +50,14 @@ namespace Fakebook.Profile.DataAccess.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
-                    b.HasKey("Email");
+                    b.HasKey("Id");
 
                     b.ToTable("Profile", "Fakebook");
 
                     b.HasData(
                         new
                         {
+                            Id = 1,
                             Email = "john.werner@revature.net",
                             BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "John",
@@ -62,6 +67,7 @@ namespace Fakebook.Profile.DataAccess.Migrations
                         },
                         new
                         {
+                            Id = 2,
                             Email = "testaccount@gmail.com",
                             BirthDate = new DateTime(1994, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Jay",
