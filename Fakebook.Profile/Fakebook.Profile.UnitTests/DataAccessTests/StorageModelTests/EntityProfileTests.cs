@@ -418,7 +418,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             DateTime dob = new DateTime(1988, 8, 8);
 
             // act 
-            EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dob, status);
+            EntityProfile constructProfile()  => new EntityProfile(email, firstName, lastName, dob, status);
 
             // assert
             Assert.Throws<ArgumentException>(constructProfile);
