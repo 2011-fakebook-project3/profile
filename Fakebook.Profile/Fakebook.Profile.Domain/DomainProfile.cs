@@ -14,8 +14,8 @@ namespace Fakebook.Profile.Domain
         //[anything]@[anything].[anything]
         private string _email;
 
-        public List<string> FollowerEmails { get; set; }
-        public List<string> FollowingEmails { get; set; }
+        public IList<string> FollowerEmails { get; set; }
+        public IList<string> FollowingEmails { get; set; }
 
         /// <summary>
         /// The user's email.
