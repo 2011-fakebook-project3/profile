@@ -22,11 +22,13 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [InlineData("notcom@puppies.supplies")]
         public void SetEmailShouldWork(string email)
         {
-            //arrange
-            EntityProfile profile = new();
+            // arrange
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
 
             //act
-            profile.Email = email;
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
 
             //assert
             Assert.NotNull(profile.Email);
@@ -51,8 +53,11 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangingEmailShouldWork(string email)
         {
             //arrange
-            EntityProfile profile = new();
-            profile.Email = "someOtherEmail@email.com";
+            const string email1 = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+            EntityProfile profile = new EntityProfile(email1, firstName, lastName, dob);
 
             //act
             profile.Email = email;
@@ -76,7 +81,11 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void SetValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile profile = new();
+            const string email = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
             UriBuilder uriBuilder = new();
 
             //act
@@ -103,14 +112,16 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ChangeValidUriShouldWork(string host, string path)
         {
             //arrange
-            EntityProfile profile = new()
-            {
-                //set to an initial uri, since this is testing that it can change when not null.
-                ProfilePictureUrl = new UriBuilder().Uri
-            };
+            const string email = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
+            profile.ProfilePictureUrl = new UriBuilder().Uri;
+
+            //act
             UriBuilder uriBuilder = new()
             {
-                //act
                 Host = host,
                 Path = path
             };
@@ -128,17 +139,19 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// </summary>
         [Theory]
         [InlineData("Name")]
-        public void SettingFirstNameShouldWork(string name)
+        public void SettingFirstNameShouldWork(string firstName)
         {
             //arrange
-            EntityProfile profile = new();
+            const string email = "hi@gmail.com";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
 
             //act
-            profile.FirstName = name;
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
 
             //assert
             Assert.NotNull(profile.FirstName);
-            Assert.Equal(name, profile.FirstName);
+            Assert.Equal(firstName, profile.FirstName);
         }
 
         /// <summary>
@@ -151,17 +164,20 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         [InlineData("hyphen-name")]
         [InlineData("Na,me")]
         [InlineData("Mr.Name")]
-        public void SettingLastNameShouldWork(string name)
+        public void SettingLastNameShouldWork(string lastName)
         {
             //arrange
-            EntityProfile profile = new();
+            const string email = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            DateTime dob = new DateTime(1988, 8, 8);
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob);
 
             //act
-            profile.LastName = name;
+            profile.LastName = lastName;
 
             //assert
             Assert.NotNull(profile.LastName);
-            Assert.Equal(name, profile.LastName);
+            Assert.Equal(lastName, profile.LastName);
         }
 
         /// <summary>
@@ -250,7 +266,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             const string email = "test@someemail.com";
             const string firstName = "SpongeBob";
             const string lastName = "SquarePants";
-            DateTime dobDateTime = new DateTime();
+            DateTime dobDateTime = new DateTime(long.Parse(""));
 
             // act
             EntityProfile constructProfile() => new EntityProfile(email, firstName, lastName, dobDateTime);
@@ -395,7 +411,11 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         public void ProfileStatus_Pass(string status)
         {
             // arrange
-            EntityProfile profile = new EntityProfile();
+            const string email = "hi@gmail.com";
+            const string firstName = "SpongeBob";
+            const string lastName = "SquarePants";
+            DateTime dob = new DateTime(1988, 8, 8);
+            EntityProfile profile = new EntityProfile(email, firstName, lastName, dob, null, null, status);
 
             // act
             profile.Status = status;
@@ -418,7 +438,7 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             DateTime dob = new DateTime(1988, 8, 8);
 
             // act 
-            EntityProfile constructProfile()  => new EntityProfile(email, firstName, lastName, dob, status);
+            EntityProfile constructProfile()  => new EntityProfile(email, firstName, lastName, dob, null, null, status);
 
             // assert
             Assert.Throws<ArgumentException>(constructProfile);
