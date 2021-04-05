@@ -384,7 +384,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollower throws an exemption when a duplicate follower email is added to the FollowerEmails list.
+        /// Check the method AddFollower throws an exemption when a duplicate follower email is added to the list of follower emails.
         /// </summary>
         [Fact]
         public void TestDuplicateFollowerEmail() 
@@ -401,7 +401,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         }
 
         /// <summary>
-        /// Check the method AddFollow throws an exemption when a duplicate following email is added to the FollowingEmails list.
+        /// Check the method AddFollow throws an exemption when a duplicate following email is added to the list of following emails.
         /// </summary>
         [Fact]
         public void TestDuplicateFollowingEmail()
