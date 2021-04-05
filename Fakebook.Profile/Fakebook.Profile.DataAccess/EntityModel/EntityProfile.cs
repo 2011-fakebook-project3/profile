@@ -13,6 +13,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// The primary key.
         /// </summary>
         [Key]
+        [Column(name: nameof(Id))]
         public int Id { get; set; }
 
 
