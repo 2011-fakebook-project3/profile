@@ -168,12 +168,35 @@ namespace Fakebook.Profile.Domain
 
         public void AddFollow(string followingEmail)
         {
-            throw new NotImplementedException();
+            Regex followingMailRegex = new(RegularExpressions.EmailCharacters);
+            if (!followingMailRegex.IsMatch(followingEmail))
+            {
+                throw new ArgumentException("The email is not valid", nameof(followingEmail));
+            }
+
+            if (FollowingEmails.Contains(followingEmail))
+            {
+                throw new ArgumentException("The email already exists in the following emails list", nameof(followingEmail));
+            }
+
+            FollowingEmails.Add(followingEmail);
         }
 
         public void AddFollower(string followerEmail)
         {
-            throw new NotImplementedException();
+            Regex followerMailRegex = new(RegularExpressions.EmailCharacters);
+            if (!followerMailRegex.IsMatch(followerEmail))
+            {
+                throw new ArgumentException("The email is not valid", nameof(followerEmail));
+            }
+
+            if (FollowerEmails.Contains(followerEmail))
+            {
+                throw new ArgumentException("The email already exists in the following emails list", nameof(followerEmail));
+            }
+
+            FollowerEmails.Add(followerEmail);
+
         }
 
         /// <summary>
