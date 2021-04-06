@@ -168,34 +168,38 @@ namespace Fakebook.Profile.Domain
 
         public void AddFollow(DomainProfile following)
         {
-            
-            if (Following.Contains(following))
+            if(following != null) 
             {
-                throw new ArgumentException("The email already exists in the following emails list", nameof(following));
-            }
+                if (Following.Contains(following))
+                {
+                    throw new ArgumentException(nameof(following), "The email already exists in the following emails list.");
+                }
 
-            if (this.Email.Equals(following.Email)) 
-            {
-                throw new ArgumentException("You cannot add yourself as following", nameof(following));
-            }
+                if (this.Email.Equals(following.Email))
+                {
+                    throw new ArgumentException(nameof(following), "You cannot add yourself as following.");
+                }
 
-            Following.Add(following);
+                Following.Add(following);
+            }
         }
 
         public void AddFollower(DomainProfile follower)
         {
-            if (Followers.Contains(follower))
+            if(follower != null) 
             {
-                throw new ArgumentException("The email already exists in the followers emails list", nameof(follower));
+                if (Followers.Contains(follower))
+                {
+                    throw new ArgumentException(nameof(follower), "The email already exists in the followers emails list.");
+                }
+
+                if (this.Email.Equals(follower.Email))
+                {
+                    throw new ArgumentException(nameof(follower), "You cannot add yourself as a follower.");
+                }
+
+                Followers.Add(follower);
             }
-
-            if (this.Email.Equals(follower.Email))
-            {
-                throw new ArgumentException("You cannot add yourself as a follower", nameof(follower));
-            }
-
-            Followers.Add(follower);
-
         }
 
         /// <summary>
