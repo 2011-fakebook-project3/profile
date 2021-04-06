@@ -166,14 +166,35 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        public void AddFollow(DomainProfile followingEmail)
+        public void AddFollow(DomainProfile following)
         {
-            throw new NotImplementedException();
+            
+            if (Following.Contains(following))
+            {
+                throw new ArgumentException("The email already exists in the following emails list", nameof(following));
+            }
+
+            if (this.Email.Equals(following.Email)) 
+            {
+                throw new ArgumentException("You cannot add yourself as following", nameof(following));
+            }
+
+            Following.Add(following);
         }
 
-        public void AddFollower(DomainProfile followerEmail)
+        public void AddFollower(DomainProfile follower)
         {
-            throw new NotImplementedException();
+            if (Followers.Contains(follower))
+            {
+                throw new ArgumentException("The email already exists in the followers emails list", nameof(follower));
+            }
+
+            if (this.Email.Equals(follower.Email))
+            {
+                throw new ArgumentException("You cannot add yourself as a follower", nameof(follower));
+            }
+
+            Followers.Add(follower);
 
         }
 
@@ -228,8 +249,8 @@ namespace Fakebook.Profile.Domain
             FirstName = firstName;
             LastName = lastName;
             ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
-            FollowerEmails = new List<string>();
-            FollowingEmails = new List<string>();
+            Followers = new List<DomainProfile>();
+            Following = new List<DomainProfile>();
         }
 
     }

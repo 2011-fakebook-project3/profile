@@ -350,7 +350,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             DomainProfile followingProfile = new("followingtestmail@outlook.com", "Follower", "Tester");
             DomainProfile duplicateFollowing = followingProfile;
 
-            profile.AddFollower(followingProfile);
+            profile.AddFollow(followingProfile);
 
             // act
             // assert
@@ -382,7 +382,7 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
             // act
             // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollowing(profile));
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(profile));
         }
     }
 }
