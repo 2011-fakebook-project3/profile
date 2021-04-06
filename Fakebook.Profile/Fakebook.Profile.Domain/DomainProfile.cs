@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 using Fakebook.Profile.Domain.Utility;
@@ -12,6 +13,10 @@ namespace Fakebook.Profile.Domain
     {
         //[anything]@[anything].[anything]
         private string _email;
+
+        public IList<string> FollowerEmails { get; set; }
+        public IList<string> FollowingEmails { get; set; }
+
         /// <summary>
         /// The user's email.
         /// </summary>
@@ -161,6 +166,39 @@ namespace Fakebook.Profile.Domain
             }
         }
 
+        public void AddFollow(string followingEmail)
+        {
+            Regex followingMailRegex = new(RegularExpressions.EmailCharacters);
+            if (!followingMailRegex.IsMatch(followingEmail))
+            {
+                throw new ArgumentException("The email is not valid", nameof(followingEmail));
+            }
+
+            if (FollowingEmails.Contains(followingEmail))
+            {
+                throw new ArgumentException("The email already exists in the following emails list", nameof(followingEmail));
+            }
+
+            FollowingEmails.Add(followingEmail);
+        }
+
+        public void AddFollower(string followerEmail)
+        {
+            Regex followerMailRegex = new(RegularExpressions.EmailCharacters);
+            if (!followerMailRegex.IsMatch(followerEmail))
+            {
+                throw new ArgumentException("The email is not valid", nameof(followerEmail));
+            }
+
+            if (FollowerEmails.Contains(followerEmail))
+            {
+                throw new ArgumentException("The email already exists in the following emails list", nameof(followerEmail));
+            }
+
+            FollowerEmails.Add(followerEmail);
+
+        }
+
         /// <summary>
         /// Construct a new DomainProfile with all of its properties/backing fields assigned if valid
         /// </summary>
@@ -212,6 +250,9 @@ namespace Fakebook.Profile.Domain
             FirstName = firstName;
             LastName = lastName;
             ProfilePictureUrl = new Uri(ProfileConfiguration.DefaultUri);
+            FollowerEmails = new List<string>();
+            FollowingEmails = new List<string>();
         }
+
     }
 }
