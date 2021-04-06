@@ -28,6 +28,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly IStorageService _storageService;
         private readonly ILogger<ProfileController> _logger;
         private readonly IConfiguration _configuration;
+        private const int _maxFileSize = 2_097_152; // 2 MB
 
         /// <summary>
         /// Constructor for a new instance of the controller.
@@ -46,7 +47,9 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// Endpoint for uploading an image to the service's storage.
         /// </summary>
         /// <returns>An Http response.</returns>
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost]
+        [RequestSizeLimit(_maxFileSize)]
+        [RequestFormLimits(MultipartBodyLengthLimit = _maxFileSize)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UploadProfilePicture()
