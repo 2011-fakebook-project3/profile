@@ -28,7 +28,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         private readonly IStorageService _storageService;
         private readonly ILogger<ProfileController> _logger;
         private readonly IConfiguration _configuration;
-        private const int _maxFileSize = 2097152; // 2 MB
+        private const int _maxFileSize = 2_097_152; // 2 MB
 
         /// <summary>
         /// Constructor for a new instance of the controller.
