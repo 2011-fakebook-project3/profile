@@ -21,12 +21,18 @@ namespace Fakebook.Profile.DataAccess.Migrations
 
             modelBuilder.Entity("Fakebook.Profile.DataAccess.EntityModel.EntityProfile", b =>
                 {
-                    b.Property<string>("Email")
-                        .HasColumnType("text")
-                        .HasColumnName("Email");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("Id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -46,15 +52,16 @@ namespace Fakebook.Profile.DataAccess.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
-                    b.HasKey("Email");
+                    b.HasKey("Id");
 
                     b.ToTable("Profile", "Fakebook");
 
                     b.HasData(
                         new
                         {
-                            Email = "john.werner@revature.net",
+                            Id = 1,
                             BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "john.werner@revature.net",
                             FirstName = "John",
                             LastName = "Werner",
                             ProfilePictureUrl = "https://images.unsplash.com/photo-1489533119213-66a5cd877091",
@@ -62,8 +69,9 @@ namespace Fakebook.Profile.DataAccess.Migrations
                         },
                         new
                         {
-                            Email = "testaccount@gmail.com",
+                            Id = 2,
                             BirthDate = new DateTime(1994, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "testaccount@gmail.com",
                             FirstName = "Jay",
                             LastName = "Shin",
                             ProfilePictureUrl = "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800"

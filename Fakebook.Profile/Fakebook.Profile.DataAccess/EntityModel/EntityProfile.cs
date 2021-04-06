@@ -10,10 +10,15 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     public class EntityProfile
     {
         /// <summary>
-        /// The primary key, the user's email.
+        /// The primary key.
         /// </summary>
         [Key]
-        [Column(name: nameof(Email))]
+        [Column(name: nameof(Id))]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The users email address.
+        /// </summary>
         public string Email { get; set; }
 
         /// <summary>
