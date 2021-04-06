@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +23,8 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// The table with all the user profiles.
         /// </summary>
         public DbSet<EntityProfile> EntityProfiles { get; set; }
+
+        public DbSet<Follow> Relationships { get; set; }
 
         /// <summary>
         /// Override for generating the model tables.
@@ -57,7 +61,21 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
                 entity.Property(e => e.Status)
                     .IsRequired(false);
+
             });
+
+            modelBuilder.Entity<Follow>()
+                .HasKey(e => new { e.UserId, e.FollowingId });
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(e => e.User)
+                .WithMany(e => e.Following)
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(e => e.Following)
+                .WithMany(e => e.Followers)
+                .HasForeignKey(e => e.FollowingId);
 
             modelBuilder.Entity<EntityProfile>()
                 .HasData(new[]
