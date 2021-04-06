@@ -14,8 +14,8 @@ namespace Fakebook.Profile.Domain
         //[anything]@[anything].[anything]
         private string _email;
 
-        public IList<string> FollowerEmails { get; set; }
-        public IList<string> FollowingEmails { get; set; }
+        public IList<DomainProfile> Followers { get; set; }
+        public IList<DomainProfile> Following { get; set; }
 
         /// <summary>
         /// The user's email.
@@ -166,36 +166,14 @@ namespace Fakebook.Profile.Domain
             }
         }
 
-        public void AddFollow(string followingEmail)
+        public void AddFollow(DomainProfile followingEmail)
         {
-            Regex followingMailRegex = new(RegularExpressions.EmailCharacters);
-            if (!followingMailRegex.IsMatch(followingEmail))
-            {
-                throw new ArgumentException("The email is not valid", nameof(followingEmail));
-            }
-
-            if (FollowingEmails.Contains(followingEmail))
-            {
-                throw new ArgumentException("The email already exists in the following emails list", nameof(followingEmail));
-            }
-
-            FollowingEmails.Add(followingEmail);
+            throw new NotImplementedException();
         }
 
-        public void AddFollower(string followerEmail)
+        public void AddFollower(DomainProfile followerEmail)
         {
-            Regex followerMailRegex = new(RegularExpressions.EmailCharacters);
-            if (!followerMailRegex.IsMatch(followerEmail))
-            {
-                throw new ArgumentException("The email is not valid", nameof(followerEmail));
-            }
-
-            if (FollowerEmails.Contains(followerEmail))
-            {
-                throw new ArgumentException("The email already exists in the following emails list", nameof(followerEmail));
-            }
-
-            FollowerEmails.Add(followerEmail);
+            throw new NotImplementedException();
 
         }
 

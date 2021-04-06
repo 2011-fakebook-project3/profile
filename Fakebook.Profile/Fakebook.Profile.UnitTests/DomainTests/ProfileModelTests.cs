@@ -290,17 +290,17 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// Check that follower emails have the correct format.
         /// </summary>
         [Fact]
-        public void TestAddFollowerEmail() 
+        public void TestAddFollower() 
         {
             // arrange
             DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followerEmail = "testermail@gmail.com";
+            DomainProfile followerProfile = new("followertestmail@outlook.com", "Follower", "Tester");
 
             // act
-            profile.AddFollower(followerEmail);
+            profile.AddFollower(followerProfile);
 
             // assert
-            Assert.Contains(followerEmail, profile.FollowerEmails);
+            Assert.Contains(followerProfile, profile.Followers);
 
         }
 
@@ -308,114 +308,81 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         /// Check that following emails have the correct format.
         /// </summary>
         [Fact]
-        public void TestAddFollowingEmail()
+        public void TestAddFollowing()
         {
             // arrange
             DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followingEmail = "testermail@gmail.com";
+            DomainProfile followingProfile = new("followingtestmail@outlook.com", "Follower", "Tester");
 
             // act
-            profile.AddFollow(followingEmail);
+            profile.AddFollow(followingProfile);
 
             // assert
-            Assert.Contains(followingEmail, profile.FollowingEmails);
-        }
-
-        /// <summary>
-        /// Check the method AddFollower throws an exception when the follower email has an invalid format.
-        /// </summary>
-        [Fact]
-        public void TestAddInvalidFollowerEmail()
-        {
-            // arrange
-            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followerEmail = "@gmail.com.tester";
-
-            // act
-            // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(followerEmail));
-
-        }
-
-        /// <summary>
-        /// Check the method AddFollow throws an exception when the following email has an invalid format.
-        /// </summary>
-        [Fact]
-        public void TestAddInvalidFollowingEmail()
-        {
-            // arrange
-            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followingEmail = "@gmail.com.tester";
-
-            // act
-            // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(followingEmail));
-
-        }
-
-        /// <summary>
-        /// Check the method AddFollower throws an exception when the follower email is empty.
-        /// </summary>
-        [Fact]
-        public void TestEmptyFollowerEmail() 
-        {
-            // arrange
-            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followerEmail = "";
-
-            // act
-            // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(followerEmail));
-        }
-
-        /// <summary>
-        /// Check the method AddFollow throws an exception when the following email is empty.
-        /// </summary>
-        [Fact]
-        public void TestEmptyFollowingEmail()
-        {
-            // arrange
-            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followingEmail = "";
-
-            // act
-            // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(followingEmail));
+            Assert.Contains(followingProfile, profile.Following);
         }
 
         /// <summary>
         /// Check the method AddFollower throws an exception when a duplicate follower email is added to the list of follower emails.
         /// </summary>
         [Fact]
-        public void TestDuplicateFollowerEmail() 
+        public void TestDuplicateFollower() 
         {
             // arrange
             DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followerEmail = "testermail@outlook.com";
-            string duplicateFollowerEmail = followerEmail;
-            profile.AddFollower(followerEmail);
+            DomainProfile followerProfile = new("followertestmail@outlook.com", "Follower", "Tester");
+            DomainProfile duplicateFollower = followerProfile;
+            
+            profile.AddFollower(followerProfile);
 
             // act
             // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(duplicateFollowerEmail));
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(duplicateFollower));
         }
 
         /// <summary>
         /// Check the method AddFollow throws an exception when a duplicate following email is added to the list of following emails.
         /// </summary>
         [Fact]
-        public void TestDuplicateFollowingEmail()
+        public void TestDuplicateFollowing()
         {
             // arrange
             DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
-            string followingEmail = "testermail@outlook.com";
-            string duplicateFollowingEmail = followingEmail;
-            profile.AddFollow(followingEmail);
+            DomainProfile followingProfile = new("followingtestmail@outlook.com", "Follower", "Tester");
+            DomainProfile duplicateFollowing = followingProfile;
+
+            profile.AddFollower(followingProfile);
 
             // act
             // assert
-            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(duplicateFollowingEmail));
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(duplicateFollowing));
         }
 
+        /// <summary>
+        /// Test user cannot add itself as a follower.
+        /// </summary>
+        [Fact]
+        public void TestCannotAddSelfAsFollower()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollower(profile));
+        }
+
+        /// <summary>
+        /// Test user cannot add itself as following.
+        /// </summary>
+        [Fact]
+        public void TestCannotAddSelfAsFollowing()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+
+            // act
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.AddFollowing(profile));
+        }
     }
 }
