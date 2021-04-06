@@ -57,6 +57,8 @@ namespace Fakebook.Profile.DataAccess.EntityModel
 
                 entity.Property(e => e.Status)
                     .IsRequired(false);
+
+                entity.HasMany(e => e.Following).WithOne();
             });
 
             modelBuilder.Entity<EntityProfile>()

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -57,5 +59,11 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// </summary>
         [MaxLength(300)]
         public string Status { get; set; }
+
+        /// <summary>
+        /// List of users this user is following
+        /// </summary>
+        [ForeignKey("Id")]
+        public List<EntityProfile> Following { get; set; }
     }
 }
