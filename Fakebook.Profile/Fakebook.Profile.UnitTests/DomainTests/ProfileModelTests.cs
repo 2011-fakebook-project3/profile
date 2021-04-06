@@ -90,9 +90,9 @@ namespace Fakebook.Profile.UnitTests.DomainTests
         //https://i.imgur.com/BCeyxdR.jpg
         [InlineData("i.imgur.com", "BCeyxdR.jpg")]
         //https://i.imgur.com/Lf5S5Sa.jpg
-        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.png")]
         //https://i.imgur.com/DX5KAnQ.jpg
-        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
+        [InlineData("i.imgur.com", "DX5KAnQ.jpeg")]
         public void ValidUrlWorks(string host, string path)
         {
             //arrange
@@ -107,6 +107,33 @@ namespace Fakebook.Profile.UnitTests.DomainTests
 
             //assert
             Assert.NotNull(profile.ProfilePictureUrl);
+        }
+
+        /// <summary>
+        /// Check that a invalid url is not accepted.
+        /// </summary>
+        /// <param name="host">The host of the uri to test. Should be a domain</param>
+        /// <param name="path">The path to the resource in the url</param>
+        [Theory]
+        //https://i.imgur.com/BCeyxdR.jpg
+        [InlineData("i.imgur.com", "BCeyxdR.log")]
+        //https://i.imgur.com/Lf5S5Sa.jpg
+        [InlineData("i.imgur.com", "Lf5S5Sa.json")]
+        //https://i.imgur.com/DX5KAnQ.jpg
+        [InlineData("i.imgur.com", "DX5KAnQ.tim")]
+        public void InvalidUrlFails(string host, string path)
+        {
+            //arrange
+            DomainProfile profile = new("test@test.com", "First", "Last");
+            UriBuilder uriBuilder = new();
+            uriBuilder.Host = host;
+            uriBuilder.Path = path;
+
+            //act
+            Uri uri = uriBuilder.Uri;
+
+            //assert
+            Assert.ThrowsAny<Exception>(() => { profile.ProfilePictureUrl = uri; });
         }
         #endregion
 

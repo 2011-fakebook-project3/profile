@@ -69,10 +69,9 @@ namespace Fakebook.Profile.DataAccess.StorageModel
         /// <param name="host">The domain for th uri to test</param>
         /// <param name="path">The path to the resource in the domain.</param>
         [Theory]
-        [InlineData("test.com", "test")]
         [InlineData("i.imgur.com", "BCeyxdR.jpg")]
-        [InlineData("i.imgur.com", "Lf5S5Sa.jpg")]
-        [InlineData("i.imgur.com", "DX5KAnQ.jpg")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.png")]
+        [InlineData("i.imgur.com", "DX5KAnQ.jpeg")]
         public void SetValidUriShouldWork(string host, string path)
         {
             //arrange
@@ -88,6 +87,30 @@ namespace Fakebook.Profile.DataAccess.StorageModel
             Assert.NotNull(profile.ProfilePictureUrl);
             Assert.Equal(host, profile.ProfilePictureUrl.Host);
             Assert.EndsWith(path, profile.ProfilePictureUrl.AbsolutePath);
+        }
+
+        /// <summary>
+        /// Check that you cannot set an invalid uri.
+        /// </summary>
+        /// <param name="host">The domain for th uri to test</param>
+        /// <param name="path">The path to the resource in the domain.</param>
+        [Theory]
+        [InlineData("test.com", "test")]
+        [InlineData("test.com", "BCed3.img")]
+        [InlineData("i.imgur.com", "Lf5S5Sa.123")]
+        [InlineData("i.imgur.com", "DX5KAnQ.bbp")]
+        public void SetInvalidUriShouldNotWork(string host, string path)
+        {
+            //arrange
+            EntityProfile profile = new();
+            UriBuilder uriBuilder = new();
+
+            //act
+            uriBuilder.Host = host;
+            uriBuilder.Path = path;
+
+            //assert
+            Assert.ThrowsAny<Exception>(() => { profile.ProfilePictureUrl = uriBuilder.Uri; });
         }
 
         /// <summary>
