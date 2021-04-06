@@ -10,10 +10,17 @@ namespace Fakebook.Profile.DataAccess.EntityModel
     public class EntityProfile
     {
         /// <summary>
-        /// The primary key, the user's email.
+        /// The primary key.
         /// </summary>
         [Key]
-        [Column(name: nameof(Email))]
+        [Column(name: nameof(Id))]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The users email address.
+        /// </summary>
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         /// <summary>
@@ -24,27 +31,31 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// <summary>
         /// The user's first name. Cannot be null.
         /// </summary>
+        [Required]
         public string FirstName { get; set; }
 
         /// <summary>
         /// The user's last name, cannot be null.
         /// </summary>
+        [Required]
         public string LastName { get; set; }
 
         /// <summary>
         /// The user's phone number. can be up to 15 characters. (?) Can be null.
         /// </summary>
-        [MaxLength(15)]
+        [MinLength(10), MaxLength(15)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// The user's birthdate. Can't be null.
         /// </summary>
+        [Required]
         public DateTime BirthDate { get; set; }
 
         /// <summary>
         /// The user's current status message, can be null.
         /// </summary>
+        [MaxLength(300)]
         public string Status { get; set; }
     }
 }
