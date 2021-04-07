@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fakebook.Profile.DataAccess.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20210406231710_AddFollowing")]
-    partial class AddFollowing
+    [Migration("20210407193410_AddFollowersAndFollowing")]
+    partial class AddFollowersAndFollowing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,7 +93,7 @@ namespace Fakebook.Profile.DataAccess.Migrations
 
                     b.HasIndex("FollowingId");
 
-                    b.ToTable("Relationships");
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("Fakebook.Profile.DataAccess.EntityModel.Follow", b =>

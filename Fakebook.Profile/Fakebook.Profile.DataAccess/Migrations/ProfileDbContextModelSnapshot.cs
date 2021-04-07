@@ -91,7 +91,7 @@ namespace Fakebook.Profile.DataAccess.Migrations
 
                     b.HasIndex("FollowingId");
 
-                    b.ToTable("Relationships");
+                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("Fakebook.Profile.DataAccess.EntityModel.Follow", b =>

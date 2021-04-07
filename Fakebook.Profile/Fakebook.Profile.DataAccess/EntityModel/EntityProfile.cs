@@ -62,11 +62,11 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// <summary>
         /// List of users this user is following
         /// </summary>
-        public virtual List<Follow> Following { get; set; }
+        public virtual IList<Follow> Following { get; set; }
 
         /// <summary>
         /// List of users following this user
         /// </summary>
-        public virtual List<Follow> Followers { get; set; }
+        public virtual IList<Follow> Followers { get; set; }
     }
 }

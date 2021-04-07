@@ -2,12 +2,12 @@
 
 namespace Fakebook.Profile.DataAccess.Migrations
 {
-    public partial class AddFollowing : Migration
+    public partial class AddFollowersAndFollowing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Relationships",
+                name: "Follows",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "integer", nullable: false),
@@ -15,16 +15,16 @@ namespace Fakebook.Profile.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Relationships", x => new { x.UserId, x.FollowingId });
+                    table.PrimaryKey("PK_Follows", x => new { x.UserId, x.FollowingId });
                     table.ForeignKey(
-                        name: "FK_Relationships_Profile_FollowingId",
+                        name: "FK_Follows_Profile_FollowingId",
                         column: x => x.FollowingId,
                         principalSchema: "Fakebook",
                         principalTable: "Profile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Relationships_Profile_UserId",
+                        name: "FK_Follows_Profile_UserId",
                         column: x => x.UserId,
                         principalSchema: "Fakebook",
                         principalTable: "Profile",
@@ -33,15 +33,15 @@ namespace Fakebook.Profile.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relationships_FollowingId",
-                table: "Relationships",
+                name: "IX_Follows_FollowingId",
+                table: "Follows",
                 column: "FollowingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Relationships");
+                name: "Follows");
         }
     }
 }

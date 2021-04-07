@@ -24,7 +24,7 @@ namespace Fakebook.Profile.DataAccess.EntityModel
         /// </summary>
         public DbSet<EntityProfile> EntityProfiles { get; set; }
 
-        public DbSet<Follow> Relationships { get; set; }
+        public DbSet<Follow> Follows { get; set; }
 
         /// <summary>
         /// Override for generating the model tables.
