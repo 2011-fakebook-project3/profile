@@ -72,7 +72,7 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private EntityProfile ToEntityProfile(DomainProfile profile)
+        private async Task<EntityProfile> ToEntityProfile(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
@@ -84,10 +84,10 @@ namespace Fakebook.Profile.DataAccess
 
             if(profile.FollowingEmails.Count != 0)
             {
-                int userId = GetProfileId(profile.Email);
+                int userId = await GetProfileIdAsync(profile.Email);
                 foreach (var following in profile.FollowingEmails)
                 {
-                    int followingId = GetProfileId(following);
+                    int followingId = await GetProfileIdAsync(following);
                     Follow newFollow = new Follow
                     {
                         UserId = userId,
@@ -99,10 +99,10 @@ namespace Fakebook.Profile.DataAccess
             
             if(profile.FollowerEmails.Count != 0)
             {
-                int userId = GetProfileId(profile.Email);
+                int userId = await GetProfileIdAsync(profile.Email);
                 foreach (var follower in profile.FollowerEmails)
                 {
-                    int followerId = GetProfileId(follower);
+                    int followerId = await GetProfileIdAsync(follower);
                     Follow newFollow = new Follow
                     {
                         UserId = followerId,
@@ -127,11 +127,6 @@ namespace Fakebook.Profile.DataAccess
             };
 
             return convertedProfile;
-        }
-
-        private int GetProfileId(string email)
-        {
-            return GetProfileIdAsync(email).Result;
         }
 
         private async Task<int> GetProfileIdAsync(string email)
@@ -232,7 +227,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var newUser = ToEntityProfile(profileData); // convert
+                var newUser = await ToEntityProfile(profileData); // convert
                 await _context.AddAsync(newUser);
                 await _context.SaveChangesAsync();
             }
@@ -252,7 +247,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var userEntity = ToEntityProfile(domainProfileData);
+                var userEntity = await ToEntityProfile(domainProfileData);
 
                 var entities = _context.EntityProfiles;
                 if (!entities.Any())
