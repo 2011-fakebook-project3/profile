@@ -26,11 +26,30 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a Domain Profile.</returns>
-        private static DomainProfile ToDomainProfile(EntityProfile profile)
+        private DomainProfile ToDomainProfile(EntityProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
                 throw new ArgumentNullException("Must have a entity profile, with an email.");
+            }
+
+            List<string> followingEmails = new List<string>();
+            List<string> followerEmails = new List<string>();
+
+            if(profile.Following != null)
+            {
+                foreach (var following in profile.Following)
+                {
+                    followingEmails.Add(following.Following.Email);
+                }
+            }
+            
+            if(profile.Followers != null)
+            {
+                foreach (var follower in profile.Followers)
+                {
+                    followerEmails.Add(follower.User.Email);
+                }
             }
 
             DomainProfile convertedProfile = new(profile.Email, profile.FirstName, profile.LastName)
@@ -38,7 +57,9 @@ namespace Fakebook.Profile.DataAccess
                 ProfilePictureUrl = profile.ProfilePictureUrl,
                 PhoneNumber = profile.PhoneNumber,
                 BirthDate = profile.BirthDate,
-                Status = profile.Status
+                Status = profile.Status,
+                FollowerEmails = followerEmails,
+                FollowingEmails = followingEmails
             };
 
             return convertedProfile;
@@ -51,12 +72,46 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private static EntityProfile ToEntityProfile(DomainProfile profile)
+        private EntityProfile ToEntityProfile(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
                 throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
             }
+
+            List<Follow> followingEmails = new List<Follow>();
+            List<Follow> followerEmails = new List<Follow>();
+
+            if(profile.FollowingEmails.Count != 0)
+            {
+                int userId = GetProfileIdAsync(profile.Email).Result;
+                foreach (var following in profile.FollowingEmails)
+                {
+                    int followingId = GetProfileIdAsync(following).Result;
+                    Follow newFollow = new Follow
+                    {
+                        UserId = userId,
+                        FollowingId = followingId
+                    };
+                    followingEmails.Add(newFollow);
+                }
+            }
+            
+            if(profile.FollowerEmails.Count != 0)
+            {
+                int userId = GetProfileIdAsync(profile.Email).Result;
+                foreach (var follower in profile.FollowerEmails)
+                {
+                    int followerId = GetProfileIdAsync(follower).Result;
+                    Follow newFollow = new Follow
+                    {
+                        UserId = followerId,
+                        FollowingId = userId
+                    };
+                    followerEmails.Add(newFollow);
+                }
+            }
+            
 
             EntityProfile convertedProfile = new()
             {
@@ -66,10 +121,18 @@ namespace Fakebook.Profile.DataAccess
                 LastName = profile.LastName,
                 PhoneNumber = profile.PhoneNumber,
                 BirthDate = profile.BirthDate,
-                Status = profile.Status
+                Status = profile.Status,
+                Following = followingEmails,
+                Followers = followerEmails
             };
 
             return convertedProfile;
+        }
+
+        private async Task<int> GetProfileIdAsync(string email)
+        {
+            var entity = await _context.EntityProfiles.FirstAsync(x => x.Email == email);
+            return entity.Id;
         }
 
         /// <summary>
@@ -208,6 +271,8 @@ namespace Fakebook.Profile.DataAccess
                 profile.PhoneNumber = userEntity.PhoneNumber;
                 profile.BirthDate = userEntity.BirthDate;
                 profile.Status = userEntity.Status;
+                profile.Followers = userEntity.Followers;
+                profile.Following = userEntity.Following;
                 // save changes.
                 _context.SaveChanges();
             }
