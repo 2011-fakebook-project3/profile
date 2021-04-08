@@ -72,12 +72,17 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private async Task<EntityProfile> ToEntityProfile(DomainProfile profile)
+        private Task<EntityProfile> ToEntityProfile(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
                 throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
             }
+
+            return ToEntityProfileAsync(profile);
+        }
+
+        private async Task<EntityProfile> ToEntityProfileAsync(DomainProfile profile) {
 
             List<Follow> followingEmails = new List<Follow>();
             List<Follow> followerEmails = new List<Follow>();
