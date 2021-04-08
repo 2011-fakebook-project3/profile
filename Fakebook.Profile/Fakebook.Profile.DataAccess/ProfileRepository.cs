@@ -232,7 +232,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var newUser = await ToEntityProfile(profileData); // convert
+                var newUser = ToEntityProfile(profileData); // convert
                 await _context.AddAsync(newUser);
                 await _context.SaveChangesAsync();
             }
@@ -252,7 +252,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var userEntity = await ToEntityProfile(domainProfileData);
+                var userEntity = ToEntityProfile(domainProfileData);
 
                 var entities = _context.EntityProfiles;
                 if (!entities.Any())
