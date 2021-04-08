@@ -72,7 +72,7 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private async Task<EntityProfile> ToEntityProfile(DomainProfile profile)
+        private EntityProfile ToEntityProfile(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
@@ -84,10 +84,10 @@ namespace Fakebook.Profile.DataAccess
 
             if(profile.FollowingEmails.Count != 0)
             {
-                int userId = await GetProfileIdAsync(profile.Email);
+                int userId = GetProfileId(profile.Email);
                 foreach (var following in profile.FollowingEmails)
                 {
-                    int followingId = await GetProfileIdAsync(following);
+                    int followingId = GetProfileId(following);
                     Follow newFollow = new Follow
                     {
                         UserId = userId,
@@ -99,10 +99,10 @@ namespace Fakebook.Profile.DataAccess
             
             if(profile.FollowerEmails.Count != 0)
             {
-                int userId = await GetProfileIdAsync(profile.Email);
+                int userId = GetProfileId(profile.Email);
                 foreach (var follower in profile.FollowerEmails)
                 {
-                    int followerId = await GetProfileIdAsync(follower);
+                    int followerId = GetProfileId(follower);
                     Follow newFollow = new Follow
                     {
                         UserId = followerId,
@@ -127,6 +127,11 @@ namespace Fakebook.Profile.DataAccess
             };
 
             return convertedProfile;
+        }
+
+        private int GetProfileId(string email)
+        {
+            return GetProfileIdAsync(email).Result;
         }
 
         private async Task<int> GetProfileIdAsync(string email)
