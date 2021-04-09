@@ -36,7 +36,7 @@ namespace Fakebook.Profile.DataAccess
             List<string> followingEmails = new List<string>();
             List<string> followerEmails = new List<string>();
 
-            if(profile.Following != null)
+            if (profile.Following != null)
             {
                 foreach (var following in profile.Following)
                 {
@@ -44,7 +44,7 @@ namespace Fakebook.Profile.DataAccess
                 }
             }
             
-            if(profile.Followers != null)
+            if (profile.Followers != null)
             {
                 foreach (var follower in profile.Followers)
                 {
@@ -72,14 +72,14 @@ namespace Fakebook.Profile.DataAccess
         /// <exception type="ArgumentException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private async Task<EntityProfile> ToEntityProfileAsync(DomainProfile profile)
+        private Task<EntityProfile> ToEntityProfileAsync(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
                 throw new ArgumentException("Profile is missing required fields.", nameof(profile));
             }
 
-            var entityProfile = await ConvertAsync(profile);
+            var entityProfile = ConvertAsync(profile);
             return entityProfile;
 
             async Task<EntityProfile> ConvertAsync(DomainProfile profile)
@@ -91,13 +91,13 @@ namespace Fakebook.Profile.DataAccess
                 if (profile.FollowingEmails.Count != 0)
                 {
                     int userId = await GetProfileIdAsync(profile.Email);
-                    foreach (var following in profile.FollowingEmails)
+                    var followingIds = await GetManyProfileIdsAsync(profile.FollowingEmails);
+                    foreach (var following in followingIds)
                     {
-                        int followingId = await GetProfileIdAsync(following);
                         Follow newFollow = new Follow
                         {
                             UserId = userId,
-                            FollowingId = followingId
+                            FollowingId = following
                         };
                         followingEmails.Add(newFollow);
                     }
@@ -106,12 +106,12 @@ namespace Fakebook.Profile.DataAccess
                 if (profile.FollowerEmails.Count != 0)
                 {
                     int userId = await GetProfileIdAsync(profile.Email);
-                    foreach (var follower in profile.FollowerEmails)
+                    var followerIds = await GetManyProfileIdsAsync(profile.FollowerEmails);
+                    foreach (var follower in followerIds)
                     {
-                        int followerId = await GetProfileIdAsync(follower);
                         Follow newFollow = new Follow
                         {
-                            UserId = followerId,
+                            UserId = follower,
                             FollowingId = userId
                         };
                         followerEmails.Add(newFollow);
@@ -140,6 +140,12 @@ namespace Fakebook.Profile.DataAccess
         {
             var entityId = await _context.EntityProfiles.Where(x => x.Email == email).Select(x => x.Id).FirstAsync();
             return entityId;
+        }
+
+        private async Task<List<int>> GetManyProfileIdsAsync(IList<string> emails)
+        {
+            var IDs = await _context.EntityProfiles.Where(x => emails.Contains(x.Email)).Select(x => x.Id).ToListAsync();
+            return IDs;
         }
 
         /// <summary>
