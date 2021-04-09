@@ -79,8 +79,7 @@ namespace Fakebook.Profile.DataAccess
                 throw new ArgumentException("Profile is missing required fields.", nameof(profile));
             }
 
-            var entityProfile = ConvertAsync(profile);
-            return entityProfile;
+            return ConvertAsync(profile);
 
             async Task<EntityProfile> ConvertAsync(DomainProfile profile)
             {
