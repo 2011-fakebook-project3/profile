@@ -142,7 +142,7 @@ namespace Fakebook.Profile.DataAccess
             return entityId;
         }
 
-        private async Task<List<int>> GetManyProfileIdsAsync(IList<string> emails)
+        private async Task<List<int>> GetManyProfileIdsAsync(ICollection<string> emails)
         {
             var IDs = await _context.EntityProfiles.Where(x => emails.Contains(x.Email)).Select(x => x.Id).ToListAsync();
             return IDs;
