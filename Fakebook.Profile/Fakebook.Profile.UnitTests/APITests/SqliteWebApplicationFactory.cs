@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
-namespace Fakebook.Profile.UnitTests.APITests
+namespace Fakebook.Profile.UnitTests.ApiTests
 {
     public class SqliteWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.DataAccess;
 
-namespace Fakebook.Profile.UnitTests.APITests
+namespace Fakebook.Profile.UnitTests.ApiTests
 {
     public class ProfileIntegrationTests
     {
@@ -22,8 +22,9 @@ namespace Fakebook.Profile.UnitTests.APITests
 
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
+            int lastId = context.EntityProfiles.Count();
 
-            var compare = context.EntityProfiles.Local.Single(x => x.Id == 3); //ID is 3 because there's already 2 users in seed data
+            var compare = context.EntityProfiles.Local.Single(x => x.Id == lastId);
             Assert.Equal(test.Email, compare.Email);
             Assert.Equal(test.FirstName, compare.FirstName);
             Assert.Equal(test.LastName, compare.LastName);
@@ -38,7 +39,7 @@ namespace Fakebook.Profile.UnitTests.APITests
             var repo = new ProfileRepository(context);
             var test = await repo.GetProfileAsync("john.werner@revature.net");
 
-            var compare = context.EntityProfiles.Local.Single(x => x.Id == 1); //ID is 3 because there's already 2 users in seed data
+            var compare = context.EntityProfiles.Local.Single(x => x.Id == 1);
             Assert.Equal(test.Email, compare.Email);
             Assert.Equal(test.FirstName, compare.FirstName);
             Assert.Equal(test.LastName, compare.LastName);
@@ -58,7 +59,9 @@ namespace Fakebook.Profile.UnitTests.APITests
 
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test); // ID 3
+            int testId = context.EntityProfiles.Count();
             await repo.CreateProfileAsync(testFriend); // ID 4
+            int testFriendId = context.EntityProfiles.Count();
 
             test.FollowingEmails.Add("friend@google.com");
             testFriend.FollowerEmails.Add("tdunbar@google.com");
@@ -69,8 +72,8 @@ namespace Fakebook.Profile.UnitTests.APITests
             await repo.UpdateProfileAsync(test.Email, test);
             await repo.UpdateProfileAsync(testFriend.Email, testFriend);
 
-            var compareTest = context.EntityProfiles.Local.Single(x => x.Id == 3);
-            var compareTestFriend = context.EntityProfiles.Local.Single(x => x.Id == 4);
+            var compareTest = context.EntityProfiles.Local.Single(x => x.Id == testId);
+            var compareTestFriend = context.EntityProfiles.Local.Single(x => x.Id == testFriendId);
 
             Assert.NotEmpty(compareTest.Followers);
             Assert.NotEmpty(compareTest.Following);

@@ -5,36 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fakebook.Profile.DataAccess;
+using Fakebook.Profile.DataAccess.EntityModel;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fakebook.Profile.UnitTests.APITests
+namespace Fakebook.Profile.UnitTests.ApiTests
 {
     public class ContextFactory : IDisposable
     {
         private DbConnection _conn;
         private bool disposedValue;
 
-        private DbContextOptions<DataAccess.EntityModel.ProfileDbContext> CreateOptions()
+        private DbContextOptions<ProfileDbContext> CreateOptions()
         {
-            return new DbContextOptionsBuilder<DataAccess.EntityModel.ProfileDbContext>().UseSqlite(_conn).Options;
+            return new DbContextOptionsBuilder<ProfileDbContext>().UseSqlite(_conn).Options;
         }
 
-        public DataAccess.EntityModel.ProfileDbContext CreateContext()
+        public ProfileDbContext CreateContext()
         {
+            
             if (_conn == null)
             {
                 _conn = new SqliteConnection("DataSource=:memory:");
                 _conn.Open();
-
-                DbContextOptions<DataAccess.EntityModel.ProfileDbContext> options = CreateOptions();
-                using var context = new DataAccess.EntityModel.ProfileDbContext(options);
-                context.Database.EnsureCreated();
-
-                // add extra test seed data here (or, in each test method)
             }
 
-            return new DataAccess.EntityModel.ProfileDbContext(CreateOptions());
+            DbContextOptions<ProfileDbContext> options = CreateOptions();
+            using var context = new ProfileDbContext(options);
+            context.Database.EnsureCreated();
+
+            // add extra test seed data here (or, in each test method)
+
+            return new ProfileDbContext(options);
         }
 
         protected virtual void Dispose(bool disposing)
