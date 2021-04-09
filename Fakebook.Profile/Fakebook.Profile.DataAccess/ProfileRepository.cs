@@ -23,14 +23,33 @@ namespace Fakebook.Profile.DataAccess
         /// Model mapping from entity to domain.
         /// </summary>
         /// <param name="profile">entity model object used</param>
-        /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
+        /// <exception type="ArgumentException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a Domain Profile.</returns>
         private static DomainProfile ToDomainProfile(EntityProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
-                throw new ArgumentNullException("Must have a entity profile, with an email.");
+                throw new ArgumentException("Profile is missing required fields.", nameof(profile));
+            }
+
+            List<string> followingEmails = new List<string>();
+            List<string> followerEmails = new List<string>();
+
+            if (profile.Following != null)
+            {
+                foreach (var following in profile.Following)
+                {
+                    followingEmails.Add(following.Following.Email);
+                }
+            }
+            
+            if (profile.Followers != null)
+            {
+                foreach (var follower in profile.Followers)
+                {
+                    followerEmails.Add(follower.User.Email);
+                }
             }
 
             DomainProfile convertedProfile = new(profile.Email, profile.FirstName, profile.LastName)
@@ -38,7 +57,9 @@ namespace Fakebook.Profile.DataAccess
                 ProfilePictureUrl = profile.ProfilePictureUrl,
                 PhoneNumber = profile.PhoneNumber,
                 BirthDate = profile.BirthDate,
-                Status = profile.Status
+                Status = profile.Status,
+                FollowerEmails = followerEmails,
+                FollowingEmails = followingEmails
             };
 
             return convertedProfile;
@@ -48,28 +69,82 @@ namespace Fakebook.Profile.DataAccess
         /// Default model mapping from domain to entity.
         /// </summary>
         /// <param name="profile">domain model object used</param>
-        /// <exception type="ArgumentNullException">If the profile, the profile's email, or the profile's names are null,
+        /// <exception type="ArgumentException">If the profile, the profile's email, or the profile's names are null,
         /// this will be thrown </exception>
         /// <returns>A representation of the profile as a DB Entity.</returns>
-        private static EntityProfile ToEntityProfile(DomainProfile profile)
+        private Task<EntityProfile> ToEntityProfileAsync(DomainProfile profile)
         {
             if (profile == null || profile.Email == null || profile.FirstName == null || profile.LastName == null)
             {
-                throw new ArgumentNullException("Must have a domain profile, with an email and first and last name.");
+                throw new ArgumentException("Profile is missing required fields.", nameof(profile));
             }
 
-            EntityProfile convertedProfile = new()
-            {
-                Email = profile.Email,
-                ProfilePictureUrl = profile.ProfilePictureUrl,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                PhoneNumber = profile.PhoneNumber,
-                BirthDate = profile.BirthDate,
-                Status = profile.Status
-            };
+            return ConvertAsync(profile);
 
-            return convertedProfile;
+            async Task<EntityProfile> ConvertAsync(DomainProfile profile)
+            {
+
+                List<Follow> followingEmails = new List<Follow>();
+                List<Follow> followerEmails = new List<Follow>();
+
+                if (profile.FollowingEmails.Count != 0)
+                {
+                    int userId = await GetProfileIdAsync(profile.Email);
+                    var followingIds = await GetManyProfileIdsAsync(profile.FollowingEmails);
+                    foreach (var following in followingIds)
+                    {
+                        Follow newFollow = new Follow
+                        {
+                            UserId = userId,
+                            FollowingId = following
+                        };
+                        followingEmails.Add(newFollow);
+                    }
+                }
+
+                if (profile.FollowerEmails.Count != 0)
+                {
+                    int userId = await GetProfileIdAsync(profile.Email);
+                    var followerIds = await GetManyProfileIdsAsync(profile.FollowerEmails);
+                    foreach (var follower in followerIds)
+                    {
+                        Follow newFollow = new Follow
+                        {
+                            UserId = follower,
+                            FollowingId = userId
+                        };
+                        followerEmails.Add(newFollow);
+                    }
+                }
+
+
+                EntityProfile convertedProfile = new()
+                {
+                    Email = profile.Email,
+                    ProfilePictureUrl = profile.ProfilePictureUrl,
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    PhoneNumber = profile.PhoneNumber,
+                    BirthDate = profile.BirthDate,
+                    Status = profile.Status,
+                    Following = followingEmails,
+                    Followers = followerEmails
+                };
+
+                return convertedProfile;
+            }
+        }
+
+        private async Task<int> GetProfileIdAsync(string email)
+        {
+            var entityId = await _context.EntityProfiles.Where(x => x.Email == email).Select(x => x.Id).FirstAsync();
+            return entityId;
+        }
+
+        private async Task<List<int>> GetManyProfileIdsAsync(ICollection<string> emails)
+        {
+            var IDs = await _context.EntityProfiles.Where(x => emails.Contains(x.Email)).Select(x => x.Id).ToListAsync();
+            return IDs;
         }
 
         /// <summary>
@@ -164,7 +239,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var newUser = ToEntityProfile(profileData); // convert
+                var newUser = await ToEntityProfileAsync(profileData); // convert
                 await _context.AddAsync(newUser);
                 await _context.SaveChangesAsync();
             }
@@ -184,7 +259,7 @@ namespace Fakebook.Profile.DataAccess
             // have to have this try catch block to prevent errors from data base
             try
             {
-                var userEntity = ToEntityProfile(domainProfileData);
+                var userEntity = await ToEntityProfileAsync(domainProfileData);
 
                 var entities = _context.EntityProfiles;
                 if (!entities.Any())
@@ -208,6 +283,8 @@ namespace Fakebook.Profile.DataAccess
                 profile.PhoneNumber = userEntity.PhoneNumber;
                 profile.BirthDate = userEntity.BirthDate;
                 profile.Status = userEntity.Status;
+                profile.Followers = userEntity.Followers;
+                profile.Following = userEntity.Following;
                 // save changes.
                 _context.SaveChanges();
             }

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace Fakebook.Profile.UnitTests.APITests
+namespace Fakebook.Profile.UnitTests.ApiTests
 {
     public class HttpIntegrationTests : IClassFixture<SqliteWebApplicationFactory<Startup>>
     {

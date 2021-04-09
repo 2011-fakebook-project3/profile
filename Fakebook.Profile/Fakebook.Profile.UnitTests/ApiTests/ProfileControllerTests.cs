@@ -16,7 +16,7 @@ using Moq;
 
 using Xunit;
 
-namespace Fakebook.Profile.UnitTests.APITests
+namespace Fakebook.Profile.UnitTests.ApiTests
 {
     public class ProfileControllerTests
     {
