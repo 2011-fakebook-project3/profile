@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Fakebook.Profile.DataAccess.Services.Interfaces;
-using Fakebook.Profile.Domain;
-using Fakebook.Profile.RestApi.ApiModel;
 using Fakebook.Profile.RestApi.Controllers;
-using Fakebook.Profile.UnitTests.TestData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -49,7 +44,7 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             await UploadImageExtension(extension, false);
         }
 
-        internal async Task UploadImageExtension(string extension, bool successExpected)
+        internal static async Task UploadImageExtension(string extension, bool successExpected)
         {
             // arrange
             Mock<IConfiguration> mockedStorageConfiguration = new();
