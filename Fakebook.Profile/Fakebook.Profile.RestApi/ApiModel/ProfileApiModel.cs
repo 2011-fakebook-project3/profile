@@ -83,7 +83,7 @@ namespace Fakebook.Profile.RestApi.ApiModel
 
         public DomainProfile ToDomainProfile()
         {
-            return new(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status);
+            return new(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status, Followers, Following);
         }
     }
 }
