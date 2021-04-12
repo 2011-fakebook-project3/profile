@@ -99,6 +99,21 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                         Status = null
                     }
                 });
+
+            modelBuilder.Entity<Follow>()
+                .HasData(new[]
+                {
+                    new Follow
+                    {
+                        UserId = 1,
+                        FollowingId = 2
+                    },
+                    new Follow
+                    {
+                        UserId = 2,
+                        FollowingId = 1
+                    }
+                });
         }
     }
 }
