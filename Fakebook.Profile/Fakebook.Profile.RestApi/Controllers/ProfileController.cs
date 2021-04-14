@@ -171,20 +171,29 @@ namespace Fakebook.Profile.RestApi.Controllers
         {
             // Get emails of each user
             string thisUserEmail = GetUserEmail();
-            DomainProfile followUser = user.ToDomainProfile();
+            string followEmail = user.Email;
             if (thisUserEmail is null)
             {
                 return NotFound(thisUserEmail);
             }
+            if (followEmail is null)
+            {
+                return NotFound(followEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile followUser;
             try
             {
-                DomainProfile thisUser = await _repository.GetProfileAsync(thisUserEmail);
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, followEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                followUser = usersQuery.Single(x => x.Email == followEmail);
                 // Add following relationships
-                thisUser.FollowingEmails.Add(followUser.Email);
-                followUser.FollowerEmails.Add(thisUser.Email);
+                thisUser.FollowingEmails.Add(followEmail);
+                followUser.FollowerEmails.Add(thisUserEmail);
                 // Update in the database
                 await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
-                await _repository.UpdateProfileAsync(followUser.Email, followUser);
+                await _repository.UpdateProfileAsync(followEmail, followUser);
                 return Ok();
             }
             catch (ArgumentException e)
