@@ -209,16 +209,17 @@ namespace Fakebook.Profile.Domain
         /// <param name="profilePictureUri">The URI of the user's profile picture; if null, will default to a valid URI</param>
         /// <param name="phoneNumber">The phone number of the user's profile; it can be null</param>
         /// <param name="status">The status message of the user's profile; it can be null</param>
-        public DomainProfile(string email, string firstName, string lastName, DateTime birthDate, Uri profilePictureUri = null, string phoneNumber = null, string status = null)
+        public DomainProfile(string email, string firstName, string lastName, DateTime birthDate, Uri profilePictureUri = null, string phoneNumber = null, string status = null, IList<string> followers = null, IList<string> following = null)
         {
             Email = email;
             FirstName = firstName;
             LastName = lastName;
             BirthDate = birthDate;
             PhoneNumber = phoneNumber;
-
             ProfilePictureUrl = profilePictureUri ?? new Uri(ProfileConfiguration.DefaultUri);
             Status = status;
+            FollowerEmails = followers;
+            FollowingEmails = following;
         }
 
         /// <summary>

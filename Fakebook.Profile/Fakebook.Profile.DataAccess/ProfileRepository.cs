@@ -154,6 +154,10 @@ namespace Fakebook.Profile.DataAccess
         public async Task<IEnumerable<DomainProfile>> GetAllProfilesAsync()
         {
             var entity = await _context.EntityProfiles
+                .Include(x => x.Following)
+                    .ThenInclude(x => x.Following)
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.User)
                 .ToListAsync();
 
             // model mapping
@@ -186,6 +190,10 @@ namespace Fakebook.Profile.DataAccess
             }
 
             var profile = await _context.EntityProfiles
+                .Include(x => x.Following)
+                    .ThenInclude(x => x.Following)
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
 
             if (profile == null)
@@ -207,6 +215,10 @@ namespace Fakebook.Profile.DataAccess
         {
             var userEntities = _context.EntityProfiles;
             var userEmails = userEntities
+                .Include(x => x.Following)
+                    .ThenInclude(x => x.Following)
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.User)
                 .Select(u => u.Email.ToUpper())
                 .ToList();
 

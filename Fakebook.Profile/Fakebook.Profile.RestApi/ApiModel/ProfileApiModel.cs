@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using Fakebook.Profile.Domain;
@@ -53,6 +54,16 @@ namespace Fakebook.Profile.RestApi.ApiModel
         /// </summary>
         public string Status { get; set; }
 
+        /// <summary>
+        /// List of users following the current user
+        /// </summary>
+        public IList<string> Followers { get; set; }
+
+        /// <summary>
+        /// List of users the current user is following
+        /// </summary>
+        public IList<string> Following { get; set; }
+
         public ProfileApiModel()
         {
         }
@@ -66,11 +77,13 @@ namespace Fakebook.Profile.RestApi.ApiModel
             PhoneNumber = p.PhoneNumber;
             BirthDate = p.BirthDate;
             Status = p.Status;
+            Followers = p.FollowerEmails;
+            Following = p.FollowingEmails;
         }
 
         public DomainProfile ToDomainProfile()
         {
-            return new(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status);
+            return new(Email, FirstName, LastName, BirthDate, ProfilePictureUrl, PhoneNumber, Status, Followers, Following);
         }
     }
 }
