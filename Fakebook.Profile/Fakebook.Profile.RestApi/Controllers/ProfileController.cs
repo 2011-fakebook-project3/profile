@@ -162,5 +162,46 @@ namespace Fakebook.Profile.RestApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("follow/{user=user}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Follow(ProfileApiModel user)
+        {
+            // Get emails of each user
+            string thisUserEmail = GetUserEmail();
+            string followEmail = user.Email;
+            if (thisUserEmail is null)
+            {
+                return NotFound(thisUserEmail);
+            }
+            if (followEmail is null)
+            {
+                return NotFound(followEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile followUser;
+            try
+            {
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, followEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                followUser = usersQuery.Single(x => x.Email == followEmail);
+                // Add following relationships
+                thisUser.FollowingEmails.Add(followEmail);
+                followUser.FollowerEmails.Add(thisUserEmail);
+                // Update in the database
+                await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
+                await _repository.UpdateProfileAsync(followEmail, followUser);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                return BadRequest();
+            }
+        }
     }
 }
