@@ -443,5 +443,31 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.Throws<ArgumentException>(() => profile.RemoveFollowing(followingEmail));
         }
 
+        [Fact]
+        public void TestRemoveFollowerEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
+            profile.AddFollower(followerEmail);
+
+            // act
+            profile.RemoveFollower(followerEmail);
+
+            // assert
+            Assert.DoesNotContain(followerEmail, profile.FollowerEmails);
+        }
+
+        [Fact]
+        public void TestRemoveFollowerEmailThrowsExceptionWhenEmailDoesNotExist()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
+
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.RemoveFollower(followerEmail));
+        }
+
     }
 }
