@@ -185,8 +185,8 @@ namespace Fakebook.Profile.RestApi.Controllers
                 thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
                 followUser = usersQuery.Single(x => x.Email == followEmail);
                 // Add following relationships
-                thisUser.FollowingEmails.Add(followEmail);
-                followUser.FollowerEmails.Add(thisUserEmail);
+                thisUser.AddFollow(followEmail);
+                followUser.AddFollower(thisUserEmail);
                 // Update in the database
                 await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
                 await _repository.UpdateProfileAsync(followEmail, followUser);
