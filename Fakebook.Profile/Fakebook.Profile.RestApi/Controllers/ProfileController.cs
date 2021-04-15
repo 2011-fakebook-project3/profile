@@ -164,21 +164,17 @@ namespace Fakebook.Profile.RestApi.Controllers
             }
         }
 
-        [HttpPost("follow/{followEmail=email}")]
+        [HttpPost("follow/{followEmail}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Follow([Required] string followEmail)
+        public async Task<ActionResult> Follow([EmailAddress] string followEmail)
         {
             // Get emails of each user
             string thisUserEmail = GetUserEmail();
             if (thisUserEmail is null)
             {
                 return Unauthorized(thisUserEmail);
-            }
-            if (followEmail is null)
-            {
-                return BadRequest(followEmail);
             }
             // Get users into domain models
             DomainProfile thisUser;
