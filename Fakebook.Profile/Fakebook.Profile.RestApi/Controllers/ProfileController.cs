@@ -199,5 +199,41 @@ namespace Fakebook.Profile.RestApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("unfollow/{unfollowEmail}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Unfollow([EmailAddress] string unfollowEmail)
+        {
+            // Get emails of each user
+            string thisUserEmail = GetUserEmail();
+            if (thisUserEmail is null)
+            {
+                return Unauthorized(thisUserEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile unfollowUser;
+            try
+            {
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, unfollowEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                unfollowUser = usersQuery.Single(x => x.Email == unfollowEmail);
+                // Add following relationships
+                thisUser.RemoveFollowing(unfollowEmail);
+                unfollowUser.RemoveFollower(thisUserEmail);
+                // Update in the database
+                await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
+                await _repository.UpdateProfileAsync(unfollowEmail, unfollowUser);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                return BadRequest();
+            }
+        }
     }
 }
