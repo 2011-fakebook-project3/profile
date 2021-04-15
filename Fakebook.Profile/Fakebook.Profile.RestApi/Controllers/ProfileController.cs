@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -159,6 +160,42 @@ namespace Fakebook.Profile.RestApi.Controllers
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);
                 //should be 404?
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("follow/{followEmail}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Follow([EmailAddress] string followEmail)
+        {
+            // Get emails of each user
+            string thisUserEmail = GetUserEmail();
+            if (thisUserEmail is null)
+            {
+                return Unauthorized(thisUserEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile followUser;
+            try
+            {
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, followEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                followUser = usersQuery.Single(x => x.Email == followEmail);
+                // Add following relationships
+                thisUser.FollowingEmails.Add(followEmail);
+                followUser.FollowerEmails.Add(thisUserEmail);
+                // Update in the database
+                await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
+                await _repository.UpdateProfileAsync(followEmail, followUser);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
                 return BadRequest();
             }
         }
