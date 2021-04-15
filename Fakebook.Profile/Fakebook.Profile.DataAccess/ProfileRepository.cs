@@ -254,7 +254,7 @@ namespace Fakebook.Profile.DataAccess
                 .Where(x => x.FirstName.Contains(firstName) && x.LastName.Contains(lastName))
                 .ToListAsync();
             }
-            if(lastName == null)
+            else if(lastName == null)
             {
                 query = await _context.EntityProfiles
                 .Include(x => x.Following)
