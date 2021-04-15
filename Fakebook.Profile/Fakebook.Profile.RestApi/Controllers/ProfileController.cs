@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -163,22 +164,21 @@ namespace Fakebook.Profile.RestApi.Controllers
             }
         }
 
-        [HttpPost("follow/{user=user}")]
+        [HttpPost("follow/{followEmail=email}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Follow(ProfileApiModel user)
+        public async Task<ActionResult> Follow([Required] string followEmail)
         {
             // Get emails of each user
             string thisUserEmail = GetUserEmail();
-            string followEmail = user.Email;
             if (thisUserEmail is null)
             {
-                return NotFound(thisUserEmail);
+                return Unauthorized(thisUserEmail);
             }
             if (followEmail is null)
             {
-                return NotFound(followEmail);
+                return BadRequest(followEmail);
             }
             // Get users into domain models
             DomainProfile thisUser;
