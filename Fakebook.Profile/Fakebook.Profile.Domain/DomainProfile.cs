@@ -199,6 +199,16 @@ namespace Fakebook.Profile.Domain
 
         }
 
+        public void RemoveFollowing(string followingEmail)
+        {
+            if (!FollowingEmails.Contains(followingEmail))
+            {
+                throw new ArgumentException("The email does not exist in the following emails list", nameof(followingEmail));
+            }
+
+            FollowingEmails.Remove(followingEmail);
+        }
+
         /// <summary>
         /// Construct a new DomainProfile with all of its properties/backing fields assigned if valid
         /// </summary>
