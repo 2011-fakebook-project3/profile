@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-
+using Fakebook.Profile.DataAccess;
 using Fakebook.Profile.DataAccess.Services.Interfaces;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
 using Fakebook.Profile.RestApi.Controllers;
 using Fakebook.Profile.UnitTests.TestData;
-
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -217,5 +218,44 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Never);
         }
         #endregion
+
+        [Fact]
+        public async Task AddFollowerAsync()
+        {
+            using var contextFactory = new ContextFactory();
+            using var context = contextFactory.CreateContext();
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, "john werner"),
+                new Claim(ClaimTypes.NameIdentifier, "john.werner@revature.net"),
+                new Claim("custom-claim", "example claim value"),
+            }, "mock"));
+
+            var repo = new ProfileRepository(context);
+            Mock<IStorageService> mockedStorageService = new();
+            ProfileController controller = new(
+                repo,
+                mockedStorageService.Object,
+                new NullLogger<ProfileController>()
+            );
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = new DefaultHttpContext() { User = user }
+            };
+
+            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
+
+            ProfileApiModel testProfileModel = new ProfileApiModel(test);
+
+            await repo.CreateProfileAsync(test);
+
+            var result = controller.Follow(testProfileModel);
+            Assert.NotNull(result);
+            var actionResult = Assert.IsType<Task<ActionResult>>(result);
+            var okObjectResult = Assert.IsType<OkResult>(actionResult.Result);
+
+        }
     }
 }
