@@ -24,7 +24,7 @@ namespace Fakebook.Profile.UnitTests.IntegrationTests
             using var contextFactory = new ContextFactory();
             using var context = contextFactory.CreateContext();
 
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new []
             {
                 new Claim(ClaimTypes.Name, "john werner"),
                 new Claim(ClaimTypes.NameIdentifier, "john.werner@revature.net"),
@@ -38,9 +38,9 @@ namespace Fakebook.Profile.UnitTests.IntegrationTests
                 mockedStorageService.Object,
                 new NullLogger<ProfileController>()
             );
-            controller.ControllerContext = new ControllerContext()
+            controller.ControllerContext = new ControllerContext
             {
-                HttpContext = new DefaultHttpContext() { User = user }
+                HttpContext = new DefaultHttpContext { User = user }
             };
 
             DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
