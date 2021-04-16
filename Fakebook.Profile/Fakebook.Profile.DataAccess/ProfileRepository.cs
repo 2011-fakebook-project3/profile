@@ -241,41 +241,25 @@ namespace Fakebook.Profile.DataAccess
                 .ToList();
         }
 
-        public async Task<IEnumerable<DomainProfile>> GetProfilesByNameAsync(string firstName = null, string lastName = null)
+        public async Task<IEnumerable<DomainProfile>> GetProfilesByNameAsync(string name = null)
         {
-            List<EntityProfile> query;
-            if(firstName != null && lastName != null)
-            {
-                query = await _context.EntityProfiles
+            var query = await _context.EntityProfiles
                 .Include(x => x.Following)
                     .ThenInclude(x => x.Following)
                 .Include(x => x.Followers)
                     .ThenInclude(x => x.User)
-                .Where(x => x.FirstName.Contains(firstName) && x.LastName.Contains(lastName))
                 .ToListAsync();
-            }
-            else if(lastName == null)
+            var profiles = query.Select(x => ToDomainProfile(x));
+            if(name != null)
             {
-                query = await _context.EntityProfiles
-                .Include(x => x.Following)
-                    .ThenInclude(x => x.Following)
-                .Include(x => x.Followers)
-                    .ThenInclude(x => x.User)
-                .Where(x => x.FirstName.Contains(firstName))
-                .ToListAsync();
+                profiles = profiles.Where(x => x.Name.Contains(name)).ToList();
             }
             else
             {
-                query = await _context.EntityProfiles
-                .Include(x => x.Following)
-                    .ThenInclude(x => x.Following)
-                .Include(x => x.Followers)
-                    .ThenInclude(x => x.User)
-                .Where(x => x.LastName.Contains(lastName))
-                .ToListAsync();
+                return new List<DomainProfile>();
             }
            
-            return query.Select(x => ToDomainProfile(x));
+            return profiles;
         }
 
         /// <summary>
