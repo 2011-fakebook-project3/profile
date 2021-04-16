@@ -86,7 +86,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesByNameAsync([FromQuery] string name)
         {
-            var results = await _repository.GetProfilesByNameAsync(name.ToUpper());
+            var results = await _repository.GetProfilesByNameAsync(name.ToUpperInvariant());
 
             // convert them to the ApiModel
             return Ok(results
