@@ -114,5 +114,68 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             Assert.Contains("tdunbar@google.com", compareTestFriend.FollowerEmails);
             Assert.Contains("tdunbar@google.com", compareTestFriend.FollowingEmails);
         }
+
+        [Fact]
+        public async Task TestSearchByFirstNameOnly()
+        {
+            using var contextFactory = new ContextFactory();
+            using var context = contextFactory.CreateContext();
+
+            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
+
+            var repo = new ProfileRepository(context);
+            await repo.CreateProfileAsync(test);
+
+            var search = await repo.GetProfilesByNameAsync("Trevor");
+
+            var user = search.First();
+
+            Assert.Equal("tdunbar@google.com", user.Email);
+            Assert.Equal("Trevor", user.FirstName);
+            Assert.Equal("Dunbar", user.LastName);
+        }
+
+        [Fact]
+        public async Task TestSearchByLastNameOnly()
+        {
+            using var contextFactory = new ContextFactory();
+            using var context = contextFactory.CreateContext();
+
+            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
+
+            var repo = new ProfileRepository(context);
+            await repo.CreateProfileAsync(test);
+
+            var search = await repo.GetProfilesByNameAsync("Dunbar");
+
+            var user = search.First();
+
+            Assert.Equal("tdunbar@google.com", user.Email);
+            Assert.Equal("Trevor", user.FirstName);
+            Assert.Equal("Dunbar", user.LastName);
+        }
+
+        [Fact]
+        public async Task TestSearchByFirstNameAndLastName()
+        {
+            using var contextFactory = new ContextFactory();
+            using var context = contextFactory.CreateContext();
+
+            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
+
+            var repo = new ProfileRepository(context);
+            await repo.CreateProfileAsync(test);
+
+            var search = await repo.GetProfilesByNameAsync("Trevor Dunbar");
+
+            var user = search.First();
+
+            Assert.Equal("tdunbar@google.com", user.Email);
+            Assert.Equal("Trevor", user.FirstName);
+            Assert.Equal("Dunbar", user.LastName);
+        }
     }
 }

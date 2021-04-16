@@ -241,6 +241,27 @@ namespace Fakebook.Profile.DataAccess
                 .ToList();
         }
 
+        public async Task<IEnumerable<DomainProfile>> GetProfilesByNameAsync(string name = null)
+        {
+            var query = await _context.EntityProfiles
+                .Include(x => x.Following)
+                    .ThenInclude(x => x.Following)
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.User)
+                .ToListAsync();
+            var profiles = query.Select(x => ToDomainProfile(x));
+            if(name != null)
+            {
+                profiles = profiles.Where(x => x.Name.Contains(name)).ToList();
+            }
+            else
+            {
+                return new List<DomainProfile>();
+            }
+           
+            return profiles;
+        }
+
         /// <summary>
         /// Take in a domain profile and create an entity profile
         /// </summary>
