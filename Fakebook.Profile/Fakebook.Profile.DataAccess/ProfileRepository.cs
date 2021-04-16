@@ -252,7 +252,7 @@ namespace Fakebook.Profile.DataAccess
             var profiles = query.Select(x => ToDomainProfile(x));
             if(name != null)
             {
-                profiles = profiles.Where(x => x.Name.Contains(name)).ToList();
+                profiles = profiles.Where(x => x.Name.ToUpper().Contains(name)).ToList();
             }
             else
             {
