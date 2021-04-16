@@ -82,10 +82,14 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="name">A name you want to search for to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
-        [HttpGet("search/{name}")]
+        [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesByNameAsync([FromQuery] string name)
         {
+            if(name == null)
+            {
+                return BadRequest();
+            }
             var results = await _repository.GetProfilesByNameAsync(name);
 
             // convert them to the ApiModel
