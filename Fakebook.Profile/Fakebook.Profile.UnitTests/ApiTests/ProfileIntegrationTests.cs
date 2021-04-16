@@ -148,7 +148,7 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
 
-            var search = await repo.GetProfilesByNameAsync(lastName: "Dunbar");
+            var search = await repo.GetProfilesByNameAsync("Dunbar");
 
             var user = search.First();
 
@@ -169,7 +169,7 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
 
-            var search = await repo.GetProfilesByNameAsync("Trevor", "Dunbar");
+            var search = await repo.GetProfilesByNameAsync("Trevor Dunbar");
 
             var user = search.First();
 
