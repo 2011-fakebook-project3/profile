@@ -75,6 +75,30 @@ namespace Fakebook.Profile.RestApi.Controllers
                 .ToList());
         }
 
+
+        /// <summary>
+        /// Action method that handles getting multiple profiles via their names;
+        /// PUT: /api/profiles/selection/{name}
+        /// </summary>
+        /// <param name="name">A name you want to search for to get the profiles</param>
+        /// <returns>A collection of profiles converted to API Models</returns>
+        [HttpGet("selection/{name}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesByNameAsync([FromQuery] string name)
+        {
+            var results = await _repository.GetProfilesByNameAsync(name);
+
+            // convert them to the ApiModel
+            return Ok(results
+                .Select(p => new ProfileApiModel(p))
+                .ToList());
+        }
+
+
+
+
         /// <summary>
         /// Action method that handles getting a single user by their email;
         /// GET: /api/profiles/{profileEmail}
