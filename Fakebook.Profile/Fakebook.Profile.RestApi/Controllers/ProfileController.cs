@@ -78,9 +78,8 @@ namespace Fakebook.Profile.RestApi.Controllers
 
         /// <summary>
         /// Action method that handles getting multiple profiles via their names;
-        /// PUT: /api/profiles/search/{name}
+        /// GET: /api/profiles/search
         /// </summary>
-        /// <param name="name">A name you want to search for to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
         [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
