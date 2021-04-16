@@ -121,19 +121,19 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             using var contextFactory = new ContextFactory();
             using var context = contextFactory.CreateContext();
 
-            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            DomainProfile test = new DomainProfile("testAccount@google.com", "Test", "User");
             test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
 
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
 
-            var search = await repo.GetProfilesByNameAsync("Trevor");
+            var search = await repo.GetProfilesByNameAsync("Test");
 
             var user = search.First();
 
-            Assert.Equal("tdunbar@google.com", user.Email);
-            Assert.Equal("Trevor", user.FirstName);
-            Assert.Equal("Dunbar", user.LastName);
+            Assert.Equal("testAccount@google.com", user.Email);
+            Assert.Equal("Test", user.FirstName);
+            Assert.Equal("User", user.LastName);
         }
 
         [Fact]
@@ -142,19 +142,19 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             using var contextFactory = new ContextFactory();
             using var context = contextFactory.CreateContext();
 
-            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            DomainProfile test = new DomainProfile("testAccount@google.com", "Test", "User");
             test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
 
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
 
-            var search = await repo.GetProfilesByNameAsync("Dunbar");
+            var search = await repo.GetProfilesByNameAsync("User");
 
             var user = search.First();
 
-            Assert.Equal("tdunbar@google.com", user.Email);
-            Assert.Equal("Trevor", user.FirstName);
-            Assert.Equal("Dunbar", user.LastName);
+            Assert.Equal("testAccount@google.com", user.Email);
+            Assert.Equal("Test", user.FirstName);
+            Assert.Equal("User", user.LastName);
         }
 
         [Fact]
@@ -163,19 +163,19 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             using var contextFactory = new ContextFactory();
             using var context = contextFactory.CreateContext();
 
-            DomainProfile test = new DomainProfile("tdunbar@google.com", "Trevor", "Dunbar");
+            DomainProfile test = new DomainProfile("testAccount@google.com", "Test", "User");
             test.BirthDate = new DateTime(1994, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified);
 
             var repo = new ProfileRepository(context);
             await repo.CreateProfileAsync(test);
 
-            var search = await repo.GetProfilesByNameAsync("Trevor Dunbar");
+            var search = await repo.GetProfilesByNameAsync("Test User");
 
             var user = search.First();
 
-            Assert.Equal("tdunbar@google.com", user.Email);
-            Assert.Equal("Trevor", user.FirstName);
-            Assert.Equal("Dunbar", user.LastName);
+            Assert.Equal("testAccount@google.com", user.Email);
+            Assert.Equal("Test", user.FirstName);
+            Assert.Equal("User", user.LastName);
         }
     }
 }
