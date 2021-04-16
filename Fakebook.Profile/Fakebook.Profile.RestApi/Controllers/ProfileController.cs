@@ -90,7 +90,7 @@ namespace Fakebook.Profile.RestApi.Controllers
             {
                 return BadRequest();
             }
-            var results = await _repository.GetProfilesByNameAsync(name.ToUpperInvariant());
+            var results = await _repository.GetProfilesByNameAsync(name);
 
             // convert them to the ApiModel
             return Ok(results
