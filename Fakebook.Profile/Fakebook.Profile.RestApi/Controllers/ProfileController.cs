@@ -78,13 +78,11 @@ namespace Fakebook.Profile.RestApi.Controllers
 
         /// <summary>
         /// Action method that handles getting multiple profiles via their names;
-        /// PUT: /api/profiles/selection/{name}
+        /// PUT: /api/profiles/search/{name}
         /// </summary>
         /// <param name="name">A name you want to search for to get the profiles</param>
         /// <returns>A collection of profiles converted to API Models</returns>
-        [HttpGet("selection/{name}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("search/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesByNameAsync([FromQuery] string name)
         {
