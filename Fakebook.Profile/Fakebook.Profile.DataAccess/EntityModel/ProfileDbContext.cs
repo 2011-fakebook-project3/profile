@@ -97,7 +97,17 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                         BirthDate = new DateTime(1994, 9, 17),
                         ProfilePictureUrl = new Uri("https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800"),
                         Status = null
-                    }
+                    },
+                    new EntityProfile
+                    {
+                        Id = 3,
+                        Email = "trevor.dunbar@revature.net",
+                        FirstName = "Trevor",
+                        LastName = "Dunbar",
+                        BirthDate = new DateTime(1996, 8, 29),
+                        ProfilePictureUrl = new Uri("https://cdn.download.ams.birds.cornell.edu/api/v1/asset/252252921/1800"),
+                        Status = "four more days"
+                    },
                 });
 
             modelBuilder.Entity<Follow>()
@@ -112,6 +122,16 @@ namespace Fakebook.Profile.DataAccess.EntityModel
                     {
                         UserId = 2,
                         FollowingId = 1
+                    },
+                    new Follow
+                    {
+                        UserId = 3,
+                        FollowingId = 1
+                    },
+                    new Follow
+                    {
+                        UserId = 1,
+                        FollowingId = 3
                     }
                 });
         }
