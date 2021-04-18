@@ -213,7 +213,9 @@ namespace Fakebook.Profile.DataAccess
         /// <returns>A collection of domain profiles matching the emails provided.</returns>
         public async Task<IEnumerable<DomainProfile>> GetProfilesByEmailAsync(IEnumerable<string> emails)
         {
-            var userEntities = _context.EntityProfiles;
+            var userEntities = _context.EntityProfiles
+                .Include(x => x.Followers)
+                .Include(x => x.Following);
             var userEmails = userEntities
                 .Include(x => x.Following)
                     .ThenInclude(x => x.Following)
