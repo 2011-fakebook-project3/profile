@@ -104,24 +104,28 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// Action method that handles getting a single user by their email;
         /// GET: /api/profiles/{profileEmail}
         /// </summary>
-        /// <param name="profileEmail">The email of the user being retrieved</param>
+        /// <param name="email">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
-        [HttpGet("")]
-        [HttpGet("{profileEmail}")]
+        [HttpGet("{email?}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
+        public Task<ActionResult<ProfileApiModel>> GetAsync([FromQuery] string email = null)
         {
             // redundant or incorrect??
-            string email = profileEmail is not null ? profileEmail : GetUserEmail();
+            string profileEmail = email is not null ? email : GetUserEmail();
 
-            if (email is null)
+            if (profileEmail is null)
             {
-                _logger.LogError($"Could not find current user's email. {profileEmail}");
+                _logger.LogError($"Could not find current user's email. {email}");
                 throw new ArgumentException("Could not find current user's email");
             }
 
+            return GetAsyncInternal(profileEmail);
+        }
+
+        private async Task<ActionResult<ProfileApiModel>> GetAsyncInternal(string email)
+        {
             var result = await _repository.GetProfileAsync(email);
             return Ok(new ProfileApiModel(result));
         }
