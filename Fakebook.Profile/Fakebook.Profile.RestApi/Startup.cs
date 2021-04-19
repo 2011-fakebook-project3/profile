@@ -53,8 +53,14 @@ namespace Fakebook.Profile.RestApi
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                // change to actual auth url later
-                o.Authority = "https://localhost:44374";
+                if (_env.IsDevelopment())
+                {
+                    o.Authority = "https://localhost:44374"
+                }
+                else
+                {
+                    o.Authority = "https://fakebook.revaturelabs.com";
+                }
                 o.Audience = "fakebookApi";
                 o.RequireHttpsMetadata = false;
             });
