@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Fakebook.Profile.DataAccess.Services.Interfaces;
 using Fakebook.Profile.Domain;
 using Fakebook.Profile.RestApi.ApiModel;
 using Fakebook.Profile.RestApi.Controllers;
 using Fakebook.Profile.UnitTests.TestData;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -217,5 +215,6 @@ namespace Fakebook.Profile.UnitTests.ApiTests
             mockedProfileRepository.Verify(x => x.CreateProfileAsync(It.IsAny<DomainProfile>()), Times.Never);
         }
         #endregion
+
     }
 }

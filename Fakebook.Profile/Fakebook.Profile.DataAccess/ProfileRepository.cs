@@ -213,7 +213,9 @@ namespace Fakebook.Profile.DataAccess
         /// <returns>A collection of domain profiles matching the emails provided.</returns>
         public async Task<IEnumerable<DomainProfile>> GetProfilesByEmailAsync(IEnumerable<string> emails)
         {
-            var userEntities = _context.EntityProfiles;
+            var userEntities = _context.EntityProfiles
+                .Include(x => x.Followers)
+                .Include(x => x.Following);
             var userEmails = userEntities
                 .Include(x => x.Following)
                     .ThenInclude(x => x.Following)
@@ -239,6 +241,27 @@ namespace Fakebook.Profile.DataAccess
                 .Where(u => emails.Contains(u.Email))
                 .Select(u => ToDomainProfile(u))
                 .ToList();
+        }
+
+        public async Task<IEnumerable<DomainProfile>> GetProfilesByNameAsync(string name = null)
+        {
+            var query = await _context.EntityProfiles
+                .Include(x => x.Following)
+                    .ThenInclude(x => x.Following)
+                .Include(x => x.Followers)
+                    .ThenInclude(x => x.User)
+                .ToListAsync();
+            var profiles = query.Select(x => ToDomainProfile(x));
+            if(name != null)
+            {
+                profiles = profiles.Where(x => x.Name.ToUpperInvariant().Contains(name.ToUpperInvariant())).ToList();
+            }
+            else
+            {
+                return new List<DomainProfile>();
+            }
+           
+            return profiles;
         }
 
         /// <summary>

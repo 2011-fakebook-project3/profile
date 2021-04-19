@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -74,28 +75,57 @@ namespace Fakebook.Profile.RestApi.Controllers
                 .ToList());
         }
 
+
+        /// <summary>
+        /// Action method that handles getting multiple profiles via their names;
+        /// GET: /api/profiles/search
+        /// </summary>
+        /// <returns>A collection of profiles converted to API Models</returns>
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ProfileApiModel>>> SelectProfilesByNameAsync([FromQuery] string name)
+        {
+            if(name == null)
+            {
+                return BadRequest();
+            }
+            var results = await _repository.GetProfilesByNameAsync(name);
+
+            // convert them to the ApiModel
+            return Ok(results
+                .Select(p => new ProfileApiModel(p))
+                .ToList());
+        }
+
+
+
+
         /// <summary>
         /// Action method that handles getting a single user by their email;
         /// GET: /api/profiles/{profileEmail}
         /// </summary>
-        /// <param name="profileEmail">The email of the user being retrieved</param>
+        /// <param name="email">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
-        [HttpGet("")]
-        [HttpGet("{profileEmail}")]
+        [HttpGet("{email?}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProfileApiModel>> GetAsync(string profileEmail = null)
+        public Task<ActionResult<ProfileApiModel>> GetAsync([FromQuery] string email = null)
         {
             // redundant or incorrect??
-            string email = profileEmail is not null ? profileEmail : GetUserEmail();
+            string profileEmail = email is not null ? email : GetUserEmail();
 
-            if (email is null)
+            if (profileEmail is null)
             {
-                _logger.LogError($"Could not find current user's email. {profileEmail}");
+                _logger.LogError($"Could not find current user's email. {email}");
                 throw new ArgumentException("Could not find current user's email");
             }
 
+            return GetAsyncInternal(profileEmail);
+        }
+
+        private async Task<ActionResult<ProfileApiModel>> GetAsyncInternal(string email)
+        {
             var result = await _repository.GetProfileAsync(email);
             return Ok(new ProfileApiModel(result));
         }
@@ -159,6 +189,78 @@ namespace Fakebook.Profile.RestApi.Controllers
                 _logger.LogError(e.Message);
                 _logger.LogError(e.StackTrace);
                 //should be 404?
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("follow/{followEmail}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Follow([EmailAddress] string followEmail)
+        {
+            // Get emails of each user
+            string thisUserEmail = GetUserEmail();
+            if (thisUserEmail is null)
+            {
+                return Unauthorized(thisUserEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile followUser;
+            try
+            {
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, followEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                followUser = usersQuery.Single(x => x.Email == followEmail);
+                // Add following relationships
+                thisUser.AddFollow(followEmail);
+                followUser.AddFollower(thisUserEmail);
+                // Update in the database
+                await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
+                await _repository.UpdateProfileAsync(followEmail, followUser);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("unfollow/{unfollowEmail}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Unfollow([EmailAddress] string unfollowEmail)
+        {
+            // Get emails of each user
+            string thisUserEmail = GetUserEmail();
+            if (thisUserEmail is null)
+            {
+                return Unauthorized(thisUserEmail);
+            }
+            // Get users into domain models
+            DomainProfile thisUser;
+            DomainProfile unfollowUser;
+            try
+            {
+                var usersQuery = await _repository.GetProfilesByEmailAsync(new List<string> { thisUserEmail, unfollowEmail });
+                thisUser = usersQuery.Single(x => x.Email == thisUserEmail);
+                unfollowUser = usersQuery.Single(x => x.Email == unfollowEmail);
+                // Add following relationships
+                thisUser.RemoveFollowing(unfollowEmail);
+                unfollowUser.RemoveFollower(thisUserEmail);
+                // Update in the database
+                await _repository.UpdateProfileAsync(thisUserEmail, thisUser);
+                await _repository.UpdateProfileAsync(unfollowEmail, unfollowUser);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                _logger.LogError(e.Message);
+                _logger.LogError(e.StackTrace);
                 return BadRequest();
             }
         }
