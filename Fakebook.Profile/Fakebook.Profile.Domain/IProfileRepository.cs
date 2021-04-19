@@ -29,6 +29,13 @@ namespace Fakebook.Profile.Domain
         Task<IEnumerable<DomainProfile>> GetProfilesByEmailAsync(IEnumerable<string> emails);
 
         /// <summary>
+        /// Get user profiles by searching a name.
+        /// </summary>
+        /// <param name="name">A name used to find users.</param>
+        /// <returns>A collection of domain profiles matching the name provided.</returns>
+        Task<IEnumerable<DomainProfile>> GetProfilesByNameAsync(string name);
+
+        /// <summary>
         /// Get all users' profiles at once.
         /// </summary>
         /// <returns>A list of all matching profiles from the database.</returns>

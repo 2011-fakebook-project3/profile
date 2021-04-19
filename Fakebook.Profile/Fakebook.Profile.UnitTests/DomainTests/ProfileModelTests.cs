@@ -417,5 +417,57 @@ namespace Fakebook.Profile.UnitTests.DomainTests
             Assert.ThrowsAny<ArgumentException>(() => profile.AddFollow(duplicateFollowingEmail));
         }
 
+        [Fact]
+        public void TestRemoveFollowingEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followingEmail = "testermail@gmail.com";
+            profile.AddFollow(followingEmail);
+
+            // act
+            profile.RemoveFollowing(followingEmail);
+
+            // assert
+            Assert.DoesNotContain(followingEmail, profile.FollowingEmails);
+        }
+
+        [Fact]
+        public void TestRemoveFollowingEmailThrowsExceptionWhenEmailDoesNotExist()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followingEmail = "testermail@gmail.com";
+
+            // assert
+            Assert.Throws<ArgumentException>(() => profile.RemoveFollowing(followingEmail));
+        }
+
+        [Fact]
+        public void TestRemoveFollowerEmail()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
+            profile.AddFollower(followerEmail);
+
+            // act
+            profile.RemoveFollower(followerEmail);
+
+            // assert
+            Assert.DoesNotContain(followerEmail, profile.FollowerEmails);
+        }
+
+        [Fact]
+        public void TestRemoveFollowerEmailThrowsExceptionWhenEmailDoesNotExist()
+        {
+            // arrange
+            DomainProfile profile = new("emailtest@gmail.com", "Bob", "Fields");
+            string followerEmail = "testermail@gmail.com";
+
+            // assert
+            Assert.ThrowsAny<ArgumentException>(() => profile.RemoveFollower(followerEmail));
+        }
+
     }
 }
