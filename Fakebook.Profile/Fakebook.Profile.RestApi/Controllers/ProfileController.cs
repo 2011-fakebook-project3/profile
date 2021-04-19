@@ -106,8 +106,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user being retrieved</param>
         /// <returns>If found, a profile API model version of the profile; if not, it returns a NotFound()</returns>
-        [HttpGet("")]
-        [HttpGet("{email}")]
+        [HttpGet("{email?}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
