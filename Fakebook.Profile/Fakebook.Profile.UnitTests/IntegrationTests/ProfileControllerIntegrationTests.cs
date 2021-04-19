@@ -27,7 +27,7 @@ namespace Fakebook.Profile.UnitTests.IntegrationTests
             var user = new ClaimsPrincipal(new ClaimsIdentity(new []
             {
                 new Claim(ClaimTypes.Name, "john werner"),
-                new Claim(ClaimTypes.NameIdentifier, "john.werner@revature.net"),
+                new Claim(ClaimTypes.Email, "john.werner@revature.net"),
                 new Claim("custom-claim", "example claim value"),
             }, "mock"));
 
@@ -61,8 +61,8 @@ namespace Fakebook.Profile.UnitTests.IntegrationTests
             var user = new ClaimsPrincipal(new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, "john werner"),
-                new Claim(ClaimTypes.NameIdentifier, "john.werner@revature.net"),
-                new Claim("custom-claim", "example claim value"),
+                new Claim(ClaimTypes.Email, "john.werner@revature.net"),
+                new Claim("custom-claim", "example claim value")
             }, "mock"));
 
             var repo = new ProfileRepository(context);

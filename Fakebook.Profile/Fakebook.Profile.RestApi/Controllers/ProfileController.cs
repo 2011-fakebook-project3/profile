@@ -47,7 +47,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         {
             try
             {
-                return User.FindFirst(ct => ct.Type.Contains("nameidentifier")).Value;
+                return User.FindFirst(ct => ct.Type.Contains("email")).Value;
             }
             catch
             {
