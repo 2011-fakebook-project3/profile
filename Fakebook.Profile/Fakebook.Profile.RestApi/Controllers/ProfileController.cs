@@ -110,7 +110,7 @@ namespace Fakebook.Profile.RestApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProfileApiModel>> GetAsync([FromQuery] string email = null)
+        public Task<ActionResult<ProfileApiModel>> GetAsync([FromQuery] string email = null)
         {
             // redundant or incorrect??
             string profileEmail = email is not null ? email : GetUserEmail();
@@ -121,7 +121,12 @@ namespace Fakebook.Profile.RestApi.Controllers
                 throw new ArgumentException("Could not find current user's email");
             }
 
-            var result = await _repository.GetProfileAsync(profileEmail);
+            return GetAsyncInternal(profileEmail);
+        }
+
+        private async Task<ActionResult<ProfileApiModel>> GetAsyncInternal(string email)
+        {
+            var result = await _repository.GetProfileAsync(email);
             return Ok(new ProfileApiModel(result));
         }
 
