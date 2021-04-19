@@ -55,7 +55,7 @@ namespace Fakebook.Profile.RestApi
             {
                 if (_env.IsDevelopment())
                 {
-                    o.Authority = "https://localhost:44374"
+                    o.Authority = "https://localhost:44374";
                 }
                 else
                 {
