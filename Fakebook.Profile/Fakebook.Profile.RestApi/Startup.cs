@@ -17,7 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
 
 namespace Fakebook.Profile.RestApi
 {
@@ -47,29 +46,19 @@ namespace Fakebook.Profile.RestApi
                     });
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                if (_env.IsDevelopment())
+            services.AddAuthentication(
+                JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    o.Authority = "https://localhost:44374";
-                }
-                else
-                {
-                    o.Authority = "https://fakebook.revaturelabs.com";
-                }
-                o.Audience = "fakebookApi";
-                o.RequireHttpsMetadata = false;
-            });
+                    options.Authority = "https://revature-p3.okta.com/oauth2/default";
+                    options.Audience = "api://default";
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
-                options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
-            });
+                    // Won't send details outside of dev env
+                    if (_env.IsDevelopment())
+                    {
+                        options.IncludeErrorDetails = true;
+                    }
+                });
 
             services.AddControllers();
 
